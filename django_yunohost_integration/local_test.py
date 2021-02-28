@@ -8,8 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from django_ynh.path_utils import assert_is_dir, assert_is_file
-from django_ynh.test_utils import generate_basic_auth
+from django_yunohost_integration.path_utils import assert_is_dir, assert_is_file
+from django_yunohost_integration.test_utils import generate_basic_auth
 
 
 def verbose_check_call(command, verbose=True, **kwargs):
@@ -30,6 +30,7 @@ def verbose_check_call(command, verbose=True, **kwargs):
 
 
 def call_manage_py(final_home_path, args):
+    assert_is_file(final_home_path / 'manage.py')
     verbose_check_call(
         command=f'{sys.executable} manage.py {args}',
         cwd=final_home_path,
@@ -83,7 +84,7 @@ def create_local_test(django_settings_path, destination, runserver=False):
         'django.db.backends.postgresql': 'django.db.backends.sqlite3',
         "'NAME': '__APP__',": f"'NAME': '{destination / 'test_db.sqlite'}',",
         'django_redis.cache.RedisCache': 'django.core.cache.backends.dummy.DummyCache',
-        # Just use the default logging setup from django_ynh project:
+        # Just use the default logging setup from django_yunohost_integration project:
         'LOGGING = {': 'HACKED_DEACTIVATED_LOGGING = {',
     }
 
@@ -94,6 +95,11 @@ def create_local_test(django_settings_path, destination, runserver=False):
             p.mkdir(parents=True, exist_ok=True)
 
     log_file.touch(exist_ok=True)
+
+    # Check that there are some needed files:
+    assert_is_file(conf_path / 'manage.py')
+    assert_is_file(conf_path / 'settings.py')
+    assert_is_file(conf_path / 'urls.py')
 
     for src_file in conf_path.glob('*.py'):
         copy_patch(src_file=src_file, replaces=REPLACES, final_home_path=final_home_path)

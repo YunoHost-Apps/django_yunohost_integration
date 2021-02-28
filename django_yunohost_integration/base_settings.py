@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'axes',  # https://github.com/jazzband/django-axes
-    'django_ynh',
+    'django_yunohost_integration',
 ]
 
 # -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     #
     # login a user via HTTP_REMOTE_USER header from SSOwat:
-    'django_ynh.sso_auth.auth_middleware.SSOwatRemoteUserMiddleware',
+    'django_yunohost_integration.sso_auth.auth_middleware.SSOwatRemoteUserMiddleware',
     #
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -68,7 +68,7 @@ AUTHENTICATION_BACKENDS = (
     'axes.backends.AxesBackend',  # AxesBackend should be the first backend!
     #
     # Authenticate via SSO and nginx 'HTTP_REMOTE_USER' header:
-    'django_ynh.sso_auth.auth_backend.SSOwatUserBackend',
+    'django_yunohost_integration.sso_auth.auth_backend.SSOwatUserBackend',
     #
     # Fallback to normal Django model backend:
     'django.contrib.auth.backends.ModelBackend',
@@ -97,6 +97,6 @@ LOGGING = {
         'django.auth': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
         'django.security': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
         'django.request': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-        'django_ynh': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
+        'django_yunohost_integration': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
     },
 }

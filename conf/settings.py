@@ -13,8 +13,8 @@
 """
 from pathlib import Path as __Path
 
-from django_ynh.base_settings import *  # noqa
-from django_ynh.secret_key import get_or_create_secret as __get_or_create_secret
+from django_yunohost_integration.base_settings import *  # noqa
+from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
 
 
 DEBUG = True  # This is only the DEMO app ;) But should never be on in production!
@@ -28,7 +28,7 @@ assert FINAL_HOME_PATH.is_dir(), f'Directory not exists: {FINAL_HOME_PATH}'
 FINAL_WWW_PATH = __Path('__FINAL_WWW_PATH__')  # /var/www/$app
 assert FINAL_WWW_PATH.is_dir(), f'Directory not exists: {FINAL_WWW_PATH}'
 
-LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/django_ynh.log
+LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/django_yunohost_integration.log
 assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
 
 PATH_URL = '__PATH_URL__'  # $YNH_APP_ARG_PATH
