@@ -1,20 +1,20 @@
 [tool.poetry]
-name = "django_ynh"
-version = "0.1.5"
+name = "django_yunohost_integration"
+version = "0.2.0.alpha0"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
 readme = "README.md"
-homepage = "https://github.com/YunoHost-Apps/django_ynh"
+homepage = "https://github.com/jedie/django_yunohost_integration"
 packages = [
-    { include = "django_ynh" },
+    { include = "django_yunohost_integration" },
 ]
 
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0.0"
 django = "*"
-# The follogin extra packages are used for install "django_ynh" as YunoHost app:
+# The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
 psycopg2-binary = { version = "*", optional = true }
 django-redis = { version = "*", optional = true }
@@ -51,7 +51,7 @@ case_sensitive=false
 skip_glob=["*/htmlcov/*","*/migrations/*","*/volumes/*"]
 multi_line_output=3
 include_trailing_comma=true
-known_first_party=["django_ynh","django_ynh_project","django_ynh_tests"]
+known_first_party=["django_yunohost_integration","django_yunohost_integration_project","django_yunohost_integration_tests"]
 no_lines_before="LOCALFOLDER"
 default_section="THIRDPARTY"
 sections=["FUTURE","STDLIB","THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]
@@ -98,5 +98,5 @@ skip_missing_interpreters = True
 passenv = *
 whitelist_externals = pytest
 commands =
-    pytest --workers auto --tests-per-worker 1 --pyargs django_ynh django_ynh_project
+    pytest --workers auto --tests-per-worker 1 --pyargs django_yunohost_integration django_yunohost_integration_project
 """

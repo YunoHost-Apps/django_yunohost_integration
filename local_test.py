@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 try:
-    from django_ynh.local_test import create_local_test
+    from django_yunohost_integration.local_test import create_local_test
 except ImportError as err:
     raise ImportError('Did you forget to activate a virtual environment?') from err
 

@@ -26,12 +26,11 @@ install: check-poetry  ## install project via poetry
 update: install-poetry  ## update the sources and installation and generate "conf/requirements.txt"
 	poetry run pip install -U pip
 	poetry update
-	poetry export -f requirements.txt --output conf/requirements.txt
 
 lint: ## Run code formatters and linter
 	poetry run flynt --fail-on-change --line_length=${MAX_LINE_LENGTH} .
 	poetry run isort --check-only .
-	poetry run flake8 django_ynh
+	poetry run flake8 django_yunohost_integration
 
 fix-code-style: ## Fix code formatting
 	poetry run flynt --line_length=${MAX_LINE_LENGTH} .

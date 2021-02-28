@@ -27,7 +27,7 @@ import logging
 
 from django.contrib.auth.backends import RemoteUserBackend
 
-from django_ynh.sso_auth.user_profile import call_setup_user, update_user_profile
+from django_yunohost_integration.sso_auth.user_profile import call_setup_user, update_user_profile
 
 
 logger = logging.getLogger(__name__)

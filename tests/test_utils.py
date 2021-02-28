@@ -1,6 +1,6 @@
 from unittest.case import TestCase
 
-from django_ynh.test_utils import generate_basic_auth
+from django_yunohost_integration.test_utils import generate_basic_auth
 
 
 class TestUtilsTestCase(TestCase):
