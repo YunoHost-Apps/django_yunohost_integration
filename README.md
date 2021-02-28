@@ -1,19 +1,18 @@
-# django_ynh
+# django_yunohost_integration
 
+Python package [django_yunohost_integration](https://pypi.org/project/django_yunohost_integration/) with helpers for integrate a Django project as YunoHost package.
 
-Glue code to package django projects as yunohost apps.
+A example usage of this package is here:
 
-This repository is:
-
-* The Python package [django-ynh](https://pypi.org/project/django-ynh/) with helpers for integrate a Django project as YunoHost package
-* A example [YunoHost Application](https://install-app.yunohost.org/?app=django_ynh) that can be installed
-
-
-[![Integration level](https://dash.yunohost.org/integration/django_ynh.svg)](https://dash.yunohost.org/appci/app/django_ynh) ![](https://ci-apps.yunohost.org/ci/badges/django_ynh.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/django_ynh.maintain.svg)
-[![Install django_ynh with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=django_ynh)
-
+* https://github.com/YunoHost-Apps/django_example_ynh
 
 Pull requests welcome ;)
+
+
+These projects used `django_yunohost_integration`:
+
+* https://github.com/YunoHost-Apps/pyinventory_ynh
+* https://github.com/YunoHost-Apps/django-for-runners_ynh
 
 
 ## Features
@@ -46,7 +45,7 @@ A password is not needed, because auth done via SSOwat ;)
 
 Main parts in `settings.py`:
 ```python
-from django_ynh.secret_key import get_or_create_secret as __get_or_create_secret
+from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
 
 # Function that will be called to finalize a user profile:
 YNH_SETUP_USER = 'setup_user.setup_project_user'
@@ -55,7 +54,7 @@ SECRET_KEY = __get_or_create_secret(FINAL_HOME_PATH / 'secret.txt')  # /opt/yuno
 
 INSTALLED_APPS = [
     #...
-    'django_ynh',
+    'django_yunohost_integration',
     #...
 ]
 
@@ -63,7 +62,7 @@ MIDDLEWARE = [
     #... after AuthenticationMiddleware ...
     #
     # login a user via HTTP_REMOTE_USER header from SSOwat:
-    'django_ynh.sso_auth.auth_middleware.SSOwatRemoteUserMiddleware',
+    'django_yunohost_integration.sso_auth.auth_middleware.SSOwatRemoteUserMiddleware',
     #...
 ]
 
@@ -72,7 +71,7 @@ AUTHENTICATION_BACKENDS = (
     'axes.backends.AxesBackend',  # AxesBackend should be the first backend!
     #
     # Authenticate via SSO and nginx 'HTTP_REMOTE_USER' header:
-    'django_ynh.sso_auth.auth_backend.SSOwatUserBackend',
+    'django_yunohost_integration.sso_auth.auth_backend.SSOwatUserBackend',
     #
     # Fallback to normal Django model backend:
     'django.contrib.auth.backends.ModelBackend',
@@ -86,15 +85,15 @@ LOGOUT_REDIRECT_URL = '/yunohost/sso/'
 
 ## local test
 
-For quicker developing of django_ynh in the context of YunoHost app,
+For quicker developing of django_yunohost_integration in the context of YunoHost app,
 it's possible to run the Django developer server with the settings
 and urls made for YunoHost installation.
 
 e.g.:
 ```bash
-~$ git clone https://github.com/YunoHost-Apps/django_ynh.git
-~$ cd django_ynh/
-~/django_ynh$ make
+~$ git clone https://github.com/jedie/django_yunohost_integration.git
+~$ cd django_yunohost_integration/
+~/django_yunohost_integration$ make
 install-poetry         install or update poetry
 install                install project via poetry
 update                 update the sources and installation and generate "conf/requirements.txt"
@@ -107,9 +106,9 @@ publish                Release new version to PyPi
 local-test             Run local_test.py to run the project locally
 local-diff-settings    Run "manage.py diffsettings" with local test
 
-~/django_ynh$ make install-poetry
-~/django_ynh$ make install
-~/django_ynh$ make local-test
+~/django_yunohost_integration$ make install-poetry
+~/django_yunohost_integration$ make install
+~/django_yunohost_integration$ make local-test
 ```
 
 Notes:
@@ -121,111 +120,36 @@ Notes:
 
 ## history
 
-* [compare v0.1.5...master](https://github.com/YunoHost-Apps/django_ynh/compare/v0.1.5...master) **dev**
+* [compare v0.1.5...master](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.5...master) **dev**
   * tbc
-* [v0.1.5 - 19.01.2021](https://github.com/YunoHost-Apps/django_ynh/compare/v0.1.4...v0.1.5)
+* v0.2.0.alpha0 **dev**
+  * rename/split `django_ynh` into:
+    * `django_yunohost_integration` - Python package with the glue code to integrate a Django project with YunoHost
+    * `django_example_ynh` - Demo YunoHost App to demonstrate the integration of a Django project under YunoHost
+* [v0.1.5 - 19.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.4...v0.1.5)
   * Make some deps `gunicorn`, `psycopg2-binary`, `django-redis`, `django-axes` optional
-* [v0.1.4 - 08.01.2021](https://github.com/YunoHost-Apps/django_ynh/compare/v0.1.3...v0.1.4)
-  * Bugfix [CSRF verification failed on POST requests #7](https://github.com/YunoHost-Apps/django_ynh/issues/7)
-* [v0.1.3 - 08.01.2021](https://github.com/YunoHost-Apps/django_ynh/compare/v0.1.2...v0.1.3)
+* [v0.1.4 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.3...v0.1.4)
+  * Bugfix [CSRF verification failed on POST requests #7](https://github.com/YunoHost-Apps/django_yunohost_integration/issues/7)
+* [v0.1.3 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.2...v0.1.3)
   * set "DEBUG = True" in local_test (so static files are served and auth works)
   * Bugfixes and cleanups
-* [v0.1.2 - 29.12.2020](https://github.com/YunoHost-Apps/django_ynh/compare/v0.1.1...v0.1.2)
+* [v0.1.2 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.1...v0.1.2)
   * Bugfixes
-* [v0.1.1 - 29.12.2020](https://github.com/YunoHost-Apps/django_ynh/compare/v0.1.0...v0.1.1)
-  * Refactor "create_superuser" to a manage command, useable via "django_ynh" in `INSTALLED_APPS`
+* [v0.1.1 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.0...v0.1.1)
+  * Refactor "create_superuser" to a manage command, useable via "django_yunohost_integration" in `INSTALLED_APPS`
   * Generate "conf/requirements.txt" and use this file for install
   * rename own settings and urls (in `/conf/`)
-* [v0.1.0 - 28.12.2020](https://github.com/YunoHost-Apps/django_ynh/compare/f578f14...v0.1.0)
+* [v0.1.0 - 28.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/f578f14...v0.1.0)
   * first working state
-* [23.12.2020](https://github.com/YunoHost-Apps/django_ynh/commit/f578f144a3a6d11d7044597c37d550d29c247773)
+* [23.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/commit/f578f144a3a6d11d7044597c37d550d29c247773)
   * init the project
 
 
 ## Links
 
-* Report a bug about this package: https://github.com/YunoHost-Apps/django_ynh
+* Report a bug about this package: https://github.com/YunoHost-Apps/django_yunohost_integration
 * YunoHost website: https://yunohost.org/
-* PyPi package: https://pypi.org/project/django-ynh/
+* PyPi package: https://pypi.org/project/django_yunohost_integration/
 
-These projects used `django_ynh`:
-
-* https://github.com/YunoHost-Apps/pyinventory_ynh
-* https://github.com/YunoHost-Apps/django-for-runners_ynh
-
----
-
-# Developer info
-
-## package installation / debugging
-
-Please send your pull request to https://github.com/YunoHost-Apps/django_ynh
-
-Try 'main' branch, e.g.:
-```bash
-sudo yunohost app install https://github.com/YunoHost-Apps/django_ynh/tree/master --debug
-or
-sudo yunohost app upgrade django_ynh -u https://github.com/YunoHost-Apps/django_ynh/tree/master --debug
-```
-
-Try 'testing' branch, e.g.:
-```bash
-sudo yunohost app install https://github.com/YunoHost-Apps/django_ynh/tree/testing --debug
-or
-sudo yunohost app upgrade django_ynh -u https://github.com/YunoHost-Apps/django_ynh/tree/testing --debug
-```
-
-To remove call e.g.:
-```bash
-sudo yunohost app remove django_ynh
-```
-
-Backup / remove / restore cycle, e.g.:
-```bash
-yunohost backup create --apps django_ynh
-yunohost backup list
-archives:
-  - django_ynh-pre-upgrade1
-  - 20201223-163434
-yunohost app remove django_ynh
-yunohost backup restore 20201223-163434 --apps django_ynh
-```
-
-Debug installation, e.g.:
-```bash
-root@yunohost:~# ls -la /var/www/django_ynh/
-total 18
-drwxr-xr-x 4 root root 4 Dec  8 08:36 .
-drwxr-xr-x 6 root root 6 Dec  8 08:36 ..
-drwxr-xr-x 2 root root 2 Dec  8 08:36 media
-drwxr-xr-x 7 root root 8 Dec  8 08:40 static
-
-root@yunohost:~# ls -la /opt/yunohost/django_ynh/
-total 58
-drwxr-xr-x 5 django_ynh django_ynh   11 Dec  8 08:39 .
-drwxr-xr-x 3 root        root           3 Dec  8 08:36 ..
--rw-r--r-- 1 django_ynh django_ynh  460 Dec  8 08:39 gunicorn.conf.py
--rw-r--r-- 1 django_ynh django_ynh    0 Dec  8 08:39 local_settings.py
--rwxr-xr-x 1 django_ynh django_ynh  274 Dec  8 08:39 manage.py
--rw-r--r-- 1 django_ynh django_ynh  171 Dec  8 08:39 secret.txt
-drwxr-xr-x 6 django_ynh django_ynh    6 Dec  8 08:37 venv
--rw-r--r-- 1 django_ynh django_ynh  115 Dec  8 08:39 wsgi.py
--rw-r--r-- 1 django_ynh django_ynh 4737 Dec  8 08:39 django_ynh_demo_settings.py
-
-root@yunohost:~# cd /opt/yunohost/django_ynh/
-root@yunohost:/opt/yunohost/django_ynh# source venv/bin/activate
-(venv) root@yunohost:/opt/yunohost/django_ynh# ./manage.py check
-django_ynh v0.8.2 (Django v2.2.17)
-DJANGO_SETTINGS_MODULE='django_ynh_demo_settings'
-PROJECT_PATH:/opt/yunohost/django_ynh/venv/lib/python3.7/site-packages
-BASE_PATH:/opt/yunohost/django_ynh
-System check identified no issues (0 silenced).
-
-root@yunohost:~# tail -f /var/log/django_ynh/django_ynh.log
-root@yunohost:~# cat /etc/systemd/system/django_ynh.service
-
-root@yunohost:~# systemctl reload-or-restart django_ynh
-root@yunohost:~# journalctl --unit=django_ynh --follow
-```
 
 

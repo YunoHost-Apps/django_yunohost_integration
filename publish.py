@@ -3,11 +3,11 @@ from pathlib import Path
 from poetry_publish.publish import poetry_publish
 from poetry_publish.utils.subprocess_utils import verbose_check_call
 
-import django_ynh
-from django_ynh.path_utils import assert_is_file
+import django_yunohost_integration
+from django_yunohost_integration.path_utils import assert_is_file
 
 
-PACKAGE_ROOT = Path(django_ynh.__file__).parent.parent.parent
+PACKAGE_ROOT = Path(django_yunohost_integration.__file__).parent.parent
 
 
 def publish():
@@ -23,7 +23,7 @@ def publish():
 
     poetry_publish(
         package_root=PACKAGE_ROOT,
-        version=django_ynh.__version__,
+        version=django_yunohost_integration.__version__,
     )
 
 

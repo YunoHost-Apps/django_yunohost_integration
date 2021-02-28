@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 try:
-    from django_ynh.pytest_helper import run_pytest
+    from django_yunohost_integration.pytest_helper import run_pytest
 except ImportError as err:
     raise ImportError('Did you forget to activate a virtual environment?') from err
 
