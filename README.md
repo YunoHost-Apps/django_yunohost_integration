@@ -93,25 +93,44 @@ e.g.:
 ```bash
 ~$ git clone https://github.com/jedie/django_yunohost_integration.git
 ~$ cd django_yunohost_integration/
-~/django_yunohost_integration$ make
-install-poetry         install or update poetry
-install                install project via poetry
-update                 update the sources and installation and generate "conf/requirements.txt"
-lint                   Run code formatters and linter
-fix-code-style         Fix code formatting
-tox-listenvs           List all tox test environments
-tox                    Run pytest via tox with all environments
-pytest                 Run pytest
-publish                Release new version to PyPi
-local-test             Run local_test.py to run the project locally
-local-diff-settings    Run "manage.py diffsettings" with local test
+~/django_yunohost_integration$ ./devshell.py
 
-~/django_yunohost_integration$ make install-poetry
-~/django_yunohost_integration$ make install
-~/django_yunohost_integration$ make local-test
++ .venv/bin/python .venv/bin/devshell
+
+
+
+Developer shell - django_yunohost_integration - v0.2.0.alpha1
+
+
+Documented commands (use 'help -v' for verbose/'help <topic>' for details):
+
+dev-shell commands
+==================
+fix_code_style  linting  list_venv_packages  publish  pytest  update
+
+
+Django-YunoHost-Integration commands
+====================================
+local_test
+
+Uncategorized
+=============
+alias  help     macro  run_pyscript  set    shortcuts
+edit   history  quit   run_script    shell
+
+
+(django_yunohost_integration)
 ```
 
-Notes:
+For quicker developing of django_yunohost_integration in the context of YunoHost app,
+it's possible to run the Django developer server with the settings
+and urls made for YunoHost installation.
+
+e.g.:
+```bash
+~/django_yunohost_integration$ ./devshell.py
+(django_yunohost_integration) local_test
+```
 
 * SQlite database will be used
 * A super user with username `test` and password `test` is created
@@ -122,7 +141,7 @@ Notes:
 
 * [compare v0.1.5...master](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.5...master) **dev**
   * tbc
-* v0.2.0.alpha0 **dev**
+* v0.2.0.alpha1 **dev**
   * rename/split `django_ynh` into:
     * `django_yunohost_integration` - Python package with the glue code to integrate a Django project with YunoHost
     * `django_example_ynh` - Demo YunoHost App to demonstrate the integration of a Django project under YunoHost

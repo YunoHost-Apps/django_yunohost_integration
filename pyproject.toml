@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.2.0.alpha0"
+version = "0.2.0.alpha1"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
@@ -10,20 +10,27 @@ packages = [
     { include = "django_yunohost_integration" },
 ]
 
+[tool.poetry.scripts]
+devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'
 
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0.0"
 django = "*"
 # The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
-psycopg2-binary = { version = "*", optional = true }
+psycopg2 = { version = "*", optional = true }
 django-redis = { version = "*", optional = true }
 django-axes = { version = "*", optional = true }  # https://github.com/jazzband/django-axes
 
+[tool.poetry.extras]
+ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]  # install as YunoHost app
+
 [tool.poetry.dev-dependencies]
+dev_shell = ">=0.2.2"  # https://github.com/jedie/dev-shell
 django-axes = "*"  # https://github.com/jazzband/django-axes
 poetry-publish = "*"  # https://github.com/jedie/poetry-publish
-bx_py_utils = "*"
+bx_py_utils = "*"  # https://github.com/boxine/bx_py_utils
+bx_django_utils = "*"  # https://github.com/boxine/bx_django_utils
 tox = "*"
 pytest = "*"
 pytest-cov = "*"
@@ -35,9 +42,8 @@ flynt = "*"
 black = "*"
 pyupgrade = "*"
 
-[tool.poetry.extras]
-ynh = ["gunicorn", "psycopg2-binary", "django-redis", "django-axes"]  # install as YunoHost app
-
+# fix completion for Mac OS:
+gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -84,6 +90,10 @@ addopts = """
     --last-failed-no-failures all
     --new-first
 """
+
+
+[tool.coverage.run]
+omit = [".*"]
 
 
 [tool.tox]

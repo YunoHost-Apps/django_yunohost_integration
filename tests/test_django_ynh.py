@@ -1,5 +1,5 @@
 from axes.models import AccessAttempt, AccessLog
-from bx_py_utils.test_utils.html_assertion import HtmlAssertionMixin
+from bx_django_utils.test_utils.html_assertion import HtmlAssertionMixin
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import override_settings
