@@ -90,8 +90,6 @@ def noop_signal_handler(signal_num, frame):
 
 
 def main(argv):
-    assert DEP_LOCK_PATH.is_file(), f'File not found: "{DEP_LOCK_PATH}" !'
-
     if len(argv) == 2 and argv[1] in ('--update', '--help'):
         parser = argparse.ArgumentParser(
             prog=Path(__file__).name,
@@ -125,6 +123,9 @@ def main(argv):
         # Note: Under Windows pip.exe can't replace this own .exe file, so use the module way:
         verbose_check_call(PYTHON_PATH, '-m', 'pip', 'install', '-U', 'pip', 'setuptools')
         verbose_check_call(PIP_PATH, 'install', 'poetry')
+
+    if not DEP_LOCK_PATH.is_file():
+        verbose_check_call(POETRY_PATH, 'update')
 
     # install via poetry, if:
     #   1. .venv not exists

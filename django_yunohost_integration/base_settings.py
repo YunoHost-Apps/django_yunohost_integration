@@ -80,6 +80,27 @@ LOGOUT_REDIRECT_URL = '/yunohost/sso/'
 # /yunohost/sso/?action=logout
 
 # _____________________________________________________________________________
+
+# Mark CSRF cookie as "secure" -> browsers sent cookie only with an HTTPS connection:
+CSRF_COOKIE_SECURE = True
+
+# Mark session cookie as "secure" -> browsers sent cookie only with an HTTPS connection:
+SESSION_COOKIE_SECURE = True
+
+# SecurityMiddleware should redirects all non-HTTPS requests to HTTPS:
+SECURE_SSL_REDIRECT = True
+
+# SecurityMiddleware should preload directive to the HTTP Strict Transport Security header:
+SECURE_HSTS_PRELOAD = True
+
+# Instruct modern browsers to refuse to connect to your domain name via an insecure connection:
+SECURE_HSTS_SECONDS = 3600
+
+# SecurityMiddleware should add the "includeSubDomains" directive to the Strict-Transport-Security
+# header: All subdomains of your domain should be served exclusively via SSL!
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# _____________________________________________________________________________
 # Setting below, should be overwritten!
 
 LOGGING = {
