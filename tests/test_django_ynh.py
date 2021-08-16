@@ -1,4 +1,4 @@
-from axes.models import AccessAttempt, AccessLog
+from axes.models import AccessLog
 from bx_django_utils.test_utils.html_assertion import HtmlAssertionMixin
 from django.conf import settings
 from django.contrib.auth.models import User
