@@ -71,7 +71,6 @@ class DevShellCommandSet(OriginDevShellCommandSet):
         poetry_publish(
             package_root=PACKAGE_ROOT,
             version=django_yunohost_integration.__version__,
-            creole_readme=True  # don't publish if README.rst is not up-to-date
         )
 
 
