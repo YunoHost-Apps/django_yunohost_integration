@@ -5,7 +5,6 @@ import cmd2
 from dev_shell.base_cmd2_app import DevShellBaseApp
 from dev_shell.command_sets import DevShellBaseCommandSet
 from dev_shell.command_sets.dev_shell_commands import DevShellCommandSet as OriginDevShellCommandSet
-from dev_shell.command_sets.dev_shell_commands import run_linters
 from dev_shell.config import DevShellConfig
 from dev_shell.utils.subprocess_utils import verbose_check_call
 from poetry_publish.publish import poetry_publish
@@ -18,11 +17,46 @@ PACKAGE_ROOT = Path(django_yunohost_integration.__file__).parent.parent.parent
 BASE_PATH = Path(django_yunohost_integration.__file__).parent.parent
 
 
+def run_linters(cwd=None):
+    """
+    Run code formatters and linter
+    """
+    verbose_check_call(
+        'flake8',
+        cwd=cwd,
+        exit_on_error=True
+    )
+    verbose_check_call(
+        'isort', '--check-only', '.',
+        cwd=cwd,
+        exit_on_error=True
+    )
+
+
 class DevShellCommandSet(OriginDevShellCommandSet):
 
     # TODO:
     # pyupgrade --exit-zero-even-if-changed --py3-plus --py36-plus --py37-plus --py38-plus
     # `find . -name "*.py" -type f ! -path "./.tox/*" ! -path "./htmlcov/*" ! -path "*/volumes/*"
+
+    def do_fix_code_style(self, statement: cmd2.Statement):
+        """
+        Fix code style by running: autopep8 and isort
+        """
+        verbose_check_call(
+            'autopep8', '--aggressive', '--aggressive', '--in-place', '--recursive', '.',
+            cwd=self.config.base_path
+        )
+        verbose_check_call(
+            'isort', '.',
+            cwd=self.config.base_path
+        )
+
+    def do_linting(self, statement: cmd2.Statement):
+        """
+        Linting: Check code style with flake8, isort and flynt
+        """
+        run_linters(cwd=self.config.base_path)
 
     def do_publish(self, statement: cmd2.Statement):
         """

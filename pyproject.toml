@@ -38,8 +38,7 @@ pytest-django = "*"
 coveralls = "*"
 isort = "*"
 flake8 = "*"
-flynt = "*"
-black = "*"
+autopep8 = "*"
 pyupgrade = "*"
 
 # fix completion for Mac OS:
@@ -49,12 +48,19 @@ gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+
+[tool.autopep8]
+# https://github.com/hhatto/autopep8#pyprojecttoml
+max_line_length = 120
+exclude=".*,*/htmlcov/*,*/migrations/*,*/volumes/*"
+
+
 [tool.isort]
 # https://pycqa.github.io/isort/docs/configuration/config_files/#pyprojecttoml-preferred-format
 atomic=true
 line_length=120
 case_sensitive=false
-skip_glob=["*/htmlcov/*","*/migrations/*","*/volumes/*"]
+skip_glob=[".*","*/htmlcov/*","*/migrations/*","*/volumes/*"]
 multi_line_output=3
 include_trailing_comma=true
 known_first_party=["django_yunohost_integration","django_yunohost_integration_project","django_yunohost_integration_tests"]
