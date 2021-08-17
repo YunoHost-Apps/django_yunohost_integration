@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.2.0.alpha1"
+version = "0.2.0.alpha2"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
@@ -18,7 +18,7 @@ python = ">=3.7,<4.0.0"
 django = "*"
 # The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
-psycopg2 = { version = "*", optional = true }
+psycopg2 = { version = "*", optional = true }  # https://www.psycopg.org/docs/install.html#build-prerequisites
 django-redis = { version = "*", optional = true }
 django-axes = { version = "*", optional = true }  # https://github.com/jazzband/django-axes
 
