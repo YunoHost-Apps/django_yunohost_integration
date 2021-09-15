@@ -1,5 +1,5 @@
-from axes.models import AccessAttempt, AccessLog
-from bx_py_utils.test_utils.html_assertion import HtmlAssertionMixin
+from axes.models import AccessLog
+from bx_django_utils.test_utils.html_assertion import HtmlAssertionMixin
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import override_settings
@@ -32,9 +32,24 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         assert reverse(request_media_debug_view) == '/app_path/debug/'
 
     def test_auth(self):
-        response = self.client.get('/app_path/')
-        self.assertRedirects(response, expected_url='/app_path/login/?next=/app_path/')
+        # SecurityMiddleware should redirects all non-HTTPS requests to HTTPS:
+        assert settings.SECURE_SSL_REDIRECT is True
+        response = self.client.get('/app_path/', secure=False)
+        self.assertRedirects(
+            response,
+            status_code=301,  # permanent redirect
+            expected_url='https://testserver/app_path/',
+            fetch_redirect_response=False
+        )
 
+        response = self.client.get('/app_path/', secure=True)
+        self.assertRedirects(
+            response,
+            expected_url='/app_path/login/?next=/app_path/',
+            fetch_redirect_response=False
+        )
+
+    @override_settings(SECURE_SSL_REDIRECT=False)
     def test_create_unknown_user(self):
         assert User.objects.count() == 0
 
@@ -58,6 +73,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
             response, parts=('<title>Site administration | Django site admin</title>', '<strong>test</strong>')
         )
 
+    @override_settings(SECURE_SSL_REDIRECT=False)
     def test_wrong_auth_user(self):
         assert User.objects.count() == 0
         assert AccessLog.objects.count() == 0
@@ -82,6 +98,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         assert response.status_code == 403  # Forbidden
 
+    @override_settings(SECURE_SSL_REDIRECT=False)
     def test_wrong_cookie(self):
         assert User.objects.count() == 0
         assert AccessLog.objects.count() == 0
@@ -106,6 +123,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         assert response.status_code == 403  # Forbidden
 
+    @override_settings(SECURE_SSL_REDIRECT=False)
     def test_wrong_authorization_user(self):
         assert User.objects.count() == 0
 

@@ -85,6 +85,14 @@ LOGOUT_REDIRECT_URL = '/yunohost/sso/'
 
 ## local test
 
+### Build prerequisites
+
+We install `psycopg2` (a PostgreSQL adapter for the Python) that needs some build prerequisites, e.g.:
+
+```bash
+~$ sudo apt install build-essential python3-dev libpq-dev
+```
+
 For quicker developing of django_yunohost_integration in the context of YunoHost app,
 it's possible to run the Django developer server with the settings
 and urls made for YunoHost installation.
@@ -93,25 +101,44 @@ e.g.:
 ```bash
 ~$ git clone https://github.com/jedie/django_yunohost_integration.git
 ~$ cd django_yunohost_integration/
-~/django_yunohost_integration$ make
-install-poetry         install or update poetry
-install                install project via poetry
-update                 update the sources and installation and generate "conf/requirements.txt"
-lint                   Run code formatters and linter
-fix-code-style         Fix code formatting
-tox-listenvs           List all tox test environments
-tox                    Run pytest via tox with all environments
-pytest                 Run pytest
-publish                Release new version to PyPi
-local-test             Run local_test.py to run the project locally
-local-diff-settings    Run "manage.py diffsettings" with local test
+~/django_yunohost_integration$ ./devshell.py
 
-~/django_yunohost_integration$ make install-poetry
-~/django_yunohost_integration$ make install
-~/django_yunohost_integration$ make local-test
++ .venv/bin/python .venv/bin/devshell
+
+
+
+Developer shell - django_yunohost_integration - v0.2.0
+
+
+Documented commands (use 'help -v' for verbose/'help <topic>' for details):
+
+dev-shell commands
+==================
+fix_code_style  linting  list_venv_packages  publish  pytest  update
+
+
+Django-YunoHost-Integration commands
+====================================
+local_test
+
+Uncategorized
+=============
+alias  help     macro  run_pyscript  set    shortcuts
+edit   history  quit   run_script    shell
+
+
+(django_yunohost_integration)
 ```
 
-Notes:
+For quicker developing of django_yunohost_integration in the context of YunoHost app,
+it's possible to run the Django developer server with the settings
+and urls made for YunoHost installation.
+
+e.g.:
+```bash
+~/django_yunohost_integration$ ./devshell.py
+(django_yunohost_integration) local_test
+```
 
 * SQlite database will be used
 * A super user with username `test` and password `test` is created
@@ -120,34 +147,35 @@ Notes:
 
 ## history
 
-* [compare v0.1.5...master](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.5...master) **dev**
+* [compare v0.2.0...master](https://github.com/jedie/django_yunohost_integration/compare/v0.2.0...master) **dev**
   * tbc
-* v0.2.0.alpha0 **dev**
+* [v0.2.0 - 15.09.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.5...v0.2.0)
   * rename/split `django_ynh` into:
     * `django_yunohost_integration` - Python package with the glue code to integrate a Django project with YunoHost
     * `django_example_ynh` - Demo YunoHost App to demonstrate the integration of a Django project under YunoHost
-* [v0.1.5 - 19.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.4...v0.1.5)
+  * Replace `psycopg2-binary` with `psycopg2` (needs some prerequisites packages, see above)
+* [v0.1.5 - 19.01.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.4...v0.1.5)
   * Make some deps `gunicorn`, `psycopg2-binary`, `django-redis`, `django-axes` optional
-* [v0.1.4 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.3...v0.1.4)
-  * Bugfix [CSRF verification failed on POST requests #7](https://github.com/YunoHost-Apps/django_yunohost_integration/issues/7)
-* [v0.1.3 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.2...v0.1.3)
+* [v0.1.4 - 08.01.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.3...v0.1.4)
+  * Bugfix: CSRF verification failed on POST requests
+* [v0.1.3 - 08.01.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.2...v0.1.3)
   * set "DEBUG = True" in local_test (so static files are served and auth works)
   * Bugfixes and cleanups
-* [v0.1.2 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.1...v0.1.2)
+* [v0.1.2 - 29.12.2020](https://github.com/jedie/django_yunohost_integration/compare/v0.1.1...v0.1.2)
   * Bugfixes
-* [v0.1.1 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.0...v0.1.1)
+* [v0.1.1 - 29.12.2020](https://github.com/jedie/django_yunohost_integration/compare/v0.1.0...v0.1.1)
   * Refactor "create_superuser" to a manage command, useable via "django_yunohost_integration" in `INSTALLED_APPS`
   * Generate "conf/requirements.txt" and use this file for install
   * rename own settings and urls (in `/conf/`)
-* [v0.1.0 - 28.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/f578f14...v0.1.0)
+* [v0.1.0 - 28.12.2020](https://github.com/jedie/django_yunohost_integration/compare/f578f14...v0.1.0)
   * first working state
-* [23.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/commit/f578f144a3a6d11d7044597c37d550d29c247773)
+* [23.12.2020](https://github.com/jedie/django_yunohost_integration/commit/f578f144a3a6d11d7044597c37d550d29c247773)
   * init the project
 
 
 ## Links
 
-* Report a bug about this package: https://github.com/YunoHost-Apps/django_yunohost_integration
+* Report a bug about this package: https://github.com/jedie/django_yunohost_integration
 * YunoHost website: https://yunohost.org/
 * PyPi package: https://pypi.org/project/django_yunohost_integration/
 

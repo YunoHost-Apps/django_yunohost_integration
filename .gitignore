@@ -9,5 +9,4 @@ secret.txt
 /htmlcov/
 /local_test/
 /dist/
-/poetry.lock
 *.log
