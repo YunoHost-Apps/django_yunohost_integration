@@ -151,8 +151,8 @@ e.g.:
   * tbc
 * [v0.2.0 - 15.09.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.5...v0.2.0)
   * rename/split `django_ynh` into:
-    * `django_yunohost_integration` - Python package with the glue code to integrate a Django project with YunoHost
-    * `django_example_ynh` - Demo YunoHost App to demonstrate the integration of a Django project under YunoHost
+    * [django_yunohost_integration](https://github.com/jedie/django_yunohost_integration) - Python package with the glue code to integrate a Django project with YunoHost
+    * [django_example_ynh](https://github.com/YunoHost-Apps/django_example_ynh) - Demo YunoHost App to demonstrate the integration of a Django project under YunoHost
   * Replace `psycopg2-binary` with `psycopg2` (needs some prerequisites packages, see above)
 * [v0.1.5 - 19.01.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.4...v0.1.5)
   * Make some deps `gunicorn`, `psycopg2-binary`, `django-redis`, `django-axes` optional
