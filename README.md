@@ -107,7 +107,7 @@ e.g.:
 
 
 
-Developer shell - django_yunohost_integration - v0.2.0.alpha1
+Developer shell - django_yunohost_integration - v0.2.0
 
 
 Documented commands (use 'help -v' for verbose/'help <topic>' for details):
@@ -147,35 +147,35 @@ e.g.:
 
 ## history
 
-* [compare v0.1.5...master](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.5...master) **dev**
+* [compare v0.2.0...master](https://github.com/jedie/django_yunohost_integration/compare/v0.2.0...master) **dev**
   * tbc
-* v0.2.0.alpha2 **dev**
+* [v0.2.0 - 15.09.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.5...v0.2.0)
   * rename/split `django_ynh` into:
     * `django_yunohost_integration` - Python package with the glue code to integrate a Django project with YunoHost
     * `django_example_ynh` - Demo YunoHost App to demonstrate the integration of a Django project under YunoHost
   * Replace `psycopg2-binary` with `psycopg2` (needs some prerequisites packages, see above)
-* [v0.1.5 - 19.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.4...v0.1.5)
+* [v0.1.5 - 19.01.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.4...v0.1.5)
   * Make some deps `gunicorn`, `psycopg2-binary`, `django-redis`, `django-axes` optional
-* [v0.1.4 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.3...v0.1.4)
-  * Bugfix [CSRF verification failed on POST requests #7](https://github.com/YunoHost-Apps/django_yunohost_integration/issues/7)
-* [v0.1.3 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.2...v0.1.3)
+* [v0.1.4 - 08.01.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.3...v0.1.4)
+  * Bugfix: CSRF verification failed on POST requests
+* [v0.1.3 - 08.01.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.2...v0.1.3)
   * set "DEBUG = True" in local_test (so static files are served and auth works)
   * Bugfixes and cleanups
-* [v0.1.2 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.1...v0.1.2)
+* [v0.1.2 - 29.12.2020](https://github.com/jedie/django_yunohost_integration/compare/v0.1.1...v0.1.2)
   * Bugfixes
-* [v0.1.1 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.0...v0.1.1)
+* [v0.1.1 - 29.12.2020](https://github.com/jedie/django_yunohost_integration/compare/v0.1.0...v0.1.1)
   * Refactor "create_superuser" to a manage command, useable via "django_yunohost_integration" in `INSTALLED_APPS`
   * Generate "conf/requirements.txt" and use this file for install
   * rename own settings and urls (in `/conf/`)
-* [v0.1.0 - 28.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/f578f14...v0.1.0)
+* [v0.1.0 - 28.12.2020](https://github.com/jedie/django_yunohost_integration/compare/f578f14...v0.1.0)
   * first working state
-* [23.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/commit/f578f144a3a6d11d7044597c37d550d29c247773)
+* [23.12.2020](https://github.com/jedie/django_yunohost_integration/commit/f578f144a3a6d11d7044597c37d550d29c247773)
   * init the project
 
 
 ## Links
 
-* Report a bug about this package: https://github.com/YunoHost-Apps/django_yunohost_integration
+* Report a bug about this package: https://github.com/jedie/django_yunohost_integration
 * YunoHost website: https://yunohost.org/
 * PyPi package: https://pypi.org/project/django_yunohost_integration/
 
