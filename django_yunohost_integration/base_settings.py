@@ -87,6 +87,10 @@ CSRF_COOKIE_SECURE = True
 # Mark session cookie as "secure" -> browsers sent cookie only with an HTTPS connection:
 SESSION_COOKIE_SECURE = True
 
+# HTTP header/value combination that signifies a request is secure
+# Your nginx.conf must set "X-Forwarded-Protocol" proxy header!
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
+
 # SecurityMiddleware should redirects all non-HTTPS requests to HTTPS:
 SECURE_SSL_REDIRECT = True
 
