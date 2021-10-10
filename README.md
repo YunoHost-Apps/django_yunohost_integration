@@ -1,5 +1,9 @@
 # django_yunohost_integration
 
+
+[![Build Status on github](https://github.com/YunoHost-Apps/django_yunohost_integration/workflows/test/badge.svg?branch=master)](https://github.com/YunoHost-Apps/django_yunohost_integration/actions) [![Coverage Status on codecov.io](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration/branch/master/graph/badge.svg)](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration)
+
+
 Python package [django_yunohost_integration](https://pypi.org/project/django_yunohost_integration/) with helpers for integrate a Django project as YunoHost package.
 
 A example usage of this package is here:
