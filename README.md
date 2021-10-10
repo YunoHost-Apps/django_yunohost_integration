@@ -147,8 +147,10 @@ e.g.:
 
 ## history
 
-* [compare v0.2.0...master](https://github.com/jedie/django_yunohost_integration/compare/v0.2.1...master) **dev**
+* [compare v0.2.2...master](https://github.com/jedie/django_yunohost_integration/compare/v0.2.2...master) **dev**
   * tbc
+* [v0.2.2 - 10.10.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.2.1...v0.2.2)
+  * Read YunoHost App Id from "manifest.json" and check root directory name
 * [v0.2.1 - 16.09.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.2.0...v0.2.1)
   * Bugfix endless redirect loop, by adding `SECURE_PROXY_SSL_HEADER` to settings
 * [v0.2.0 - 15.09.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.1.5...v0.2.0)
