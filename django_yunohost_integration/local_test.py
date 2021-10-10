@@ -2,6 +2,7 @@
     Create a YunoHost package local test
 """
 import argparse
+import json
 import os
 import shlex
 import subprocess
@@ -59,10 +60,31 @@ def create_local_test(django_settings_path, destination, runserver=False):
     assert_is_file(django_settings_path)
 
     django_settings_name = django_settings_path.stem
-
     conf_path = django_settings_path.parent
+    root_path = conf_path.parent
 
-    project_name = conf_path.parent.name
+    # Get the YunoHost app name from manifest:
+    manifest_path = root_path / 'manifest.json'
+    print(f'Read YunoHost App manifest from: "{manifest_path}"')
+    if not manifest_path.is_file():
+        # e.g.: self test run ;)
+        print(f'WARNING: File not found: "{manifest_path}"')
+        project_name = conf_path.parent.name
+        print(f'Fall back to root directory name as App id: "{project_name}"')
+    else:
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        project_name = manifest['id']  # same as: "app=$YNH_APP_INSTANCE_NAME" in YunoHost scripts
+
+    print(f'YunoHost App id: "{project_name}"')
+
+    # Check if App "id" and parent directory seems to match:
+    yunohost_package_name = f'{project_name}_ynh'
+    if yunohost_package_name != root_path.name:
+        print(
+            f'WARNING: App id "{project_name}"'
+            f' and project root directory name "{conf_path.parent.name}"'
+            f' does not match the default name scheme: "{yunohost_package_name}"'
+        )
 
     assert isinstance(destination, Path)
     destination = destination.resolve()
