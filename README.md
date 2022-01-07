@@ -149,8 +149,10 @@ e.g.:
 
 ## history
 
-* [compare v0.2.2...master](https://github.com/jedie/django_yunohost_integration/compare/v0.2.2...master) **dev**
+* [compare v0.2.2...master](https://github.com/jedie/django_yunohost_integration/compare/v0.2.3...master) **dev**
   * tbc
+* [v0.2.3 - 07.01.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.2...v0.2.3)
+  * Bugfix Fix local test by set `"SECURE_SSL_REDIRECT = False"`
 * [v0.2.2 - 10.10.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.2.1...v0.2.2)
   * Read YunoHost App Id from "manifest.json" and check root directory name
 * [v0.2.1 - 16.09.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.2.0...v0.2.1)
