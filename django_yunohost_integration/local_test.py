@@ -2,6 +2,7 @@
     Create a YunoHost package local test
 """
 import argparse
+import inspect
 import json
 import os
 import shlex
@@ -126,11 +127,14 @@ def create_local_test(django_settings_path, destination, runserver=False):
     for src_file in conf_path.glob('*.py'):
         copy_patch(src_file=src_file, replaces=REPLACES, final_home_path=final_home_path)
 
-    with Path(final_home_path / 'local_settings.py').open('w') as f:
-        f.write('# Only for local test run\n')
-        f.write('DEBUG = True\n')
-        f.write('SERVE_FILES = True  # May used in urls.py\n')
-        f.write('AUTH_PASSWORD_VALIDATORS = []  # accept all passwords\n')
+    local_settings_path = final_home_path / 'local_settings.py'
+    local_settings_path.write_text(inspect.cleandoc('''
+        # Only for local test run
+        DEBUG = True
+        SECURE_SSL_REDIRECT = False  # Don't redirect http to https
+        SERVE_FILES = True  # May used in urls.py
+        AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
+    '''))
 
     # call "local_test/manage.py" via subprocess:
     call_manage_py(final_home_path, 'check --deploy')
