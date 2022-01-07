@@ -14,7 +14,7 @@ from django_yunohost_integration.path_utils import assert_is_dir, assert_is_file
 from django_yunohost_integration.test_utils import generate_basic_auth
 
 
-def verbose_check_call(command, verbose=True, **kwargs):
+def verbose_check_call(command, verbose=True, extra_env=None, **kwargs):
     """ 'verbose' version of subprocess.check_call() """
     if verbose:
         print('_' * 100)
@@ -26,15 +26,19 @@ def verbose_check_call(command, verbose=True, **kwargs):
 
     env = os.environ.copy()
     env['PYTHONUNBUFFERED'] = '1'
+    if extra_env is not None:
+        assert isinstance(extra_env, dict)
+        env.update(extra_env)
 
     popenargs = shlex.split(command)
     subprocess.check_call(popenargs, universal_newlines=True, env=env, **kwargs)
 
 
-def call_manage_py(final_home_path, args):
+def call_manage_py(final_home_path, args, extra_env=None):
     assert_is_file(final_home_path / 'manage.py')
     verbose_check_call(
         command=f'{sys.executable} manage.py {args}',
+        extra_env=extra_env,
         cwd=final_home_path,
     )
 
@@ -130,10 +134,16 @@ def create_local_test(django_settings_path, destination, runserver=False):
     local_settings_path = final_home_path / 'local_settings.py'
     local_settings_path.write_text(inspect.cleandoc('''
         # Only for local test run
-        DEBUG = True
-        SECURE_SSL_REDIRECT = False  # Don't redirect http to https
-        SERVE_FILES = True  # May used in urls.py
-        AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
+
+        import os
+
+
+        if os.environ.get('ENV_TYPE', None) == 'local':
+            print(f'Activate settings overwrite by {__file__}')
+            DEBUG = True
+            SECURE_SSL_REDIRECT = False  # Don't redirect http to https
+            SERVE_FILES = True  # May used in urls.py
+            AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
     '''))
 
     # call "local_test/manage.py" via subprocess:
@@ -155,7 +165,11 @@ def create_local_test(django_settings_path, destination, runserver=False):
         os.environ['HTTP_AUTHORIZATION'] = generate_basic_auth(username='test', password='test123')
 
         try:
-            call_manage_py(final_home_path, 'runserver')
+            call_manage_py(
+                final_home_path,
+                'runserver',
+                extra_env={'ENV_TYPE': 'local'}  # Activate local_settings.py overwrites
+            )
         except KeyboardInterrupt:
             print('\nBye ;)')
 
