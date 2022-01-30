@@ -150,10 +150,11 @@ e.g.:
 
 ## history
 
-* [compare v0.2.2...main](https://github.com/jedie/django_yunohost_integration/compare/v0.2.3...main) **dev**
+* [compare v0.2.4...main](https://github.com/jedie/django_yunohost_integration/compare/v0.2.4...main) **dev**
+  * tbc
+* [v0.2.4 - 30.01.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.3...v0.2.4)
   * Rename git "master" branch to "main"
   * Use darker and pytest-darker as code formatter + update requirements
-  * tbc
 * [v0.2.3 - 07.01.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.2...v0.2.3)
   * Bugfix Fix local test by set `"SECURE_SSL_REDIRECT = False"`
 * [v0.2.2 - 10.10.2021](https://github.com/jedie/django_yunohost_integration/compare/v0.2.1...v0.2.2)
