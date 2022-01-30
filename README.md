@@ -1,6 +1,7 @@
 # django_yunohost_integration
 
-[![Test](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml/badge.svg)](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml) [![Coverage Status on codecov.io](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration/branch/master/graph/badge.svg)](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration)
+[![Test](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml)
+[![Coverage Status on codecov.io](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration/branch/main/graph/badge.svg)](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration)
 
 Python package [django_yunohost_integration](https://pypi.org/project/django_yunohost_integration/) with helpers for integrate a Django project as YunoHost package.
 
@@ -149,7 +150,9 @@ e.g.:
 
 ## history
 
-* [compare v0.2.2...master](https://github.com/jedie/django_yunohost_integration/compare/v0.2.3...master) **dev**
+* [compare v0.2.2...main](https://github.com/jedie/django_yunohost_integration/compare/v0.2.3...main) **dev**
+  * Rename git "master" branch to "main"
+  * Use darker and pytest-darker as code formatter + update requirements
   * tbc
 * [v0.2.3 - 07.01.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.2...v0.2.3)
   * Bugfix Fix local test by set `"SECURE_SSL_REDIRECT = False"`
@@ -186,6 +189,3 @@ e.g.:
 * Report a bug about this package: https://github.com/jedie/django_yunohost_integration
 * YunoHost website: https://yunohost.org/
 * PyPi package: https://pypi.org/project/django_yunohost_integration/
-
-
-
