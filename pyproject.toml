@@ -10,6 +10,9 @@ packages = [
     { include = "django_yunohost_integration" },
 ]
 
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/jedie/django_yunohost_integration/issues"
+
 [tool.poetry.scripts]
 devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'
 
@@ -18,7 +21,10 @@ python = ">=3.7,<4.0.0"
 django = "*"
 # The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
+
+# Don't use "psycopg2-binary": It's not available on ARM boards see: https://github.com/jedie/PyInventory/issues/56
 psycopg2 = { version = "*", optional = true }  # https://www.psycopg.org/docs/install.html#build-prerequisites
+
 django-redis = { version = "*", optional = true }
 django-axes = { version = "*", optional = true }  # https://github.com/jazzband/django-axes
 
