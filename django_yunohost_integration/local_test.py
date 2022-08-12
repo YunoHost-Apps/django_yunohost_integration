@@ -34,17 +34,17 @@ def verbose_check_call(command, verbose=True, extra_env=None, **kwargs):
     subprocess.check_call(popenargs, universal_newlines=True, env=env, **kwargs)
 
 
-def call_manage_py(final_home_path, args, extra_env=None):
-    assert_is_file(final_home_path / 'manage.py')
+def call_manage_py(final_path, args, extra_env=None):
+    assert_is_file(final_path / 'manage.py')
     verbose_check_call(
         command=f'{sys.executable} manage.py {args}',
         extra_env=extra_env,
-        cwd=final_home_path,
+        cwd=final_path,
     )
 
 
-def copy_patch(src_file, replaces, final_home_path):
-    dst_file = final_home_path / src_file.name
+def copy_patch(src_file, replaces, final_path):
+    dst_file = final_path / src_file.name
     print(f'{src_file} -> {dst_file}')
 
     with src_file.open('r') as f:
@@ -98,13 +98,11 @@ def create_local_test(django_settings_path, destination, runserver=False):
 
     assert_is_dir(destination)
 
-    final_home_path = destination / 'opt_yunohost'
-    final_www_path = destination / 'var_www'
+    final_path = destination / 'opt_yunohost'
+    public_path = destination / 'var_www'
     log_file = destination / f'var_log_{project_name}.log'
 
     REPLACES = {
-        '__FINAL_HOME_PATH__': str(final_home_path),
-        '__FINAL_WWW_PATH__': str(final_www_path),
         '__LOG_FILE__': str(log_file),
         '__PATH_URL__': 'app_path',
         '__DOMAIN__': '127.0.0.1',
@@ -113,9 +111,18 @@ def create_local_test(django_settings_path, destination, runserver=False):
         'django_redis.cache.RedisCache': 'django.core.cache.backends.dummy.DummyCache',
         # Just use the default logging setup from django_yunohost_integration project:
         'LOGGING = {': 'HACKED_DEACTIVATED_LOGGING = {',
+        #
+        # New variable names, for "ynh_add_config" usage:
+        '__FINALPATH__': str(final_path),
+        '__PUBLIC_PATH__': str(public_path),
+        #
+        # Old variable names
+        # TODO: Remove in the future!
+        '__FINAL_HOME_PATH__': str(final_path),  # NEW: __FINALPATH__
+        '__FINAL_WWW_PATH__': str(public_path),  # NEW: __PUBLIC_PATH__
     }
 
-    for p in (final_home_path, final_www_path):
+    for p in (final_path, public_path):
         if p.is_dir():
             print(f'Already exists: "{p}", ok.')
         else:
@@ -129,9 +136,9 @@ def create_local_test(django_settings_path, destination, runserver=False):
     assert_is_file(conf_path / 'urls.py')
 
     for src_file in conf_path.glob('*.py'):
-        copy_patch(src_file=src_file, replaces=REPLACES, final_home_path=final_home_path)
+        copy_patch(src_file=src_file, replaces=REPLACES, final_path=final_path)
 
-    local_settings_path = final_home_path / 'local_settings.py'
+    local_settings_path = final_path / 'local_settings.py'
     local_settings_path.write_text(inspect.cleandoc('''
         # Only for local test run
 
@@ -154,11 +161,11 @@ def create_local_test(django_settings_path, destination, runserver=False):
     '''))
 
     # call "local_test/manage.py" via subprocess:
-    call_manage_py(final_home_path, 'check --deploy')
+    call_manage_py(final_path, 'check --deploy')
     if runserver:
-        call_manage_py(final_home_path, 'migrate --no-input')
-        call_manage_py(final_home_path, 'collectstatic --no-input')
-        call_manage_py(final_home_path, 'create_superuser --username="test"')
+        call_manage_py(final_path, 'migrate --no-input')
+        call_manage_py(final_path, 'collectstatic --no-input')
+        call_manage_py(final_path, 'create_superuser --username="test"')
 
         os.environ['DJANGO_SETTINGS_MODULE'] = django_settings_name
 
@@ -173,14 +180,14 @@ def create_local_test(django_settings_path, destination, runserver=False):
 
         try:
             call_manage_py(
-                final_home_path,
+                final_path,
                 'runserver',
                 extra_env={'ENV_TYPE': 'local'}  # Activate local_settings.py overwrites
             )
         except KeyboardInterrupt:
             print('\nBye ;)')
 
-    return final_home_path
+    return final_path
 
 
 def cli():
