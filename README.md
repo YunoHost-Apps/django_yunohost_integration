@@ -154,8 +154,12 @@ e.g.:
 
 ## history
 
-* [compare v0.2.4...main](https://github.com/jedie/django_yunohost_integration/compare/v0.2.4...main) **dev**
+* [compare v0.2.5...main](https://github.com/jedie/django_yunohost_integration/compare/v0.2.5...main) **dev**
   * tbc
+* [v0.2.5 - 12.08.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.4...v0.2.5)
+  * Support new variable names, for `ynh_add_config` usage in local test helper.
+  * Run tests with Python v3.10, too.
+  * Update project setup.
 * [v0.2.4 - 30.01.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.3...v0.2.4)
   * Rename git "master" branch to "main"
   * Use darker and pytest-darker as code formatter + update requirements
