@@ -19,7 +19,7 @@ def run_pytest(django_settings_path, destination):
 
     assert_is_dir(test_path)
 
-    final_home_path = create_local_test(
+    final_path = create_local_test(
         django_settings_path=django_settings_path,
         destination=destination,
         runserver=False,
@@ -28,7 +28,7 @@ def run_pytest(django_settings_path, destination):
     os.environ['DJANGO_SETTINGS_MODULE'] = django_settings_name
     print(f'DJANGO_SETTINGS_MODULE={django_settings_name}')
 
-    sys.path.insert(0, str(final_home_path))
+    sys.path.insert(0, str(final_path))
 
     import pytest
 
