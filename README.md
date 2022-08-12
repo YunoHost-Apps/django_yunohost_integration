@@ -20,6 +20,7 @@ These projects used `django_yunohost_integration`:
 
 * https://github.com/YunoHost-Apps/pyinventory_ynh
 * https://github.com/YunoHost-Apps/django-for-runners_ynh
+* https://github.com/YunoHost-Apps/django-fmd_ynh
 
 
 ## Features
