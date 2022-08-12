@@ -151,6 +151,13 @@ def create_local_test(django_settings_path, destination, runserver=False):
             SECURE_SSL_REDIRECT = False  # Don't redirect http to https
             SERVE_FILES = True  # May used in urls.py
             AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
+            ALLOWED_HOSTS = ["*"]  # Allow access from "everywhere"
+            CACHES = {  # Setup a working cache, without Redis ;)
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                    'LOCATION': 'unique-snowflake',
+                },
+            }
     '''))
 
     # call "local_test/manage.py" via subprocess:
