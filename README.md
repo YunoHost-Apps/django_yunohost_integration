@@ -1,7 +1,11 @@
 # django_yunohost_integration
 
-[![Test](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml)
-[![Coverage Status on codecov.io](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration/branch/main/graph/badge.svg)](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration)
+[![pytest](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/pytest.yml) [![Coverage Status on codecov.io](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration/branch/main/graph/badge.svg)](https://codecov.io/gh/YunoHost-Apps/django_yunohost_integration)
+
+[![django_yunohost_integration @ PyPi](https://img.shields.io/pypi/v/django_yunohost_integration?label=django_yunohost_integration%20%40%20PyPi)](https://pypi.org/project/django_yunohost_integration/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/django_yunohost_integration)](https://gitlab.com/YunoHost-Apps/django_yunohost_integration/-/blob/main/pyproject.toml)
+[![License GPL](https://img.shields.io/pypi/l/django_yunohost_integration)](https://gitlab.com/YunoHost-Apps/django_yunohost_integration/-/blob/main/LICENSE)
+
 
 Python package [django_yunohost_integration](https://pypi.org/project/django_yunohost_integration/) with helpers for integrate a Django project as YunoHost package.
 
