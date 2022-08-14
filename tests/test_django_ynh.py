@@ -27,6 +27,9 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         assert settings.ROOT_URLCONF == 'urls'
 
+        # Set in tests.conftest.pytest_configure via create_local_test():
+        assert settings.EXTRA_REPLACEMENT == 'Just for the unittests ;)'
+
     def test_urls(self):
         assert reverse('admin:index') == '/app_path/'
         assert reverse(request_media_debug_view) == '/app_path/debug/'

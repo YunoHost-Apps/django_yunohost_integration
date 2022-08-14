@@ -17,8 +17,8 @@ from django_yunohost_integration.base_settings import *  # noqa
 from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
 
 
-DEBUG = True  # This is only the DEMO app ;) But should never be on in production!
-
+# Should be set via config_panel.toml:
+DEBUG = bool(int('__DEBUG_ENABLED__'))
 
 # -----------------------------------------------------------------------------
 
@@ -33,6 +33,11 @@ assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
 
 PATH_URL = '__PATH_URL__'  # $YNH_APP_ARG_PATH
 PATH_URL = PATH_URL.strip('/')
+
+# -----------------------------------------------------------------------------
+
+# Test the extra replacements:
+EXTRA_REPLACEMENT = '__EXTRA_REPLACEMENT__'
 
 # -----------------------------------------------------------------------------
 

@@ -155,6 +155,7 @@ e.g.:
 ## history
 
 * [compare v0.2.5...main](https://github.com/jedie/django_yunohost_integration/compare/v0.2.5...main) **dev**
+  * Add `extra_replacements:dict` argument to `create_local_test()` to pass own `__YNH_VARIABLE__` replacements
   * Remove `pytest_helper.run_pytest()` because every project should used a own [conftest.py](https://github.com/YunoHost-Apps/django_yunohost_integration/blob/main/tests/conftest.py) with `create_local_test()` usage.
   * tbc
 * [v0.2.5 - 12.08.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.4...v0.2.5)

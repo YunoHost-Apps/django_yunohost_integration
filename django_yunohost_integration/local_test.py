@@ -60,7 +60,9 @@ def copy_patch(src_file, replaces, final_path):
         f.write(content)
 
 
-def create_local_test(django_settings_path, destination, runserver=False):
+def create_local_test(
+    django_settings_path, destination, runserver=False, extra_replacements: dict = None
+):
     django_settings_path = django_settings_path.resolve()
     assert_is_file(django_settings_path)
 
@@ -121,6 +123,8 @@ def create_local_test(django_settings_path, destination, runserver=False):
         '__FINAL_HOME_PATH__': str(final_path),  # NEW: __FINALPATH__
         '__FINAL_WWW_PATH__': str(public_path),  # NEW: __PUBLIC_PATH__
     }
+    if extra_replacements:
+        REPLACES.update(extra_replacements)
 
     for p in (final_path, public_path):
         if p.is_dir():
