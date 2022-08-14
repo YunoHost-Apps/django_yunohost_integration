@@ -27,7 +27,7 @@ These projects used `django_yunohost_integration`:
 * SSOwat integration (see below)
 * Helper to create first super user for `scripts/install`
 * Run Django development server with a local generated YunoHost package installation (called `local_test`)
-* Run `pytest` against `local_test` "installation"
+* Helper to run `pytest` against `local_test` "installation"
 
 
 ### SSO authentication
@@ -155,6 +155,7 @@ e.g.:
 ## history
 
 * [compare v0.2.5...main](https://github.com/jedie/django_yunohost_integration/compare/v0.2.5...main) **dev**
+  * Remove `pytest_helper.run_pytest()` because every project should used a own [conftest.py](https://github.com/YunoHost-Apps/django_yunohost_integration/blob/main/tests/conftest.py) with `create_local_test()` usage.
   * tbc
 * [v0.2.5 - 12.08.2022](https://github.com/jedie/django_yunohost_integration/compare/v0.2.4...v0.2.5)
   * Support new variable names, for `ynh_add_config` usage in local test helper.
