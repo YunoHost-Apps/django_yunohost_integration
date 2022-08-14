@@ -1,7 +1,8 @@
-def setup_demo_user(user):
+def setup_project_user(user):
     """
-    The django_ynh DEMO use the Django admin. So we need a "staff" user ;)
+    Setup a user for the project.
     """
+    # e.g.: All users should be Django Admin "staff" users:
     user.is_staff = True
-    user.save()
+    user.save(update_fields=['is_staff'])
     return user

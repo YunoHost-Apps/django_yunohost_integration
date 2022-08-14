@@ -66,7 +66,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         user = User.objects.first()
         assert user.username == 'test'
         assert user.is_active is True
-        assert user.is_staff is True  # Set by: conf.django_yunohost_integration_demo_urls.setup_user_handler
+        assert user.is_staff is True  # Set by: 'setup_user.setup_project_user'
         assert user.is_superuser is False
 
         self.assert_html_parts(
@@ -91,7 +91,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         user = User.objects.first()
         assert user.username == 'test'
         assert user.is_active is True
-        assert user.is_staff is True  # Set by: conf.django_yunohost_integration_demo_urls.setup_user_handler
+        assert user.is_staff is True  # Set by: 'setup_user.setup_project_user'
         assert user.is_superuser is False
 
         assert AccessLog.objects.count() == 1
@@ -116,7 +116,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         user = User.objects.first()
         assert user.username == 'test'
         assert user.is_active is True
-        assert user.is_staff is True  # Set by: conf.django_yunohost_integration_demo_urls.setup_user_handler
+        assert user.is_staff is True  # Set by: 'setup_user.setup_project_user'
         assert user.is_superuser is False
 
         assert AccessLog.objects.count() == 1
@@ -140,7 +140,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         user = User.objects.first()
         assert user.username == 'test'
         assert user.is_active is True
-        assert user.is_staff is True  # Set by: conf.django_yunohost_integration_demo_urls.setup_user_handler
+        assert user.is_staff is True  # Set by: 'setup_user.setup_project_user'
         assert user.is_superuser is False
 
         assert AccessLog.objects.count() == 1
