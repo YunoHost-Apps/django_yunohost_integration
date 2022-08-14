@@ -23,7 +23,9 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         assert str(settings.FINAL_HOME_PATH).endswith('/local_test/opt_yunohost')
         assert str(settings.FINAL_WWW_PATH).endswith('/local_test/var_www')
-        assert str(settings.LOG_FILE).endswith('/local_test/var_log_django_yunohost_integration.log')
+        assert str(settings.LOG_FILE).endswith(
+            '/local_test/var_log_django_yunohost_integration.log'
+        )
 
         assert settings.ROOT_URLCONF == 'urls'
 
@@ -73,7 +75,11 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         assert user.is_superuser is False
 
         self.assert_html_parts(
-            response, parts=('<title>Site administration | Django site admin</title>', '<strong>test</strong>')
+            response,
+            parts=(
+                '<title>Site administration | Django site admin</title>',
+                '<strong>test</strong>',
+            ),
         )
 
     @override_settings(SECURE_SSL_REDIRECT=False)
@@ -136,7 +142,9 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
             path='/app_path/',
             HTTP_REMOTE_USER='test',
             HTTP_AUTH_USER='test',
-            HTTP_AUTHORIZATION=generate_basic_auth(username='foobar', password='test123'),  # <<< wrong user name
+            HTTP_AUTHORIZATION=generate_basic_auth(
+                username='foobar', password='test123'  # <<< wrong user name
+            ),
         )
 
         assert User.objects.count() == 1
