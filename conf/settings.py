@@ -17,8 +17,8 @@ from django_yunohost_integration.base_settings import *  # noqa
 from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
 
 
-DEBUG = True  # This is only the DEMO app ;) But should never be on in production!
-
+# Should be set via config_panel.toml:
+DEBUG = bool(int('__DEBUG_ENABLED__'))
 
 # -----------------------------------------------------------------------------
 
@@ -36,8 +36,13 @@ PATH_URL = PATH_URL.strip('/')
 
 # -----------------------------------------------------------------------------
 
+# Test the extra replacements:
+EXTRA_REPLACEMENT = '__EXTRA_REPLACEMENT__'
+
+# -----------------------------------------------------------------------------
+
 # Function that will be called to finalize a user profile:
-YNH_SETUP_USER = 'setup_user.setup_demo_user'
+YNH_SETUP_USER = 'setup_user.setup_project_user'
 
 SECRET_KEY = __get_or_create_secret(FINAL_HOME_PATH / 'secret.txt')  # /opt/yunohost/$app/secret.txt
 

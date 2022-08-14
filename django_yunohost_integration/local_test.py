@@ -2,7 +2,6 @@
     Create a YunoHost package local test
 """
 import argparse
-import inspect
 import json
 import os
 import shlex
@@ -12,6 +11,27 @@ from pathlib import Path
 
 from django_yunohost_integration.path_utils import assert_is_dir, assert_is_file
 from django_yunohost_integration.test_utils import generate_basic_auth
+
+
+LOCAL_SETTINGS_CONTENT = '''
+# Only for local test run
+
+import os
+
+
+if os.environ.get('ENV_TYPE', None) == 'local':
+    print(f'Activate settings overwrite by {__file__}')
+    SECURE_SSL_REDIRECT = False  # Don't redirect http to https
+    SERVE_FILES = True  # May used in urls.py
+    AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
+    ALLOWED_HOSTS = ["*"]  # Allow access from "everywhere"
+    CACHES = {  # Setup a working cache, without Redis ;)
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        },
+    }
+'''
 
 
 def verbose_check_call(command, verbose=True, extra_env=None, **kwargs):
@@ -60,7 +80,9 @@ def copy_patch(src_file, replaces, final_path):
         f.write(content)
 
 
-def create_local_test(django_settings_path, destination, runserver=False):
+def create_local_test(
+    django_settings_path, destination, runserver=False, extra_replacements: dict = None
+):
     django_settings_path = django_settings_path.resolve()
     assert_is_file(django_settings_path)
 
@@ -121,6 +143,8 @@ def create_local_test(django_settings_path, destination, runserver=False):
         '__FINAL_HOME_PATH__': str(final_path),  # NEW: __FINALPATH__
         '__FINAL_WWW_PATH__': str(public_path),  # NEW: __PUBLIC_PATH__
     }
+    if extra_replacements:
+        REPLACES.update(extra_replacements)
 
     for p in (final_path, public_path):
         if p.is_dir():
@@ -139,26 +163,7 @@ def create_local_test(django_settings_path, destination, runserver=False):
         copy_patch(src_file=src_file, replaces=REPLACES, final_path=final_path)
 
     local_settings_path = final_path / 'local_settings.py'
-    local_settings_path.write_text(inspect.cleandoc('''
-        # Only for local test run
-
-        import os
-
-
-        if os.environ.get('ENV_TYPE', None) == 'local':
-            print(f'Activate settings overwrite by {__file__}')
-            DEBUG = True
-            SECURE_SSL_REDIRECT = False  # Don't redirect http to https
-            SERVE_FILES = True  # May used in urls.py
-            AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
-            ALLOWED_HOSTS = ["*"]  # Allow access from "everywhere"
-            CACHES = {  # Setup a working cache, without Redis ;)
-                'default': {
-                    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                    'LOCATION': 'unique-snowflake',
-                },
-            }
-    '''))
+    local_settings_path.write_text(LOCAL_SETTINGS_CONTENT)
 
     # call "local_test/manage.py" via subprocess:
     call_manage_py(final_path, 'check --deploy')

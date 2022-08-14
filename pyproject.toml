@@ -1,17 +1,17 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.2.5"
+version = "0.3.0"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
 readme = "README.md"
-homepage = "https://github.com/jedie/django_yunohost_integration"
+homepage = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 packages = [
     { include = "django_yunohost_integration" },
 ]
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/jedie/django_yunohost_integration/issues"
+"Bug Tracker" = "https://github.com/YunoHost-Apps/django_yunohost_integration/issues"
 
 [tool.poetry.scripts]
 devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'

@@ -41,6 +41,7 @@ class DjangoYunoHostIntegrationCommandSet(DevShellBaseCommandSet):
             django_settings_path=PACKAGE_ROOT / 'conf' / 'settings.py',
             destination=PACKAGE_ROOT / 'local_test',
             runserver=True,
+            extra_replacements={'__DEBUG_ENABLED__': '1'},
         )
 
 
