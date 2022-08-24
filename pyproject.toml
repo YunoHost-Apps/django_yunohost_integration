@@ -90,6 +90,10 @@ lines_after_imports=2
 # https://docs.pytest.org/en/latest/customize.html#pyproject-toml
 minversion = "6.0"
 norecursedirs = ".* .git __pycache__ conf coverage* dist htmlcov volumes"
+
+# Don't overwrite settings.DEBUG:
+django_debug_mode = "keep"
+
 # sometimes helpfull "addopts" arguments:
 #    -vv
 #    --verbose

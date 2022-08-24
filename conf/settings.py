@@ -17,26 +17,36 @@ from django_yunohost_integration.base_settings import *  # noqa
 from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
 
 
-# Should be set via config_panel.toml:
-DEBUG = bool(int('__DEBUG_ENABLED__'))
-
-# -----------------------------------------------------------------------------
-
 FINALPATH = __Path('__FINALPATH__')  # /opt/yunohost/$app
 assert FINALPATH.is_dir(), f'Directory not exists: {FINALPATH}'
 
 PUBLIC_PATH = __Path('__PUBLIC_PATH__')  # /var/www/$app
 assert PUBLIC_PATH.is_dir(), f'Directory not exists: {PUBLIC_PATH}'
 
-LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/django_yunohost_integration.log
+LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/$app.log
 assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
 
 PATH_URL = '__PATH_URL__'  # $YNH_APP_ARG_PATH
 PATH_URL = PATH_URL.strip('/')
 
 # -----------------------------------------------------------------------------
+# config_panel.toml settings:
 
-# Test the extra replacements:
+DEBUG_ENABLED = '__DEBUG_ENABLED__'
+LOG_LEVEL = '__LOG_LEVEL__'
+ADMIN_EMAIL = '__ADMIN_EMAIL__'
+
+# Default email address to use for various automated correspondence from
+# the site managers. Used for registration emails.
+DEFAULT_FROM_EMAIL = '__DEFAULT_FROM_EMAIL__'
+
+# -----------------------------------------------------------------------------
+
+DEBUG = bool(int(DEBUG_ENABLED))
+
+# -----------------------------------------------------------------------------
+
+# Just for testing the "extra_replacements" argument of create_local_test():
 EXTRA_REPLACEMENT = '__EXTRA_REPLACEMENT__'
 
 # -----------------------------------------------------------------------------
@@ -72,12 +82,8 @@ SITE_DOMAIN = '__DOMAIN__'
 EMAIL_SUBJECT_PREFIX = f'[{SITE_TITLE}] '
 
 
-# Default email address to use for various automated correspondence from
-# the site managers. Used for registration emails.
-DEFAULT_FROM_EMAIL = '__ADMINMAIL__'
-
 # E-mail address that error messages come from.
-SERVER_EMAIL = '__ADMINMAIL__'
+SERVER_EMAIL = ADMIN_EMAIL
 
 # List of URLs your site is supposed to serve
 ALLOWED_HOSTS = ['__DOMAIN__']

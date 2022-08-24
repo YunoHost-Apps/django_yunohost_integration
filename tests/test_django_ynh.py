@@ -10,7 +10,6 @@ from django_yunohost_integration.test_utils import generate_basic_auth
 from django_yunohost_integration.views import request_media_debug_view
 
 
-@override_settings(DEBUG=False)
 class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
     def setUp(self):
         super().setUp()
@@ -19,15 +18,32 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         self.client = self.client_class()
 
     def test_settings(self):
-        assert settings.PATH_URL == 'app_path'
+        # default YunoHost app replacements:
 
         assert str(settings.FINALPATH).endswith('/local_test/opt_yunohost')
         assert str(settings.PUBLIC_PATH).endswith('/local_test/var_www')
         assert str(settings.LOG_FILE).endswith(
             '/local_test/var_log_django_yunohost_integration.log'
         )
+        assert settings.PATH_URL == 'app_path'
 
+        # config_panel.toml settings:
+
+        assert settings.DEBUG_ENABLED == '1'
+        assert settings.LOG_LEVEL == 'DEBUG'
+        assert settings.ADMIN_EMAIL == 'admin-email@test.intranet'
+        assert settings.DEFAULT_FROM_EMAIL == 'default-from-email@test.intranet'
+
+        # Normal settings:
+        assert settings.DEBUG is True
         assert settings.ROOT_URLCONF == 'urls'
+        assert settings.ADMINS == (('The Admin Username', 'admin-email@test.intranet'),)
+        assert settings.MANAGERS == (('The Admin Username', 'admin-email@test.intranet'),)
+        assert settings.SERVER_EMAIL == 'admin-email@test.intranet'
+        assert settings.ALLOWED_HOSTS == [
+            '127.0.0.1',  # The real entry
+            'testserver',  # Added by Django's setup_test_environment()
+        ]
 
         # Set in tests.conftest.pytest_configure via create_local_test():
         assert settings.EXTRA_REPLACEMENT == 'Just for the unittests ;)'

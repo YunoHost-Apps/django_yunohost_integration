@@ -133,16 +133,23 @@ def create_local_test(
         'django_redis.cache.RedisCache': 'django.core.cache.backends.dummy.DummyCache',
         # Just use the default logging setup from django_yunohost_integration project:
         'LOGGING = {': 'HACKED_DEACTIVATED_LOGGING = {',
-        '__ADMINMAIL__': 'admin_email@test.intranet',
+        #
+        # config_panel.toml settings:
+        '__DEBUG_ENABLED__': '1',
+        '__LOG_LEVEL__': 'DEBUG',
+        '__ADMIN__': 'The Admin Username',
+        '__DEFAULT_FROM_EMAIL__': 'default-from-email@test.intranet',
         #
         # New variable names, for "ynh_add_config" usage:
         '__FINALPATH__': str(final_path),
         '__PUBLIC_PATH__': str(public_path),
+        '__ADMIN_EMAIL__': 'admin-email@test.intranet',
         #
         # Old variable names
         # TODO: Remove in the future!
         '__FINAL_HOME_PATH__': str(final_path),  # NEW: __FINALPATH__
         '__FINAL_WWW_PATH__': str(public_path),  # NEW: __PUBLIC_PATH__
+        '__ADMINMAIL__': 'admin-email@test.intranet',  # NEW: __ADMIN_EMAIL__
     }
     if extra_replacements:
         REPLACES.update(extra_replacements)

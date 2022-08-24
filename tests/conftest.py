@@ -27,7 +27,6 @@ def pytest_configure():
         destination=BASE_PATH / 'local_test',
         runserver=False,
         extra_replacements={
-            '__DEBUG_ENABLED__': '0',
             '__EXTRA_REPLACEMENT__': 'Just for the unittests ;)',
         },
     )
