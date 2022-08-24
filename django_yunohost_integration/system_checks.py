@@ -4,6 +4,29 @@ from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 
 
+VALID_LOG_LEVEL_NAMES = (
+    'DEBUG',
+    'INFO',
+    'WARNING',
+    'ERROR',
+    'CRITICAL',
+)
+
+
+@register()
+def validate_log_level(app_configs, **kwargs):
+    errors = []
+    if settings.LOG_LEVEL not in VALID_LOG_LEVEL_NAMES:
+        errors.append(
+            Error(
+                f'{settings.LOG_LEVEL!r} is not a valid log level name!',
+                hint='Check your config panel values!',
+                id='django_yunohost_integration.E002',
+            )
+        )
+    return errors
+
+
 def validate_email(errors, email, settings_key):
     try:
         EmailValidator()(email)
