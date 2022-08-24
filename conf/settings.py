@@ -72,12 +72,12 @@ SITE_DOMAIN = '__DOMAIN__'
 EMAIL_SUBJECT_PREFIX = f'[{SITE_TITLE}] '
 
 
-# E-mail address that error messages come from.
-SERVER_EMAIL = 'noreply@__DOMAIN__'
-
 # Default email address to use for various automated correspondence from
 # the site managers. Used for registration emails.
 DEFAULT_FROM_EMAIL = '__ADMINMAIL__'
+
+# E-mail address that error messages come from.
+SERVER_EMAIL = '__ADMINMAIL__'
 
 # List of URLs your site is supposed to serve
 ALLOWED_HOSTS = ['__DOMAIN__']

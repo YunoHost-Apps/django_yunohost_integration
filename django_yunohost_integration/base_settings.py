@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'axes',  # https://github.com/jazzband/django-axes
-    'django_yunohost_integration',
+    'django_yunohost_integration.apps.YunohostIntegrationConfig',
 ]
 
 # -----------------------------------------------------------------------------

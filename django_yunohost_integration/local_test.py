@@ -133,6 +133,7 @@ def create_local_test(
         'django_redis.cache.RedisCache': 'django.core.cache.backends.dummy.DummyCache',
         # Just use the default logging setup from django_yunohost_integration project:
         'LOGGING = {': 'HACKED_DEACTIVATED_LOGGING = {',
+        '__ADMINMAIL__': 'admin_email@test.intranet',
         #
         # New variable names, for "ynh_add_config" usage:
         '__FINALPATH__': str(final_path),
