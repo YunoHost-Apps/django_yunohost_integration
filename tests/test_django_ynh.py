@@ -48,6 +48,15 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         # Set in tests.conftest.pytest_configure via create_local_test():
         assert settings.EXTRA_REPLACEMENT == 'Just for the unittests ;)'
 
+        # Logging example correct?
+        log_filename = settings.LOGGING['handlers']['log_file']['filename']
+        assert log_filename.endswith('/local_test/var_log_django_yunohost_integration.log')
+        assert settings.LOGGING['loggers']['django_yunohost_integration'] == {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        }
+
     def test_urls(self):
         assert reverse('admin:index') == '/app_path/'
         assert reverse(request_media_debug_view) == '/app_path/debug/'
