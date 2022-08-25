@@ -80,7 +80,7 @@ uvloop = ["uvloop (>=0.15.2)"]
 name = "bleach"
 version = "5.0.1"
 description = "An easy safelist-based HTML-sanitizing tool."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -109,7 +109,7 @@ python-stdnum = "*"
 name = "bx-py-utils"
 version = "68"
 description = "Various Python utility functions"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7,<4.0.0"
 
@@ -350,6 +350,21 @@ redis = ">=3,<4.0.0 || >4.0.0,<4.0.1 || >4.0.1"
 hiredis = ["redis[hiredis] (>=3,!=4.0.0,!=4.0.1)"]
 
 [[package]]
+name = "django-tools"
+version = "0.54.0rc1"
+description = "miscellaneous tools for Django based projects"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0.0"
+
+[package.dependencies]
+bleach = "*"
+bx_py_utils = "*"
+django = "*"
+icdiff = "*"
+pprintpp = "*"
+
+[[package]]
 name = "docopt"
 version = "0.6.2"
 description = "Pythonic argument parser, that will make you smile"
@@ -424,6 +439,14 @@ eventlet = ["eventlet (>=0.24.1)"]
 gevent = ["gevent (>=1.4.0)"]
 setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
+
+[[package]]
+name = "icdiff"
+version = "2.0.5"
+description = "improved colored diff"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "idna"
@@ -585,6 +608,14 @@ python-versions = ">=3.7,<4.0.0"
 [package.dependencies]
 python-creole = "*"
 twine = "*"
+
+[[package]]
+name = "pprintpp"
+version = "0.4.0"
+description = "A drop-in replacement for pprint that's actually pretty"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "psycopg2"
@@ -878,7 +909,7 @@ jeepney = ">=0.6"
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -1007,7 +1038,7 @@ python-versions = "*"
 name = "webencodings"
 version = "0.5.1"
 description = "Character encoding aliases for legacy web content"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -1037,7 +1068,7 @@ ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<4.0.0"  # TODO: Update to >=3.8 after YunoHost updates to Bullseye
-content-hash = "1b85904e95f9a3379d42610601b9bdf5ae3e8c17d398e406573fcac969ef2498"
+content-hash = "e92ec016bc0f706da0e5c637d06c9eb86148b5fb18ecd5fd185857630396b128"
 
 [metadata.files]
 asgiref = [
@@ -1298,6 +1329,10 @@ django-redis = [
     {file = "django-redis-5.2.0.tar.gz", hash = "sha256:8a99e5582c79f894168f5865c52bd921213253b7fd64d16733ae4591564465de"},
     {file = "django_redis-5.2.0-py3-none-any.whl", hash = "sha256:1d037dc02b11ad7aa11f655d26dac3fb1af32630f61ef4428860a2e29ff92026"},
 ]
+django-tools = [
+    {file = "django-tools-0.54.0rc1.tar.gz", hash = "sha256:4183add9cb35e43726c48eb40ff47c9d38d4e080de392d6e38c1e69fbeed732a"},
+    {file = "django_tools-0.54.0rc1-py3-none-any.whl", hash = "sha256:b68b286927240f8e85428aacc28cbc9e01a6828772cb532b802672ea128a13a4"},
+]
 docopt = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
 ]
@@ -1344,6 +1379,9 @@ gnureadline = [
 gunicorn = [
     {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
     {file = "gunicorn-20.1.0.tar.gz", hash = "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"},
+]
+icdiff = [
+    {file = "icdiff-2.0.5.tar.gz", hash = "sha256:35d24b728e48b7e0a12bdb69386d3bfc7eef4fe922d0ac1cd70d6e5c11630bae"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -1400,6 +1438,10 @@ pluggy = [
 poetry-publish = [
     {file = "poetry-publish-0.5.0.tar.gz", hash = "sha256:7ebc7782ee318c099715518177446122e3a752347cebf8883828e110b7da0e9d"},
     {file = "poetry_publish-0.5.0-py3-none-any.whl", hash = "sha256:41db2e004595051b4bc0ccd09017f5f81e0fa9b5673bb718ab3d26c2da5dd8f3"},
+]
+pprintpp = [
+    {file = "pprintpp-0.4.0-py2.py3-none-any.whl", hash = "sha256:b6b4dcdd0c0c0d75e4d7b2f21a9e933e5b2ce62b26e1a54537f9651ae5a5c01d"},
+    {file = "pprintpp-0.4.0.tar.gz", hash = "sha256:ea826108e2c7f49dc6d66c752973c3fc9749142a798d6b254e1e301cfdbc6403"},
 ]
 psycopg2 = [
     {file = "psycopg2-2.9.3-cp310-cp310-win32.whl", hash = "sha256:083707a696e5e1c330af2508d8fab36f9700b26621ccbcb538abe22e15485362"},

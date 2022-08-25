@@ -141,18 +141,38 @@ LOGGING = {
             'include_html': True,
         },
         'log_file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'verbose',
             'filename': str(LOG_FILE),
         },
+        'syslog': {
+            'level': 'INFO',
+            'class': 'django_tools.log_utils.syslog_handler.SyslogHandler',
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
-        '': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
-        'django': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
-        'axes': {'handlers': ['log_file', 'mail_admins'], 'level': 'WARNING', 'propagate': False},
-        'django_tools': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
-        'django_ynh': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
+        '': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'axes': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'django_yunohost_integration': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        },
     },
 }
 
