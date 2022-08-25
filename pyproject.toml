@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.4.0rc2"
+version = "0.4.0rc3"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
@@ -37,6 +37,7 @@ django-axes = "*"  # https://github.com/jazzband/django-axes
 poetry-publish = "*"  # https://github.com/jedie/poetry-publish
 bx_py_utils = "*"  # https://github.com/boxine/bx_py_utils
 bx_django_utils = "*"  # https://github.com/boxine/bx_django_utils
+django-tools = ">=0.54.0rc1"  # https://github.com/jedie/django-tools
 tox = "*"
 pytest = "*"
 pytest-cov = "*"
@@ -52,7 +53,7 @@ darker = "*"  # https://github.com/akaihola/darker
 gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
