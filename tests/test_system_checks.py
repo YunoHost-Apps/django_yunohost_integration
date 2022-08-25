@@ -1,4 +1,4 @@
-from django.core.checks import Error
+from django.core.checks import Warning
 from django.core.checks.registry import CheckRegistry, registry
 from django.test.testcases import TestCase
 
@@ -22,7 +22,7 @@ class SystemChecksTestCase(TestCase):
         with self.settings(FOO_BAR_EMAIL='invalid email!'):
             self._validate_emails(
                 expected_errors=[
-                    Error(
+                    Warning(
                         "FOO_BAR_EMAIL 'invalid email!' is not valid!",
                         hint='Check your config panel email values!',
                         id='django_yunohost_integration.E001',
@@ -33,7 +33,7 @@ class SystemChecksTestCase(TestCase):
         with self.settings(ADMINS=[('foo', 'no valid email!')]):
             self._validate_emails(
                 expected_errors=[
-                    Error(
+                    Warning(
                         "ADMINS (foo) 'no valid email!' is not valid!",
                         hint='Check your config panel email values!',
                         id='django_yunohost_integration.E001',
@@ -44,7 +44,7 @@ class SystemChecksTestCase(TestCase):
         with self.settings(MANAGERS=[('bar', 'foo @ bar')]):
             self._validate_emails(
                 expected_errors=[
-                    Error(
+                    Warning(
                         "MANAGERS (bar) 'foo @ bar' is not valid!",
                         hint='Check your config panel email values!',
                         id='django_yunohost_integration.E001',
@@ -61,7 +61,7 @@ class SystemChecksTestCase(TestCase):
         with self.settings(LOG_LEVEL='foobar'):
             self._validate_log_level(
                 expected_errors=[
-                    Error(
+                    Warning(
                         "'foobar' is not a valid log level name!",
                         hint='Check your config panel values!',
                         id='django_yunohost_integration.E002',

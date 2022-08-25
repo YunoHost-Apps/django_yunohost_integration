@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.checks import Error, register
+from django.core.checks import Warning, register
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 
@@ -18,7 +18,7 @@ def validate_log_level(app_configs, **kwargs):
     errors = []
     if settings.LOG_LEVEL not in VALID_LOG_LEVEL_NAMES:
         errors.append(
-            Error(
+            Warning(
                 f'{settings.LOG_LEVEL!r} is not a valid log level name!',
                 hint='Check your config panel values!',
                 id='django_yunohost_integration.E002',
@@ -32,7 +32,7 @@ def validate_email(errors, email, settings_key):
         EmailValidator()(email)
     except ValidationError:
         errors.append(
-            Error(
+            Warning(
                 f'{settings_key} {email!r} is not valid!',
                 hint='Check your config panel email values!',
                 id='django_yunohost_integration.E001',
