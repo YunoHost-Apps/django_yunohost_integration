@@ -1,24 +1,17 @@
 import filecmp
-import os
 import shutil
-import subprocess
 from pathlib import Path
 
 import dev_shell
 from django_tools.unittest_utils.assertments import assert_is_file
+from django_tools.unittest_utils.project_setup import check_editor_config
+from poetry_publish.tests.test_project_setup import assert_file_contains_string
+from poetry_publish.tests.test_project_setup import test_poetry_check as assert_poetry_check
 
 import django_yunohost_integration
 
 
 PACKAGE_ROOT = Path(django_yunohost_integration.__file__).parent.parent
-
-
-def assert_file_contains_string(file_path, string):
-    with file_path.open('r') as f:
-        for line in f:
-            if string in line:
-                return
-    raise AssertionError(f'File {file_path} does not contain {string!r} !')
 
 
 def test_version(package_root=None, version=None):
@@ -28,29 +21,22 @@ def test_version(package_root=None, version=None):
     if version is None:
         version = django_yunohost_integration.__version__
 
-    if 'dev' not in version and 'rc' not in version:
-        version_string = f'v{version}'
-
-        assert_file_contains_string(file_path=Path(package_root, 'README.md'), string=version_string)
-
-    assert_file_contains_string(file_path=Path(package_root, 'pyproject.toml'), string=f'version = "{version}"')
-
-
-def test_poetry_check(package_root=None):
-    if package_root is None:
-        package_root = PACKAGE_ROOT
-
-    poerty_bin = shutil.which('poetry')
-
-    output = subprocess.check_output(
-        [poerty_bin, 'check'],
-        text=True,
-        env=os.environ,
-        stderr=subprocess.STDOUT,
-        cwd=str(package_root),
+    assert_file_contains_string(
+        file_path=Path(package_root, 'README.md'),
+        string=f'v{version}',
     )
-    print(output)
-    assert output == 'All set!\n'
+
+    assert_file_contains_string(
+        file_path=Path(package_root, 'pyproject.toml'),
+        string=f'version = "{version}"',
+    )
+
+
+def test_poetry_check():
+    """
+    Test 'poetry check' output.
+    """
+    assert_poetry_check(package_root=PACKAGE_ROOT)
 
 
 def test_source_file_is_up2date():
@@ -64,3 +50,7 @@ def test_source_file_is_up2date():
     if not are_the_same:
         shutil.copyfile(src=bootstrap_source_file, dst=own_bootstrap_file, follow_symlinks=False)
         raise AssertionError(f'Bootstrap source "{own_bootstrap_file}" updated!')
+
+
+def test_check_editor_config():
+    check_editor_config(package_root=PACKAGE_ROOT)
