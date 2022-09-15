@@ -14,13 +14,18 @@ from django_tools.unittest_utils.assertments import assert_is_dir, assert_is_fil
 from django_yunohost_integration.test_utils import generate_basic_auth
 
 
-LOCAL_SETTINGS_CONTENT = '''
+LOCAL_SETTINGS_CONTENT = f'# source of this file is: {__file__}'
+LOCAL_SETTINGS_CONTENT += '''
 # Only for local test run
 
 import os
 
+print('Load local settings file:', __file__)
 
-if os.environ.get('ENV_TYPE', None) == 'local':
+ENV_TYPE=os.environ.get('ENV_TYPE', None)
+print(f'ENV_TYPE: {ENV_TYPE!r}')
+
+if ENV_TYPE == 'local':
     print(f'Activate settings overwrite by {__file__}')
     SECURE_SSL_REDIRECT = False  # Don't redirect http to https
     SERVE_FILES = True  # May used in urls.py
@@ -32,6 +37,8 @@ if os.environ.get('ENV_TYPE', None) == 'local':
             'LOCATION': 'unique-snowflake',
         },
     }
+elif ENV_TYPE == 'test':
+    SILENCED_SYSTEM_CHECKS = ['security.W018']  # tests runs with DEBUG=True
 '''
 
 
