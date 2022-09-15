@@ -1,10 +1,10 @@
 from pathlib import Path
 
+from django_tools.unittest_utils.assertments import assert_is_file
 from poetry_publish.publish import poetry_publish
 from poetry_publish.utils.subprocess_utils import verbose_check_call
 
 import django_yunohost_integration
-from django_yunohost_integration.path_utils import assert_is_file
 
 
 PACKAGE_ROOT = Path(django_yunohost_integration.__file__).parent.parent

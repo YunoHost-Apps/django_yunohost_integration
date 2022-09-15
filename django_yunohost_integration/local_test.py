@@ -9,7 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from django_yunohost_integration.path_utils import assert_is_dir, assert_is_file
+from django_tools.unittest_utils.assertments import assert_is_dir, assert_is_file
+
 from django_yunohost_integration.test_utils import generate_basic_auth
 
 
