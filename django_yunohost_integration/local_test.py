@@ -9,17 +9,23 @@ import subprocess
 import sys
 from pathlib import Path
 
-from django_yunohost_integration.path_utils import assert_is_dir, assert_is_file
+from django_tools.unittest_utils.assertments import assert_is_dir, assert_is_file
+
 from django_yunohost_integration.test_utils import generate_basic_auth
 
 
-LOCAL_SETTINGS_CONTENT = '''
+LOCAL_SETTINGS_CONTENT = f'# source of this file is: {__file__}'
+LOCAL_SETTINGS_CONTENT += '''
 # Only for local test run
 
 import os
 
+print('Load local settings file:', __file__)
 
-if os.environ.get('ENV_TYPE', None) == 'local':
+ENV_TYPE=os.environ.get('ENV_TYPE', None)
+print(f'ENV_TYPE: {ENV_TYPE!r}')
+
+if ENV_TYPE == 'local':
     print(f'Activate settings overwrite by {__file__}')
     SECURE_SSL_REDIRECT = False  # Don't redirect http to https
     SERVE_FILES = True  # May used in urls.py
@@ -31,6 +37,8 @@ if os.environ.get('ENV_TYPE', None) == 'local':
             'LOCATION': 'unique-snowflake',
         },
     }
+elif ENV_TYPE == 'test':
+    SILENCED_SYSTEM_CHECKS = ['security.W018']  # tests runs with DEBUG=True
 '''
 
 
@@ -134,14 +142,22 @@ def create_local_test(
         # Just use the default logging setup from django_yunohost_integration project:
         'LOGGING = {': 'HACKED_DEACTIVATED_LOGGING = {',
         #
+        # config_panel.toml settings:
+        '__DEBUG_ENABLED__': '1',
+        '__LOG_LEVEL__': 'DEBUG',
+        '__ADMIN__': 'The Admin Username',
+        '__DEFAULT_FROM_EMAIL__': 'default-from-email@test.intranet',
+        #
         # New variable names, for "ynh_add_config" usage:
         '__FINALPATH__': str(final_path),
         '__PUBLIC_PATH__': str(public_path),
+        '__ADMIN_EMAIL__': 'admin-email@test.intranet',
         #
         # Old variable names
         # TODO: Remove in the future!
         '__FINAL_HOME_PATH__': str(final_path),  # NEW: __FINALPATH__
         '__FINAL_WWW_PATH__': str(public_path),  # NEW: __PUBLIC_PATH__
+        '__ADMINMAIL__': 'admin-email@test.intranet',  # NEW: __ADMIN_EMAIL__
     }
     if extra_replacements:
         REPLACES.update(extra_replacements)

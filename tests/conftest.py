@@ -17,17 +17,17 @@ from django_yunohost_integration.local_test import create_local_test
 
 BASE_PATH = Path(__file__).parent.parent
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-
 
 def pytest_configure():
+    os.environ['ENV_TYPE'] = 'test'  # see local_test/opt_yunohost/local_settings.py
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
     print('Compile YunoHost files...')
     final_path = create_local_test(
         django_settings_path=BASE_PATH / 'conf' / 'settings.py',
         destination=BASE_PATH / 'local_test',
         runserver=False,
         extra_replacements={
-            '__DEBUG_ENABLED__': '0',
             '__EXTRA_REPLACEMENT__': 'Just for the unittests ;)',
         },
     )

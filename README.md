@@ -152,8 +152,16 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0rc6...main)
   * tbc
+* [v0.4.0rc6 - 25.08.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...v0.4.0rc6)
+  * Add `SyslogHandler` to logging settings and enhance logging example settings.
+  * rename replacements (but still support the old ones):
+    * `__FINAL_HOME_PATH__` -> `__FINALPATH__`
+    * `__FINAL_WWW_PATH__` -> `__PUBLIC_PATH__`
+  * Add system checks to verify all "EMAIL" in `settings` and `settings.LOG_LEVEL`
+  * Bugfix dev shell and exit if it's called as CLI
+  * Run "saftey" check in CI
 * [v0.3.0 - 14.08.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.5...v0.3.0)
   * Add `extra_replacements:dict` argument to `create_local_test()` to pass own `__YNH_VARIABLE__` replacements
   * Remove `pytest_helper.run_pytest()` because every project should used a own [conftest.py](https://github.com/YunoHost-Apps/django_yunohost_integration/blob/main/tests/conftest.py) with `create_local_test()` usage.

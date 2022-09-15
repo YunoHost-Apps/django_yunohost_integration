@@ -1,8 +1,7 @@
-import sys
 from pathlib import Path
 
 import cmd2
-from dev_shell.base_cmd2_app import DevShellBaseApp
+from dev_shell.base_cmd2_app import DevShellBaseApp, run_cmd2_app
 from dev_shell.command_sets import DevShellBaseCommandSet
 from dev_shell.command_sets.dev_shell_commands import DevShellCommandSet as OriginDevShellCommandSet
 from dev_shell.config import DevShellConfig
@@ -28,6 +27,12 @@ class DevShellCommandSet(OriginDevShellCommandSet):
             package_root=PACKAGE_ROOT,
             version=django_yunohost_integration.__version__,
         )
+
+    def do_safety(self, statement: cmd2.Statement):
+        """
+        Run "safety" check
+        """
+        verbose_check_call('poetry', 'run', 'safety', 'check', '--full-report')
 
 
 @cmd2.with_default_category('Django-YunoHost-Integration commands')
@@ -74,5 +79,5 @@ def devshell_cmdloop():
     Entry point to start the "dev-shell" cmd2 app.
     Used in: [tool.poetry.scripts]
     """
-    c = DevShellApp(**get_devshell_app_kwargs())
-    sys.exit(c.cmdloop())
+    app = DevShellApp(**get_devshell_app_kwargs())
+    run_cmd2_app(app)  # Run a cmd2 App as CLI or shell

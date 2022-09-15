@@ -1,7 +1,7 @@
 """
     **************************************************************************
     Please do not modify this file, it will be reset at the next update.
-    You can edit the file __FINAL_HOME_PATH__/local_settings.py and add/modify
+    You can edit the file __FINALPATH__/local_settings.py and add/modify
     the settings you need.
 
     The parameters you add in local_settings.py will overwrite these,
@@ -13,30 +13,40 @@
 """
 from pathlib import Path as __Path
 
-from django_yunohost_integration.base_settings import *  # noqa
+from django_yunohost_integration.base_settings import *  # noqa:F401,F403
 from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
 
 
-# Should be set via config_panel.toml:
-DEBUG = bool(int('__DEBUG_ENABLED__'))
+FINALPATH = __Path('__FINALPATH__')  # /opt/yunohost/$app
+assert FINALPATH.is_dir(), f'Directory not exists: {FINALPATH}'
 
-# -----------------------------------------------------------------------------
+PUBLIC_PATH = __Path('__PUBLIC_PATH__')  # /var/www/$app
+assert PUBLIC_PATH.is_dir(), f'Directory not exists: {PUBLIC_PATH}'
 
-FINAL_HOME_PATH = __Path('__FINAL_HOME_PATH__')  # /opt/yunohost/$app
-assert FINAL_HOME_PATH.is_dir(), f'Directory not exists: {FINAL_HOME_PATH}'
-
-FINAL_WWW_PATH = __Path('__FINAL_WWW_PATH__')  # /var/www/$app
-assert FINAL_WWW_PATH.is_dir(), f'Directory not exists: {FINAL_WWW_PATH}'
-
-LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/django_yunohost_integration.log
+LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/$app.log
 assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
 
 PATH_URL = '__PATH_URL__'  # $YNH_APP_ARG_PATH
 PATH_URL = PATH_URL.strip('/')
 
 # -----------------------------------------------------------------------------
+# config_panel.toml settings:
 
-# Test the extra replacements:
+DEBUG_ENABLED = '__DEBUG_ENABLED__'
+LOG_LEVEL = '__LOG_LEVEL__'
+ADMIN_EMAIL = '__ADMIN_EMAIL__'
+
+# Default email address to use for various automated correspondence from
+# the site managers. Used for registration emails.
+DEFAULT_FROM_EMAIL = '__DEFAULT_FROM_EMAIL__'
+
+# -----------------------------------------------------------------------------
+
+DEBUG = bool(int(DEBUG_ENABLED))
+
+# -----------------------------------------------------------------------------
+
+# Just for testing the "extra_replacements" argument of create_local_test():
 EXTRA_REPLACEMENT = '__EXTRA_REPLACEMENT__'
 
 # -----------------------------------------------------------------------------
@@ -44,7 +54,7 @@ EXTRA_REPLACEMENT = '__EXTRA_REPLACEMENT__'
 # Function that will be called to finalize a user profile:
 YNH_SETUP_USER = 'setup_user.setup_project_user'
 
-SECRET_KEY = __get_or_create_secret(FINAL_HOME_PATH / 'secret.txt')  # /opt/yunohost/$app/secret.txt
+SECRET_KEY = __get_or_create_secret(FINALPATH / 'secret.txt')  # /opt/yunohost/$app/secret.txt
 
 ADMINS = (('__ADMIN__', '__ADMINMAIL__'),)
 
@@ -73,11 +83,7 @@ EMAIL_SUBJECT_PREFIX = f'[{SITE_TITLE}] '
 
 
 # E-mail address that error messages come from.
-SERVER_EMAIL = 'noreply@__DOMAIN__'
-
-# Default email address to use for various automated correspondence from
-# the site managers. Used for registration emails.
-DEFAULT_FROM_EMAIL = '__ADMINMAIL__'
+SERVER_EMAIL = ADMIN_EMAIL
 
 # List of URLs your site is supposed to serve
 ALLOWED_HOSTS = ['__DOMAIN__']
@@ -111,48 +117,27 @@ else:
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
 
-STATIC_ROOT = str(FINAL_WWW_PATH / 'static')
-MEDIA_ROOT = str(FINAL_WWW_PATH / 'media')
+STATIC_ROOT = str(PUBLIC_PATH / 'static')
+MEDIA_ROOT = str(PUBLIC_PATH / 'media')
 
 
 # -----------------------------------------------------------------------------
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '{asctime} {levelname} {name} {module}.{funcName} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'formatter': 'verbose',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,
-        },
-        'log_file': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.WatchedFileHandler',
-            'formatter': 'verbose',
-            'filename': str(LOG_FILE),
-        },
-    },
-    'loggers': {
-        '': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
-        'django': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
-        'axes': {'handlers': ['log_file', 'mail_admins'], 'level': 'WARNING', 'propagate': False},
-        'django_tools': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
-        'django_ynh': {'handlers': ['log_file', 'mail_admins'], 'level': 'INFO', 'propagate': False},
-    },
+# Set log file to e.g.: /var/log/$app/$app.log
+LOGGING['handlers']['log_file']['filename'] = str(LOG_FILE)  # noqa:F405
+
+# Example how to add logging to own app:
+LOGGING['loggers']['django_yunohost_integration'] = {  # noqa:F405
+    'handlers': ['syslog', 'log_file', 'mail_admins'],
+    'level': 'INFO',
+    'propagate': False,
 }
+
 
 # -----------------------------------------------------------------------------
 
 try:
-    from local_settings import *  # noqa
+    from local_settings import *  # noqa:F401,F403
 except ImportError:
     pass

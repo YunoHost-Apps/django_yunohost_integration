@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.3.0"
+version = "0.4.0rc6"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
@@ -19,6 +19,7 @@ devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0.0"  # TODO: Update to >=3.8 after YunoHost updates to Bullseye
 django = "*"
+django-tools = ">=0.54.0"  # https://github.com/jedie/django-tools
 # The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
 
@@ -47,12 +48,14 @@ isort = "*"
 flake8 = "*"
 flynt = "*"
 darker = "*"  # https://github.com/akaihola/darker
+EditorConfig = "*"  # https://github.com/editorconfig/editorconfig-core-py
+safety = "*"  # https://github.com/pyupio/safety
 
 # fix completion for Mac OS:
 gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
@@ -90,6 +93,10 @@ lines_after_imports=2
 # https://docs.pytest.org/en/latest/customize.html#pyproject-toml
 minversion = "6.0"
 norecursedirs = ".* .git __pycache__ conf coverage* dist htmlcov volumes"
+
+# Don't overwrite settings.DEBUG:
+django_debug_mode = "keep"
+
 # sometimes helpfull "addopts" arguments:
 #    -vv
 #    --verbose

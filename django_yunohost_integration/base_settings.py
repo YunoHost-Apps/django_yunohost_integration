@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'axes',  # https://github.com/jazzband/django-axes
-    'django_yunohost_integration',
+    'django_yunohost_integration.apps.YunohostIntegrationConfig',
 ]
 
 # -----------------------------------------------------------------------------
@@ -109,19 +109,52 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'formatters': {
         'verbose': {
             'format': '{asctime} {levelname} {name} {module}.{funcName} {message}',
             'style': '{',
         },
     },
-    'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'verbose'}},
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'formatter': 'verbose',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+        'log_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'formatter': 'verbose',
+            'filename': '/tmp/django_yunohost_integration.log',  # <<< should be overwritten!
+        },
+        'syslog': {
+            'level': 'INFO',
+            'class': 'django_tools.log_utils.syslog_handler.SyslogHandler',
+            'formatter': 'verbose',
+        },
+    },
     'loggers': {
-        'django': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
-        'django.auth': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-        'django.security': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-        'django.request': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-        'django_yunohost_integration': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
+        '': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'axes': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'django_yunohost_integration': {
+            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'level': 'INFO',
+            'propagate': False,
+        },
     },
 }
