@@ -28,6 +28,12 @@ class DevShellCommandSet(OriginDevShellCommandSet):
             version=django_yunohost_integration.__version__,
         )
 
+    def do_safety(self, statement: cmd2.Statement):
+        """
+        Run "safety" check
+        """
+        verbose_check_call('poetry', 'run', 'safety', 'check', '--full-report')
+
 
 @cmd2.with_default_category('Django-YunoHost-Integration commands')
 class DjangoYunoHostIntegrationCommandSet(DevShellBaseCommandSet):

@@ -48,6 +48,8 @@ isort = "*"
 flake8 = "*"
 flynt = "*"
 darker = "*"  # https://github.com/akaihola/darker
+EditorConfig = "*"  # https://github.com/editorconfig/editorconfig-core-py
+safety = "*"  # https://github.com/pyupio/safety
 
 # fix completion for Mac OS:
 gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
