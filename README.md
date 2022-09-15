@@ -152,9 +152,9 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0rc6...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0...main)
   * tbc
-* [v0.4.0rc6 - 25.08.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...v0.4.0rc6)
+* [v0.4.0 - 15.09.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...v0.4.0)
   * Add `SyslogHandler` to logging settings and enhance logging example settings.
   * rename replacements (but still support the old ones):
     * `__FINAL_HOME_PATH__` -> `__FINALPATH__`
