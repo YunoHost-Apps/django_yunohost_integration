@@ -1,7 +1,11 @@
+import filecmp
 import os
 import shutil
 import subprocess
 from pathlib import Path
+
+import dev_shell
+from django_tools.unittest_utils.assertments import assert_is_file
 
 import django_yunohost_integration
 
@@ -40,10 +44,23 @@ def test_poetry_check(package_root=None):
 
     output = subprocess.check_output(
         [poerty_bin, 'check'],
-        universal_newlines=True,
+        text=True,
         env=os.environ,
         stderr=subprocess.STDOUT,
         cwd=str(package_root),
     )
     print(output)
     assert output == 'All set!\n'
+
+
+def test_source_file_is_up2date():
+    own_bootstrap_file = PACKAGE_ROOT / 'devshell.py'
+    assert_is_file(own_bootstrap_file)
+
+    bootstrap_source_file = Path(dev_shell.__file__).parent / 'bootstrap-source.py'
+    assert_is_file(bootstrap_source_file)
+
+    are_the_same = filecmp.cmp(bootstrap_source_file, own_bootstrap_file, shallow=False)
+    if not are_the_same:
+        shutil.copyfile(src=bootstrap_source_file, dst=own_bootstrap_file, follow_symlinks=False)
+        raise AssertionError(f'Bootstrap source "{own_bootstrap_file}" updated!')
