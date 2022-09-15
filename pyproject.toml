@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.4.0rc5"
+version = "0.4.0rc6"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
@@ -19,7 +19,7 @@ devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'
 [tool.poetry.dependencies]
 python = ">=3.7,<4.0.0"  # TODO: Update to >=3.8 after YunoHost updates to Bullseye
 django = "*"
-django-tools = ">=0.54.0rc1"  # https://github.com/jedie/django-tools
+django-tools = ">=0.54.0rc2"  # https://github.com/jedie/django-tools
 # The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
 
