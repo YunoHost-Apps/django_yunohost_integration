@@ -256,7 +256,7 @@ release = ["airium (>=0.2.3)", "click (>=8.0.0)", "defusedxml (>=0.7.1)", "reque
 test = ["airium (>=0.2.3)", "black (>=21.7b1)", "defusedxml (>=0.7.1)", "isort (>=5.0.1)", "pygments", "pytest (>=6.2.0)", "pytest-darker", "pytest-kwparametrize (>=0.0.3)", "regex (>=2021.4.4)", "requests-cache (>=0.7)", "ruamel.yaml (>=0.17.21)", "twine (>=2.0.0)", "types-requests (>=2.27.9)", "types-toml (>=0.10.4)", "wheel (>=0.21.0)"]
 
 [[package]]
-name = "Deprecated"
+name = "deprecated"
 version = "1.2.13"
 description = "Python @deprecated decorator to deprecate old python classes, functions or methods."
 category = "main"
@@ -267,7 +267,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 wrapt = ">=1.10,<2"
 
 [package.extras]
-dev = ["PyTest", "PyTest (<5)", "PyTest-Cov", "PyTest-Cov (<2.6)", "bump2version (<1)", "configparser (<5)", "importlib-metadata (<3)", "importlib-resources (<4)", "sphinx (<2)", "sphinxcontrib-websupport (<2)", "tox", "zipp (<2)"]
+dev = ["PyTest (<5)", "PyTest-Cov (<2.6)", "bump2version (<1)", "configparser (<5)", "importlib-metadata (<3)", "importlib-resources (<4)", "pytest", "pytest-cov", "sphinx (<2)", "sphinxcontrib-websupport (<2)", "tox", "zipp (<2)"]
 
 [[package]]
 name = "dev-shell"
@@ -290,7 +290,7 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "Django"
+name = "django"
 version = "3.2.15"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
@@ -317,7 +317,6 @@ python-versions = ">=3.7"
 [package.dependencies]
 django = ">=3.2"
 django-ipware = ">=3"
-setuptools = "*"
 
 [[package]]
 name = "django-ipware"
@@ -344,7 +343,7 @@ hiredis = ["redis[hiredis] (>=3,!=4.0.0,!=4.0.1)"]
 
 [[package]]
 name = "django-tools"
-version = "0.54.0rc2"
+version = "0.54.0"
 description = "miscellaneous tools for Django based projects"
 category = "main"
 optional = false
@@ -390,7 +389,7 @@ conda = ["pyyaml"]
 pipenv = ["pipenv"]
 
 [[package]]
-name = "EditorConfig"
+name = "editorconfig"
 version = "0.12.3"
 description = "EditorConfig File Locator and Interpreter for Python"
 category = "dev"
@@ -450,9 +449,6 @@ description = "WSGI HTTP Server for UNIX"
 category = "main"
 optional = true
 python-versions = ">=3.5"
-
-[package.dependencies]
-setuptools = ">=3.0"
 
 [package.extras]
 eventlet = ["eventlet (>=0.24.1)"]
@@ -539,7 +535,7 @@ python-versions = ">=3.7"
 
 [package.extras]
 test = ["async-timeout", "pytest", "pytest-asyncio (>=0.17)", "pytest-trio", "testpath", "trio"]
-trio = ["async_generator", "trio"]
+trio = ["async-generator", "trio"]
 
 [[package]]
 name = "keyring"
@@ -702,7 +698,7 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "Pygments"
+name = "pygments"
 version = "2.13.0"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "dev"
@@ -803,7 +799,7 @@ pytest = ">=5.4.0"
 
 [package.extras]
 docs = ["sphinx", "sphinx-rtd-theme"]
-testing = ["Django", "django-configurations (>=2.0)"]
+testing = ["django", "django-configurations (>=2.0)"]
 
 [[package]]
 name = "python-creole"
@@ -827,7 +823,7 @@ python-versions = "*"
 [package.extras]
 soap = ["zeep"]
 soap-alt = ["suds"]
-soap-fallback = ["PySimpleSOAP"]
+soap-fallback = ["pysimplesoap"]
 
 [[package]]
 name = "pytz"
@@ -973,10 +969,9 @@ dparse = ">=0.5.1"
 packaging = ">=21.0"
 requests = "*"
 "ruamel.yaml" = ">=0.17.21"
-setuptools = ">=19.3"
 
 [[package]]
-name = "SecretStorage"
+name = "secretstorage"
 version = "3.3.3"
 description = "Python bindings to FreeDesktop.org Secret Service API"
 category = "dev"
@@ -986,19 +981,6 @@ python-versions = ">=3.6"
 [package.dependencies]
 cryptography = ">=2.0"
 jeepney = ">=0.6"
-
-[[package]]
-name = "setuptools"
-version = "65.3.0"
-description = "Easily download, build, install, upgrade, and uninstall Python packages"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "rst.linker (>=1.9)", "sphinx", "sphinx-favicon", "sphinx-hoverxref (<2)", "sphinx-inline-tabs", "sphinx-notfound-page (==0.8.3)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
-testing = ["build[virtualenv]", "filelock (>=3.4.0)", "flake8 (<5)", "flake8-2020", "ini2toml[lite] (>=0.9)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "mock", "pip (>=19.1)", "pip-run (>=8.8)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)", "pytest-perf", "pytest-xdist", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
-testing-integration = ["build[virtualenv]", "filelock (>=3.4.0)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "pytest", "pytest-enabler", "pytest-xdist", "tomli", "virtualenv (>=13.0.0)", "wheel"]
 
 [[package]]
 name = "six"
@@ -1163,7 +1145,7 @@ ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<4.0.0"  # TODO: Update to >=3.8 after YunoHost updates to Bullseye
-content-hash = "cf2af2fdfe1a3a3cd70e16f9b9f400d0983adabd3a0d45c8b22d5ace0d5e9bfa"
+content-hash = "704035e945efe0bac4f6e527899d50cdb5cb932317698a7266bbc4577c36b757"
 
 [metadata.files]
 asgiref = [
@@ -1397,7 +1379,7 @@ darker = [
     {file = "darker-1.5.1-py3-none-any.whl", hash = "sha256:bb4e7494511799e7989cefab290713f81ee3b36b36989427f70d9c786d5b13b0"},
     {file = "darker-1.5.1.tar.gz", hash = "sha256:ea2e7ea20c74fc1faaea5bf49c60bc797a2a488b49ccafb90612a8c3643dbe9d"},
 ]
-Deprecated = [
+deprecated = [
     {file = "Deprecated-1.2.13-py2.py3-none-any.whl", hash = "sha256:64756e3e14c8c5eea9795d93c524551432a0be75629f8f29e67ab8caf076c76d"},
     {file = "Deprecated-1.2.13.tar.gz", hash = "sha256:43ac5335da90c31c24ba028af536a91d41d53f9e6901ddb021bcc572ce44e38d"},
 ]
@@ -1409,7 +1391,7 @@ distlib = [
     {file = "distlib-0.3.6-py2.py3-none-any.whl", hash = "sha256:f35c4b692542ca110de7ef0bea44d73981caeb34ca0b9b6b2e6d7790dda8f80e"},
     {file = "distlib-0.3.6.tar.gz", hash = "sha256:14bad2d9b04d3a36127ac97f30b12a19268f211063d8f8ee4f47108896e11b46"},
 ]
-Django = [
+django = [
     {file = "Django-3.2.15-py3-none-any.whl", hash = "sha256:115baf5049d5cf4163e43492cdc7139c306ed6d451e7d3571fe9612903903713"},
     {file = "Django-3.2.15.tar.gz", hash = "sha256:f71934b1a822f14a86c9ac9634053689279cd04ae69cb6ade4a59471b886582b"},
 ]
@@ -1426,8 +1408,8 @@ django-redis = [
     {file = "django_redis-5.2.0-py3-none-any.whl", hash = "sha256:1d037dc02b11ad7aa11f655d26dac3fb1af32630f61ef4428860a2e29ff92026"},
 ]
 django-tools = [
-    {file = "django-tools-0.54.0rc2.tar.gz", hash = "sha256:33d7ac42c71c1f0e917ce383d84d48b00e4b6ac18a7d1ba8ffcf374fb31bbcd6"},
-    {file = "django_tools-0.54.0rc2-py3-none-any.whl", hash = "sha256:92c83586333d40faea435854ca4defd46f1234828073a52fe41626b548c0edfc"},
+    {file = "django-tools-0.54.0.tar.gz", hash = "sha256:5040a91282be9d1c9d379b0c65da50bcb3691bff03cee54fd4123ace238c3a43"},
+    {file = "django_tools-0.54.0-py3-none-any.whl", hash = "sha256:a7b7bfa5b9c5a81966454d17dffb2403cee25a806c858ee0486a08798227598f"},
 ]
 docopt = [
     {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
@@ -1440,7 +1422,7 @@ dparse = [
     {file = "dparse-0.6.0-py3-none-any.whl", hash = "sha256:3cb489bd06bfa8d285c85f7dec69d9ee8f89c29dd5f4ab48e159746dc13b78b2"},
     {file = "dparse-0.6.0.tar.gz", hash = "sha256:57068bb61859b1676c6beb10f399906eecb41a75b5d3fbc99d0311059cb67213"},
 ]
-EditorConfig = [
+editorconfig = [
     {file = "EditorConfig-0.12.3-py3-none-any.whl", hash = "sha256:6b0851425aa875b08b16789ee0eeadbd4ab59666e9ebe728e526314c4a2e52c1"},
     {file = "EditorConfig-0.12.3.tar.gz", hash = "sha256:57f8ce78afcba15c8b18d46b5170848c88d56fd38f05c2ec60dbbfcb8996e89e"},
 ]
@@ -1584,7 +1566,7 @@ pyflakes = [
     {file = "pyflakes-2.5.0-py2.py3-none-any.whl", hash = "sha256:4579f67d887f804e67edb544428f264b7b24f435b263c4614f384135cea553d2"},
     {file = "pyflakes-2.5.0.tar.gz", hash = "sha256:491feb020dca48ccc562a8c0cbe8df07ee13078df59813b83959cbdada312ea3"},
 ]
-Pygments = [
+pygments = [
     {file = "Pygments-2.13.0-py3-none-any.whl", hash = "sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42"},
     {file = "Pygments-2.13.0.tar.gz", hash = "sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"},
 ]
@@ -1695,13 +1677,9 @@ safety = [
     {file = "safety-2.1.1-py3-none-any.whl", hash = "sha256:05ba551fb61ef24c864835d21089f75bc8b37292680047b9f29693a6552e2fc7"},
     {file = "safety-2.1.1.tar.gz", hash = "sha256:dbc5dffa2e47da76cc43dfe8cbbbfca99d29118d0c6c54dfcfa11c2bd349dff6"},
 ]
-SecretStorage = [
+secretstorage = [
     {file = "SecretStorage-3.3.3-py3-none-any.whl", hash = "sha256:f356e6628222568e3af06f2eba8df495efa13b3b63081dafd4f7d9a7b7bc9f99"},
     {file = "SecretStorage-3.3.3.tar.gz", hash = "sha256:2403533ef369eca6d2ba81718576c5e0f564d5cca1b58f73a8b23e7d4eeebd77"},
-]
-setuptools = [
-    {file = "setuptools-65.3.0-py3-none-any.whl", hash = "sha256:2e24e0bec025f035a2e72cdd1961119f557d78ad331bb00ff82efb2ab8da8e82"},
-    {file = "setuptools-65.3.0.tar.gz", hash = "sha256:7732871f4f7fa58fb6bdcaeadb0161b2bd046c85905dbaa066bdcbcc81953b57"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
