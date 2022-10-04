@@ -9,17 +9,24 @@ from poetry_publish.tests.test_project_setup import assert_file_contains_string
 from poetry_publish.tests.test_project_setup import test_poetry_check as assert_poetry_check
 
 import django_yunohost_integration
+from django_yunohost_integration.test_utils import assert_project_version
 
 
 PACKAGE_ROOT = Path(django_yunohost_integration.__file__).parent.parent
 
 
-def test_version(package_root=None, version=None):
+def test_version(package_root=None, version=None, github_project_url=None):
     if package_root is None:
         package_root = PACKAGE_ROOT
 
     if version is None:
         version = django_yunohost_integration.__version__
+
+    if github_project_url is None:
+        github_project_url = 'https://github.com/YunoHost-Apps/django_yunohost_integration'
+
+    # Check that current version is the last version from Github tags:
+    assert_project_version(current_version=version, github_project_url=github_project_url)
 
     assert_file_contains_string(
         file_path=Path(package_root, 'README.md'),
