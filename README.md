@@ -184,8 +184,10 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...main)
   * tbc
+* [v0.4.1 - 04.10.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0...v0.4.1)
+  * Add `assert_project_version` and `get_github_version_tag` in `test_utils`
 * [v0.4.0 - 15.09.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...v0.4.0)
   * Add `SyslogHandler` to logging settings and enhance logging example settings.
   * rename replacements (but still support the old ones):

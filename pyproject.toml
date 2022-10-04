@@ -50,6 +50,9 @@ flynt = "*"
 darker = "*"  # https://github.com/akaihola/darker
 EditorConfig = "*"  # https://github.com/editorconfig/editorconfig-core-py
 safety = "*"  # https://github.com/pyupio/safety
+requests = "*"  # https://github.com/psf/requests
+packaging = "*"  # https://github.com/pypa/packaging
+requests-mock = "*"  # https://github.com/jamielennox/requests-mock
 
 # fix completion for Mac OS:
 gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
