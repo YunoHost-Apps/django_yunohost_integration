@@ -39,7 +39,7 @@ def assert_project_version(current_version: str, github_project_url: str) -> Non
     """
     current_ver_obj = Version(current_version)
     github_ver = get_github_version_tag(github_project_url=github_project_url)
-    assert github_ver == current_ver_obj, (
+    assert github_ver <= current_ver_obj, (
         f'Current version from {github_project_url} is: {github_ver}'
         f' but current package version is: {current_ver_obj}'
     )
