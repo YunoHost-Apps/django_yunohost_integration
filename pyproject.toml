@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.4.1"
+version = "0.5.0rc1"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
@@ -17,9 +17,9 @@ packages = [
 devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'
 
 [tool.poetry.dependencies]
-python = ">=3.7,<4.0.0"  # TODO: Update to >=3.8 after YunoHost updates to Bullseye
+python = ">=3.9,<4.0.0"  # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
 django = "*"
-django-tools = ">=0.54.0"  # https://github.com/jedie/django-tools
+django-tools = "*"  # https://github.com/jedie/django-tools
 # The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
 
@@ -28,6 +28,7 @@ psycopg2 = { version = "*", optional = true }  # https://www.psycopg.org/docs/in
 
 django-redis = { version = "*", optional = true }
 django-axes = { version = "*", optional = true }  # https://github.com/jazzband/django-axes
+colorlog = "*"  # https://github.com/borntyping/python-colorlog
 
 [tool.poetry.extras]
 ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]  # install as YunoHost app

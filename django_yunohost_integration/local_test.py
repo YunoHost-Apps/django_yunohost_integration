@@ -139,8 +139,7 @@ def create_local_test(
         'django.db.backends.postgresql': 'django.db.backends.sqlite3',
         "'NAME': '__APP__',": f"'NAME': '{destination / 'test_db.sqlite'}',",
         'django_redis.cache.RedisCache': 'django.core.cache.backends.dummy.DummyCache',
-        # Just use the default logging setup from django_yunohost_integration project:
-        'LOGGING = {': 'HACKED_DEACTIVATED_LOGGING = {',
+        "'syslog'": "'console'",  # Log to console for local test
         #
         # config_panel.toml settings:
         '__DEBUG_ENABLED__': '1',

@@ -184,8 +184,13 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.0rc1...main)
   * tbc
+* [v0.5.0rc1 - 05.10.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...v0.5.0rc1)
+  * Set min. Python version from 3.7 to 3.9 (Needs YunoHost 11!)
+  * Display logs in local tests and use `colorlog.StreamHandler`
+  * Bugfix example url pattern
+  * Code cleanup: Remove `request_media_debug_view`
 * [v0.4.1 - 04.10.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0...v0.4.1)
   * Add `assert_project_version` and `get_github_version_tag` in `test_utils`
 * [v0.4.0 - 15.09.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...v0.4.0)

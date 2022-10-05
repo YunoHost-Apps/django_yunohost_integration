@@ -2,6 +2,7 @@
     Base settings for a Django project installed in Yunohost.
     All values should not depent on YunoHost app settings.
 """
+import logging as __logging
 
 
 # -----------------------------------------------------------------------------
@@ -105,7 +106,26 @@ SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # _____________________________________________________________________________
-# Setting below, should be overwritten!
+# cut 'pathname' in log output
+
+old_factory = __logging.getLogRecordFactory()
+
+
+def cut_path(pathname, max_length):
+    if len(pathname) <= max_length:
+        return pathname
+    return f'...{pathname[-(max_length - 3):]}'
+
+
+def record_factory(*args, **kwargs):
+    record = old_factory(*args, **kwargs)
+    record.cut_path = cut_path(record.pathname, 30)
+    return record
+
+
+__logging.setLogRecordFactory(record_factory)
+
+# -----------------------------------------------------------------------------
 
 LOGGING = {
     'version': 1,
@@ -115,8 +135,17 @@ LOGGING = {
             'format': '{asctime} {levelname} {name} {module}.{funcName} {message}',
             'style': '{',
         },
+        'colored': {  # https://github.com/borntyping/python-colorlog
+            '()': 'colorlog.ColoredFormatter',
+            'format': '%(log_color)s%(asctime)s %(levelname)8s %(cut_path)s:%(lineno)-3s %(message)s',
+        },
     },
     'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'colorlog.StreamHandler',
+            'formatter': 'colored',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'formatter': 'verbose',

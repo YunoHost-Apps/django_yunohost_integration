@@ -1,13 +1,12 @@
 from axes.models import AccessLog
 from bx_django_utils.test_utils.html_assertion import HtmlAssertionMixin
-from django.conf import settings
+from django.conf import LazySettings, settings
 from django.contrib.auth.models import User
 from django.test import override_settings
 from django.test.testcases import TestCase
 from django.urls.base import reverse
 
 from django_yunohost_integration.test_utils import generate_basic_auth
-from django_yunohost_integration.views import request_media_debug_view
 
 
 class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
@@ -18,6 +17,9 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         self.client = self.client_class()
 
     def test_settings(self):
+        assert isinstance(settings, LazySettings)
+        assert settings.configured is True
+
         # default YunoHost app replacements:
 
         assert str(settings.FINALPATH).endswith('/local_test/opt_yunohost')
@@ -26,6 +28,8 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
             '/local_test/var_log_django_yunohost_integration.log'
         )
         assert settings.PATH_URL == 'app_path'
+        assert settings.MEDIA_URL == '/app_path/media/'
+        assert settings.STATIC_URL == '/app_path/static/'
 
         # config_panel.toml settings:
 
@@ -52,14 +56,18 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         log_filename = settings.LOGGING['handlers']['log_file']['filename']
         assert log_filename.endswith('/local_test/var_log_django_yunohost_integration.log')
         assert settings.LOGGING['loggers']['django_yunohost_integration'] == {
-            'handlers': ['syslog', 'log_file', 'mail_admins'],
+            'handlers': ['console', 'log_file', 'mail_admins'],
             'level': 'INFO',
             'propagate': False,
         }
 
     def test_urls(self):
+        assert settings.PATH_URL == 'app_path'
+        assert settings.ROOT_URLCONF == 'urls'
         assert reverse('admin:index') == '/app_path/'
-        assert reverse(request_media_debug_view) == '/app_path/debug/'
+
+        response = self.client.get('/', secure=True)
+        self.assertRedirects(response, expected_url='/app_path/', fetch_redirect_response=False)
 
     def test_auth(self):
         # SecurityMiddleware should redirects all non-HTTPS requests to HTTPS:
@@ -160,6 +168,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
     @override_settings(SECURE_SSL_REDIRECT=False)
     def test_wrong_authorization_user(self):
         assert User.objects.count() == 0
+        assert AccessLog.objects.count() == 0
 
         self.client.cookies['SSOwAuthUser'] = 'test'
 
