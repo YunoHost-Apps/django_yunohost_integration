@@ -43,7 +43,6 @@ tox = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-django = "*"
-pytest-darker = "*"  # https://github.com/akaihola/pytest-darker
 coveralls = "*"
 isort = "*"
 flake8 = "*"
@@ -117,7 +116,6 @@ addopts = """
     --cov-report xml
     --no-cov-on-fail
     --showlocals
-    --darker
     --doctest-modules
     --failed-first
     --last-failed-no-failures all
