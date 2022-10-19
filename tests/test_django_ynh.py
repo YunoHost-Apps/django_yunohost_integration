@@ -1,3 +1,6 @@
+import os
+
+import django_example
 from axes.models import AccessLog
 from bx_django_utils.test_utils.html_assertion import HtmlAssertionMixin
 from django.conf import LazySettings, settings
@@ -64,7 +67,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
     def test_urls(self):
         assert settings.PATH_URL == 'app_path'
         assert settings.ROOT_URLCONF == 'urls'
-        assert reverse('admin:index') == '/app_path/'
+        assert reverse('admin:index') == '/app_path/admin/'
 
         response = self.client.get('/', secure=True)
         self.assertRedirects(response, expected_url='/app_path/', fetch_redirect_response=False)
@@ -80,11 +83,20 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
             fetch_redirect_response=False
         )
 
-        response = self.client.get('/app_path/', secure=True)
-        self.assertRedirects(
-            response,
-            expected_url='/app_path/login/?next=/app_path/',
-            fetch_redirect_response=False
+        with self.assertLogs('django_example') as logs:
+            response = self.client.get('/app_path/', secure=True)
+            self.assert_html_parts(
+                response,
+                parts=(
+                    f'<h2>YunoHost Django Example Project v{django_example.__version__}</h2>',
+                    '<a href="/app_path/admin/">Home</a>',
+                    '<p>Log in to see more information</p>',
+                    '<tr><td>User:</td><td>AnonymousUser</td></tr>',
+                    '<tr><td>META:</td><td></td></tr>',
+                ),
+            )
+        self.assertEqual(
+            logs.output, ['INFO:django_example.views:DebugView request from user: AnonymousUser']
         )
 
     @override_settings(SECURE_SSL_REDIRECT=False)
@@ -93,26 +105,32 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         self.client.cookies['SSOwAuthUser'] = 'test'
 
-        response = self.client.get(
-            path='/app_path/',
-            HTTP_REMOTE_USER='test',
-            HTTP_AUTH_USER='test',
-            HTTP_AUTHORIZATION='basic dGVzdDp0ZXN0MTIz',
-        )
+        with self.assertLogs('django_example') as logs:
+            response = self.client.get(
+                path='/app_path/',
+                HTTP_REMOTE_USER='test',
+                HTTP_AUTH_USER='test',
+                HTTP_AUTHORIZATION='basic dGVzdDp0ZXN0MTIz',
+            )
 
-        assert User.objects.count() == 1
-        user = User.objects.first()
-        assert user.username == 'test'
-        assert user.is_active is True
-        assert user.is_staff is True  # Set by: 'setup_user.setup_project_user'
-        assert user.is_superuser is False
+            assert User.objects.count() == 1
+            user = User.objects.first()
+            assert user.username == 'test'
+            assert user.is_active is True
+            assert user.is_staff is True  # Set by: 'setup_user.setup_project_user'
+            assert user.is_superuser is False
 
         self.assert_html_parts(
             response,
             parts=(
-                '<title>Site administration | Django site admin</title>',
-                '<strong>test</strong>',
+                f'<h2>YunoHost Django Example Project v{django_example.__version__}</h2>',
+                '<a href="/app_path/admin/">Django Admin</a>',
+                '<tr><td>User:</td><td>test</td></tr>',
+                f'<tr><td>Process ID:</td><td>{os.getpid()}</td></tr>',
             ),
+        )
+        self.assertEqual(
+            logs.output, ['INFO:django_example.views:DebugView request from user: test']
         )
 
     @override_settings(SECURE_SSL_REDIRECT=False)

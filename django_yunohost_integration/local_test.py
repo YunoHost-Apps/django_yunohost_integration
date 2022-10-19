@@ -11,35 +11,11 @@ from pathlib import Path
 
 from django_tools.unittest_utils.assertments import assert_is_dir, assert_is_file
 
+import django_yunohost_integration
 from django_yunohost_integration.test_utils import generate_basic_auth
 
 
-LOCAL_SETTINGS_CONTENT = f'# source of this file is: {__file__}'
-LOCAL_SETTINGS_CONTENT += '''
-# Only for local test run
-
-import os
-
-print('Load local settings file:', __file__)
-
-ENV_TYPE=os.environ.get('ENV_TYPE', None)
-print(f'ENV_TYPE: {ENV_TYPE!r}')
-
-if ENV_TYPE == 'local':
-    print(f'Activate settings overwrite by {__file__}')
-    SECURE_SSL_REDIRECT = False  # Don't redirect http to https
-    SERVE_FILES = True  # May used in urls.py
-    AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
-    ALLOWED_HOSTS = ["*"]  # Allow access from "everywhere"
-    CACHES = {  # Setup a working cache, without Redis ;)
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'unique-snowflake',
-        },
-    }
-elif ENV_TYPE == 'test':
-    SILENCED_SYSTEM_CHECKS = ['security.W018']  # tests runs with DEBUG=True
-'''
+BASE_PATH = Path(django_yunohost_integration.__file__).parent
 
 
 def verbose_check_call(command, verbose=True, extra_env=None, **kwargs):
@@ -151,12 +127,6 @@ def create_local_test(
         '__FINALPATH__': str(final_path),
         '__PUBLIC_PATH__': str(public_path),
         '__ADMIN_EMAIL__': 'admin-email@test.intranet',
-        #
-        # Old variable names
-        # TODO: Remove in the future!
-        '__FINAL_HOME_PATH__': str(final_path),  # NEW: __FINALPATH__
-        '__FINAL_WWW_PATH__': str(public_path),  # NEW: __PUBLIC_PATH__
-        '__ADMINMAIL__': 'admin-email@test.intranet',  # NEW: __ADMIN_EMAIL__
     }
     if extra_replacements:
         REPLACES.update(extra_replacements)
@@ -178,7 +148,10 @@ def create_local_test(
         copy_patch(src_file=src_file, replaces=REPLACES, final_path=final_path)
 
     local_settings_path = final_path / 'local_settings.py'
-    local_settings_path.write_text(LOCAL_SETTINGS_CONTENT)
+    local_settings_source = Path(BASE_PATH / 'local_settings_source.py')
+    local_settings = f'# source file: {local_settings_source}\n'
+    local_settings += local_settings_source.read_text()
+    local_settings_path.write_text(local_settings)
 
     # call "local_test/manage.py" via subprocess:
     call_manage_py(final_path, 'check --deploy')

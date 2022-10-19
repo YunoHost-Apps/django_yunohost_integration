@@ -180,10 +180,5 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': False,
         },
-        'django_yunohost_integration': {
-            'handlers': ['syslog', 'log_file', 'mail_admins'],
-            'level': 'INFO',
-            'propagate': False,
-        },
     },
 }

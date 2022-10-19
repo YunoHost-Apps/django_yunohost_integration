@@ -29,11 +29,16 @@ psycopg2 = { version = "*", optional = true }  # https://www.psycopg.org/docs/in
 django-redis = { version = "*", optional = true }
 django-axes = { version = "*", optional = true }  # https://github.com/jazzband/django-axes
 colorlog = "*"  # https://github.com/borntyping/python-colorlog
+packaging = "*"  # https://github.com/pypa/packaging
+pyyaml = "*"  # https://github.com/yaml/pyyaml
+
 
 [tool.poetry.extras]
 ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]  # install as YunoHost app
 
+
 [tool.poetry.dev-dependencies]
+django-example = ">=0.1.0rc0"  # https://github.com/jedie/django-example
 dev_shell = ">=0.2.2"  # https://github.com/jedie/dev-shell
 django-axes = "*"  # https://github.com/jazzband/django-axes
 poetry-publish = "*"  # https://github.com/jedie/poetry-publish
@@ -51,7 +56,6 @@ darker = "*"  # https://github.com/akaihola/darker
 EditorConfig = "*"  # https://github.com/editorconfig/editorconfig-core-py
 safety = "*"  # https://github.com/pyupio/safety
 requests = "*"  # https://github.com/psf/requests
-packaging = "*"  # https://github.com/pypa/packaging
 requests-mock = "*"  # https://github.com/jamielennox/requests-mock
 
 # fix completion for Mac OS:
@@ -132,7 +136,7 @@ omit = [".*"]
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-envlist = py{37,38,39,310}
+envlist = py{39,310,311}
 skip_missing_interpreters = True
 
 [testenv]
