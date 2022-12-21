@@ -76,7 +76,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_REDIRECT_URL = None
-LOGIN_URL = '/yunohost/sso/'
+LOGIN_URL = 'ssowat-login'
 LOGOUT_REDIRECT_URL = '/yunohost/sso/'
 # /yunohost/sso/?action=logout
 
