@@ -1,11 +1,21 @@
-from django.core.checks import Warning
+import tempfile
+from unittest.mock import patch
+
+from django.conf import settings
+from django.core.checks import Error, Warning
 from django.core.checks.registry import CheckRegistry, registry
-from django.test.testcases import TestCase
+from django.test.testcases import SimpleTestCase
 
-from django_yunohost_integration.system_checks import validate_log_level, validate_settings_emails
+from django_yunohost_integration import yunohost_utils
+from django_yunohost_integration.system_checks import (
+    check_ynh_current_host,
+    validate_log_level,
+    validate_settings_emails,
+)
+from django_yunohost_integration.yunohost_utils import get_ssowat_domain
 
 
-class SystemChecksTestCase(TestCase):
+class SystemChecksTestCase(SimpleTestCase):
     def test_is_registered(self):
         assert isinstance(registry, CheckRegistry)
         self.assertIn(validate_settings_emails, registry.registered_checks)
@@ -25,7 +35,7 @@ class SystemChecksTestCase(TestCase):
                     Warning(
                         "FOO_BAR_EMAIL 'invalid email!' is not valid!",
                         hint='Check your config panel email values!',
-                        id='django_yunohost_integration.E001',
+                        id='django_yunohost_integration.W001',
                     )
                 ]
             )
@@ -36,7 +46,7 @@ class SystemChecksTestCase(TestCase):
                     Warning(
                         "ADMINS (foo) 'no valid email!' is not valid!",
                         hint='Check your config panel email values!',
-                        id='django_yunohost_integration.E001',
+                        id='django_yunohost_integration.W001',
                     )
                 ]
             )
@@ -47,7 +57,7 @@ class SystemChecksTestCase(TestCase):
                     Warning(
                         "MANAGERS (bar) 'foo @ bar' is not valid!",
                         hint='Check your config panel email values!',
-                        id='django_yunohost_integration.E001',
+                        id='django_yunohost_integration.W001',
                     )
                 ]
             )
@@ -64,7 +74,67 @@ class SystemChecksTestCase(TestCase):
                     Warning(
                         "'foobar' is not a valid log level name!",
                         hint='Check your config panel values!',
-                        id='django_yunohost_integration.E002',
+                        id='django_yunohost_integration.W002',
                     )
                 ]
             )
+
+    def test_check_ynh_current_host_setting(self):
+        with tempfile.NamedTemporaryFile(prefix='current_host') as tmp:
+            with patch.object(yunohost_utils, 'YNH_CURRENT_HOST', tmp.name):
+                errors = check_ynh_current_host(app_configs=None)
+                self.assertEqual(
+                    errors,
+                    [
+                        Warning(
+                            msg=f"'{tmp.name}' is empty",
+                            id='django_yunohost_integration.W003',
+                        )
+                    ],
+                )
+
+                tmp.write(b'ynh.test.tld')
+                tmp.flush()
+                self.assertEqual(get_ssowat_domain(), 'ynh.test.tld')
+
+                errors = check_ynh_current_host(app_configs=None)
+                self.assertEqual(errors, [])
+
+                tmp.seek(0)
+                tmp.write(b'This is no domain!')
+                tmp.flush()
+
+                errors = check_ynh_current_host(app_configs=None)
+                self.assertEqual(
+                    errors,
+                    [
+                        Warning(
+                            msg="'This is no domain!' is invalid",
+                            id='django_yunohost_integration.W003',
+                        )
+                    ],
+                )
+
+        with patch.object(
+            yunohost_utils, 'YNH_CURRENT_HOST', '/file/path/not/exists'
+        ), self.assertLogs('django_yunohost_integration') as logs:
+            errors = check_ynh_current_host(app_configs=None)
+            self.assertEqual(
+                errors,
+                [
+                    Warning(
+                        msg=(
+                            "Cannot read '/file/path/not/exists':"
+                            " [Errno 2] No such file or directory: '/file/path/not/exists'"
+                        ),
+                        id='django_yunohost_integration.W003',
+                    )
+                ],
+            )
+        self.assertEqual(len(logs.output), 1)
+        self.assertTrue(
+            logs.output[0].startswith(
+                'ERROR:django_yunohost_integration.yunohost_utils:'
+                'Cannot read \'/file/path/not/exists\': [Errno 2] No such file or directory'
+            )
+        )

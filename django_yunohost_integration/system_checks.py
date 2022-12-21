@@ -2,6 +2,9 @@ from django.conf import settings
 from django.core.checks import Warning, register
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
+from django.http.request import host_validation_re
+
+from django_yunohost_integration.yunohost_utils import YnhCurrentHostError, get_ssowat_domain
 
 
 VALID_LOG_LEVEL_NAMES = (
@@ -21,7 +24,7 @@ def validate_log_level(app_configs, **kwargs):
             Warning(
                 f'{settings.LOG_LEVEL!r} is not a valid log level name!',
                 hint='Check your config panel values!',
-                id='django_yunohost_integration.E002',
+                id='django_yunohost_integration.W002',
             )
         )
     return errors
@@ -35,7 +38,7 @@ def validate_email(errors, email, settings_key):
             Warning(
                 f'{settings_key} {email!r} is not valid!',
                 hint='Check your config panel email values!',
-                id='django_yunohost_integration.E001',
+                id='django_yunohost_integration.W001',
             )
         )
 
@@ -61,4 +64,19 @@ def validate_settings_emails(app_configs, **kwargs):
     for user_name, email in settings.MANAGERS:
         validate_email(errors, email=email, settings_key=f'MANAGERS ({user_name})')
 
+    return errors
+
+
+@register()
+def check_ynh_current_host(app_configs, **kwargs):
+    errors = []
+    try:
+        get_ssowat_domain()
+    except YnhCurrentHostError as err:
+        errors.append(
+            Warning(
+                msg=str(err),
+                id='django_yunohost_integration.W003',
+            )
+        )
     return errors

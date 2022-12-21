@@ -1,5 +1,7 @@
 import filecmp
+import os
 import shutil
+import sys
 from pathlib import Path
 
 import dev_shell
@@ -61,3 +63,18 @@ def test_source_file_is_up2date():
 
 def test_check_editor_config():
     check_editor_config(package_root=PACKAGE_ROOT)
+
+
+def test_code_style_with_darker():
+    # Add .venv/bin to PATH to fix call darker/flake8
+    python_bin = Path(sys.executable)
+    venv_bin = str(python_bin.parent)
+    if venv_bin not in os.environ['PATH']:
+        os.environ['PATH'] = venv_bin + os.pathsep + os.environ['PATH']
+
+    assert shutil.which('darker')
+    assert shutil.which('flake8')
+
+    from darker.__main__ import main as darker_cli
+
+    darker_cli(argv=[str(PACKAGE_ROOT)])
