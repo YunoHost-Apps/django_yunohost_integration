@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django_yunohost_integration"
-version = "0.5.0"
+version = "0.5.1"
 description = "Glue code to package django projects as yunohost apps."
 authors = ["JensDiemer <git@jensdiemer.de>"]
 license = "GPL"
@@ -38,7 +38,7 @@ ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]  # install as Yuno
 
 
 [tool.poetry.dev-dependencies]
-django-example = ">=0.1.0rc0"  # https://github.com/jedie/django-example
+django-example = ">=0.1.0"  # https://github.com/jedie/django-example
 dev_shell = ">=0.2.2"  # https://github.com/jedie/dev-shell
 django-axes = "*"  # https://github.com/jazzband/django-axes
 poetry-publish = "*"  # https://github.com/jedie/poetry-publish

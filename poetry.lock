@@ -1817,4 +1817,4 @@ ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0.0"  # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
-content-hash = "80629ee128c3f9eb5c2e4cbb80180c78b1a221b2741ae467ecb7509504ed75ab"
+content-hash = "a80b1724dff9a57d2db360d42d0cbfa3fa0f7db3bacbe90943f5637f81169f5b"
