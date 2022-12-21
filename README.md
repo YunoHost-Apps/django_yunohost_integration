@@ -184,9 +184,12 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.0rc1...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.1...main)
   * tbc
-* [v0.5.0rc1 - 05.10.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...v0.5.0rc1)
+* [v0.5.1 - 21.12.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.0...v0.5.1)
+  * Skip versions check in Github actions to avoid the rate limit in pipelines ;)
+* [v0.5.0 - 21.12.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...v0.5.0)
+  * Add `SSOwatLoginRedirectView`
   * Set min. Python version from 3.7 to 3.9 (Needs YunoHost 11!)
   * Display logs in local tests and use `colorlog.StreamHandler`
   * Bugfix example url pattern
