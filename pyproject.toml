@@ -1,14 +1,29 @@
 [tool.poetry]
-name = "django_yunohost_integration"
+name = 'django_yunohost_integration'
 version = "0.5.1"
-description = "Glue code to package django projects as yunohost apps."
-authors = ["JensDiemer <git@jensdiemer.de>"]
-license = "GPL"
-readme = "README.md"
+description = 'Glue code to package django projects as yunohost apps.'
 homepage = "https://github.com/YunoHost-Apps/django_yunohost_integration"
-packages = [
-    { include = "django_yunohost_integration" },
+authors = [
+    "Jens Diemer <git@jensdiemer.de>",
 ]
+maintainers = [
+    "Jens Diemer <git@jensdiemer.de>",
+]
+license = 'GPL-3.0-or-later'
+readme='README.md'
+include = ['LICENSE', 'README.md']
+packages = [{ include = "django_yunohost_integration" }]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    'Framework :: Django',
+    'Intended Audience :: Developers',
+]
+keywords=['Yunohost', 'django', 'utilities']
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/YunoHost-Apps/django_yunohost_integration/issues"
@@ -18,8 +33,9 @@ devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0.0"  # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
-django = "*"
-django-tools = "*"  # https://github.com/jedie/django-tools
+django = '>=4.0,<4.2'  # https://github.com/django/django
+django-tools = '*'  # https://github.com/jedie/django-tools
+
 # The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
 gunicorn = { version = "*", optional = true }
 
@@ -36,7 +52,6 @@ pyyaml = "*"  # https://github.com/yaml/pyyaml
 [tool.poetry.extras]
 ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]  # install as YunoHost app
 
-
 [tool.poetry.dev-dependencies]
 django-example = ">=0.1.0"  # https://github.com/jedie/django-example
 dev_shell = ">=0.2.2"  # https://github.com/jedie/dev-shell
@@ -46,9 +61,7 @@ bx_py_utils = "*"  # https://github.com/boxine/bx_py_utils
 bx_django_utils = "*"  # https://github.com/boxine/bx_django_utils
 tox = "*"
 pytest = "*"
-pytest-cov = "*"
 pytest-django = "*"
-coveralls = "*"
 isort = "*"
 flake8 = "*"
 flynt = "*"
@@ -62,28 +75,25 @@ requests-mock = "*"  # https://github.com/jamielennox/requests-mock
 gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ['poetry-core>=1.0.0']
+build-backend = 'poetry.core.masonry.api'
 
 
 [tool.darker]
 src = ['.']
 revision = "origin/main..."
-line_length = 100
+line_length = 119
 verbose = true
 skip_string_normalization = true
 diff = false
 check = false
 stdout = false
 isort = true
+flynt = true
 lint = [
-    "flake8",
+    'flake8',
 ]
-log_level = "INFO"
-
-
-[tool.flynt]
-line_length = 100
+log_level = 'INFO'
 
 
 [tool.isort]
@@ -92,7 +102,7 @@ atomic=true
 profile='black'
 skip_glob=[".*", "*/htmlcov/*","*/migrations/*"]
 known_first_party=["django_yunohost_integration"]
-line_length=100
+line_length=119
 lines_after_imports=2
 
 
@@ -114,11 +124,6 @@ django_debug_mode = "keep"
 addopts = """
     --reuse-db
     --nomigrations
-    --cov=.
-    --cov-report term-missing
-    --cov-report html
-    --cov-report xml
-    --no-cov-on-fail
     --showlocals
     --doctest-modules
     --failed-first
@@ -127,24 +132,63 @@ addopts = """
 """
 
 
-[tool.coverage.run]
-omit = [".*"]
-
-
 [tool.tox]
 # https://tox.readthedocs.io/en/latest/example/basic.html#pyproject-toml-tox-legacy-ini
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-envlist = py{39,310,311}
+envlist = py{39,310,311}-django{4.0,4.1}
 skip_missing_interpreters = True
 
 [testenv]
 passenv = *
-whitelist_externals =
-    poetry
+deps =
+    django4.0: django>=4.0,<4.1
+    django4.1: django>=4.1,<4.2
+    dev_shell
+    poetry-publish
+    darker
+    flake8
+    isort
+    flynt
+    EditorConfig
+    django-example
+    django-axes
+    requests-mock
+    pytest
+    pytest-cov
+    pytest-django
+    requests
 commands =
     python --version
-    poetry run django-admin --version
-    python devshell.py pytest
+    python -m django --version
+    pytest
 """
+
+
+[tool.mypy]
+warn_unused_configs = true
+ignore_missing_imports = true
+allow_redefinition = true  # https://github.com/python/mypy/issues/7165
+show_error_codes = true
+plugins = []
+exclude = ['.venv', 'tests', 'migrations']
+
+
+[manageprojects] # https://github.com/jedie/manageprojects
+initial_revision = "a26f623"
+initial_date = 2023-02-18T09:47:20+01:00
+cookiecutter_template = "https://github.com/jedie/cookiecutter_templates/"
+cookiecutter_directory = "poetry-django-app"
+
+[manageprojects.cookiecutter_context.cookiecutter]
+full_name = "Jens Diemer"
+github_username = "jedie"
+author_email = "git@jensdiemer.de"
+package_name = "django_yunohost_integration"
+package_version = "0.5.1"
+package_description = "Glue code to package django projects as yunohost apps."
+package_url = "https://github.com/YunoHost-Apps/django_yunohost_integration"
+issues_url = "https://github.com/YunoHost-Apps/django_yunohost_integration/issues"
+license = "GPL-3.0-or-later"
+_template = "https://github.com/jedie/cookiecutter_templates/"
