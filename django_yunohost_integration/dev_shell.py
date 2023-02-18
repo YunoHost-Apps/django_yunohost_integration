@@ -34,6 +34,12 @@ class DevShellCommandSet(OriginDevShellCommandSet):
         """
         verbose_check_call('poetry', 'run', 'safety', 'check', '--full-report')
 
+    def do_django_admin(self, statement: cmd2.Statement):
+        """
+        Call django-admin and pass all given arguments to it.
+        """
+        verbose_check_call('django-admin', *statement.arg_list, cwd=self.config.base_path, exit_on_error=True)
+
 
 @cmd2.with_default_category('Django-YunoHost-Integration commands')
 class DjangoYunoHostIntegrationCommandSet(DevShellBaseCommandSet):
