@@ -1,89 +1,84 @@
-[tool.poetry]
-name = 'django_yunohost_integration'
-version = "0.5.2"
-description = 'Glue code to package django projects as yunohost apps.'
-homepage = "https://github.com/YunoHost-Apps/django_yunohost_integration"
+[project]
+name = "django_yunohost_integration"
+version = "0.6.0rc1"
+description = "Glue code to package django projects as yunohost apps."
+readme = "README.md"
 authors = [
-    "Jens Diemer <git@jensdiemer.de>",
+    {name = 'Jens Diemer', email = 'git@jensdiemer.de'}
 ]
-maintainers = [
-    "Jens Diemer <git@jensdiemer.de>",
+requires-python = ">=3.9,<4" # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
+dependencies = [
+    'django>=4.0,<4.2',  # https://github.com/django/django
+    'django-tools',  # https://github.com/jedie/django-tools
+
+    'colorlog',   # https://github.com/borntyping/python-colorlog
+    'packaging',   # https://github.com/pypa/packaging
+    'pyyaml',   # https://github.com/yaml/pyyaml
+
 ]
-license = 'GPL-3.0-or-later'
-readme='README.md'
-include = ['LICENSE', 'README.md']
-packages = [{ include = "django_yunohost_integration" }]
-classifiers = [
-    'Development Status :: 5 - Production/Stable',
-    'Topic :: Software Development :: Libraries :: Python Modules',
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3 :: Only",
-    'Framework :: Django',
-    'Intended Audience :: Developers',
+[project.optional-dependencies]
+ynh = [  # install "django_yunohost_integration" as YunoHost app:
+    'gunicorn',
+    'psycopg2', # Don't use "psycopg2-binary": It's not available on ARM boards see: https://github.com/jedie/PyInventory/issues/56
+    'django-redis',
+    'django-axes', # https://github.com/jazzband/django-axes
 ]
-keywords=['Yunohost', 'django', 'utilities']
+dev = [
+    'django-axes', # https://github.com/jazzband/django-axes
+    'django-example',  # https://github.com/jedie/django-example
+    'bx_django_utils',   # https://github.com/boxine/bx_django_utils
+    'requests-mock',  # https://github.com/jamielennox/requests-mock
+    "click",  # https://github.com/pallets/click/
+    "rich-click",  # https://github.com/ewels/rich-click
+    "rich",  # https://github.com/Textualize/rich
+    "manageprojects",  # https://github.com/jedie/manageprojects
+    "pip-tools",  # https://github.com/jazzband/pip-tools/
+    "tox",  # https://github.com/tox-dev/tox
+    "coverage",  # https://github.com/nedbat/coveragepy
+    "darker>=1.7",  # https://github.com/akaihola/darker
+    "autopep8",  # https://github.com/hhatto/autopep8
+    "pyupgrade",  # https://github.com/asottile/pyupgrade
+    "isort",  # https://github.com/pycqa/isort
+    "flynt",  # https://github.com/ikamensh/flynt
+    "flake8",  # https://github.com/pycqa/flake8
+    "pyflakes",  # https://github.com/PyCQA/pyflakes
+    "codespell",  # https://github.com/codespell-project/codespell
+    "EditorConfig",  # https://github.com/editorconfig/editorconfig-core-py
+    "safety",  # https://github.com/pyupio/safety
+    "mypy",  # https://github.com/python/mypy
+    "tomli",  # https://github.com/hukkin/tomli
+    "twine",  # https://github.com/pypa/twine
+    #
+    # Work-a-round for:
+    # https://github.com/jazzband/pip-tools/issues/994#issuecomment-1321226661
+    "typing-extensions>=3.10",
+]
 
-[tool.poetry.urls]
-"Bug Tracker" = "https://github.com/YunoHost-Apps/django_yunohost_integration/issues"
+[project.urls]
+Documentation = "https://github.com/YunoHost-Apps/django_yunohost_integration"
+Source = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 
-[tool.poetry.scripts]
-devshell = 'django_yunohost_integration.dev_shell:devshell_cmdloop'
-
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0.0"  # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
-django = '>=4.0,<4.2'  # https://github.com/django/django
-django-tools = '*'  # https://github.com/jedie/django-tools
-
-# The follogin extra packages are used for install "django_yunohost_integration" as YunoHost app:
-gunicorn = { version = "*", optional = true }
-
-# Don't use "psycopg2-binary": It's not available on ARM boards see: https://github.com/jedie/PyInventory/issues/56
-psycopg2 = { version = "*", optional = true }  # https://www.psycopg.org/docs/install.html#build-prerequisites
-
-django-redis = { version = "*", optional = true }
-django-axes = { version = "*", optional = true }  # https://github.com/jazzband/django-axes
-colorlog = "*"  # https://github.com/borntyping/python-colorlog
-packaging = "*"  # https://github.com/pypa/packaging
-pyyaml = "*"  # https://github.com/yaml/pyyaml
+[project.scripts]
+django_yunohost_integration = "django_yunohost_integration.__main__:main"
 
 
-[tool.poetry.extras]
-ynh = ["gunicorn", "psycopg2", "django-redis", "django-axes"]  # install as YunoHost app
 
-[tool.poetry.dev-dependencies]
-django-example = ">=0.1.0"  # https://github.com/jedie/django-example
-dev_shell = ">=0.2.2"  # https://github.com/jedie/dev-shell
-django-axes = "*"  # https://github.com/jazzband/django-axes
-poetry-publish = "*"  # https://github.com/jedie/poetry-publish
-bx_py_utils = "*"  # https://github.com/boxine/bx_py_utils
-bx_django_utils = "*"  # https://github.com/boxine/bx_django_utils
-tox = "*"
-pytest = "*"
-pytest-django = "*"
-isort = "*"
-flake8 = "*"
-flynt = "*"
-darker = "*"  # https://github.com/akaihola/darker
-EditorConfig = "*"  # https://github.com/editorconfig/editorconfig-core-py
-safety = "*"  # https://github.com/pyupio/safety
-requests = "*"  # https://github.com/psf/requests
-requests-mock = "*"  # https://github.com/jamielennox/requests-mock
 
-# fix completion for Mac OS:
-gnureadline = { version = "*", markers = "sys_platform == 'darwin'" }
+[tool.setuptools.packages.find]
+where = ["."]
+include = ['django_yunohost_integration']
 
 [build-system]
-requires = ['poetry-core>=1.0.0']
-build-backend = 'poetry.core.masonry.api'
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 
 [tool.darker]
-src = ['.']
+src = ['django_yunohost_integration']
 revision = "origin/main..."
 line_length = 119
 verbose = true
+color = true
 skip_string_normalization = true
 diff = false
 check = false
@@ -91,79 +86,30 @@ stdout = false
 isort = true
 flynt = true
 lint = [
-    'flake8',
+    "flake8",
 ]
-log_level = 'INFO'
+log_level = "INFO"
 
 
 [tool.isort]
 # https://pycqa.github.io/isort/docs/configuration/config_files/#pyprojecttoml-preferred-format
 atomic=true
 profile='black'
-skip_glob=[".*", "*/htmlcov/*","*/migrations/*"]
-known_first_party=["django_yunohost_integration"]
+skip_glob=['.*', '*/htmlcov/*']
+known_first_party=['django_yunohost_integration']
 line_length=119
 lines_after_imports=2
 
 
-[tool.pytest.ini_options]
-# https://docs.pytest.org/en/latest/customize.html#pyproject-toml
-minversion = "6.0"
-norecursedirs = ".* .git __pycache__ conf coverage* dist htmlcov volumes"
+[tool.coverage.run]
+branch = true
+source = ['.']
+omit = ['.*', '*/tests/*']
+command_line = 'manage.py test --buffer --shuffle -v 2'
 
-# Don't overwrite settings.DEBUG:
-django_debug_mode = "keep"
-
-# sometimes helpfull "addopts" arguments:
-#    -vv
-#    --verbose
-#    --capture=no
-#    --trace-config
-#    --full-trace
-#    -p no:warnings
-addopts = """
-    --reuse-db
-    --nomigrations
-    --showlocals
-    --doctest-modules
-    --failed-first
-    --last-failed-no-failures all
-    --new-first
-"""
-
-
-[tool.tox]
-# https://tox.readthedocs.io/en/latest/example/basic.html#pyproject-toml-tox-legacy-ini
-legacy_tox_ini = """
-[tox]
-isolated_build = True
-envlist = py{39,310,311}-django{4.0,4.1}
-skip_missing_interpreters = True
-
-[testenv]
-passenv = *
-deps =
-    django4.0: django>=4.0,<4.1
-    django4.1: django>=4.1,<4.2
-    dev_shell
-    poetry-publish
-    darker
-    flake8
-    isort
-    flynt
-    EditorConfig
-    django-example
-    django-axes
-    requests-mock
-    pytest
-    pytest-cov
-    pytest-django
-    requests
-commands =
-    python --version
-    python -m django --version
-    pytest
-"""
+[tool.coverage.report]
+skip_empty = true
+fail_under = 45
 
 
 [tool.mypy]
@@ -172,14 +118,14 @@ ignore_missing_imports = true
 allow_redefinition = true  # https://github.com/python/mypy/issues/7165
 show_error_codes = true
 plugins = []
-exclude = ['.venv', 'tests', 'migrations']
+exclude = ['.venv', 'tests']
 
 
 [manageprojects] # https://github.com/jedie/manageprojects
-initial_revision = "a26f623"
-initial_date = 2023-02-18T09:47:20+01:00
+initial_revision = "5c06368"
+initial_date = 2023-02-19T17:27:46+01:00
 cookiecutter_template = "https://github.com/jedie/cookiecutter_templates/"
-cookiecutter_directory = "poetry-django-app"
+cookiecutter_directory = "piptools-python"
 
 [manageprojects.cookiecutter_context.cookiecutter]
 full_name = "Jens Diemer"

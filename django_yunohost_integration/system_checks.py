@@ -2,7 +2,6 @@ from django.conf import settings
 from django.core.checks import Warning, register
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
-from django.http.request import host_validation_re
 
 from django_yunohost_integration.yunohost_utils import YnhCurrentHostError, get_ssowat_domain
 

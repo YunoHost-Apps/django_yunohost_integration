@@ -1,15 +1,16 @@
 """
     Create a YunoHost package local test
 """
-import argparse
+
+import dataclasses
 import json
 import os
-import shlex
-import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 
 from django_tools.unittest_utils.assertments import assert_is_dir, assert_is_file
+from manageprojects.utilities.subprocess_utils import verbose_check_call
 
 import django_yunohost_integration
 from django_yunohost_integration.test_utils import generate_basic_auth
@@ -18,30 +19,15 @@ from django_yunohost_integration.test_utils import generate_basic_auth
 BASE_PATH = Path(django_yunohost_integration.__file__).parent
 
 
-def verbose_check_call(command, verbose=True, extra_env=None, **kwargs):
-    """ 'verbose' version of subprocess.check_call() """
-    if verbose:
-        print('_' * 100)
-        msg = f'Call: {command!r}'
-        verbose_kwargs = ', '.join(f'{k}={v!r}' for k, v in sorted(kwargs.items()))
-        if verbose_kwargs:
-            msg += f' (kwargs: {verbose_kwargs})'
-        print(f'{msg}\n', flush=True)
-
-    env = os.environ.copy()
-    env['PYTHONUNBUFFERED'] = '1'
-    if extra_env is not None:
-        assert isinstance(extra_env, dict)
-        env.update(extra_env)
-
-    popenargs = shlex.split(command)
-    subprocess.check_call(popenargs, universal_newlines=True, env=env, **kwargs)
-
-
-def call_manage_py(final_path, args, extra_env=None):
+def call_manage_py(final_path, *args, extra_env=None):
+    """
+    call "local_test/manage.py" via subprocess
+    """
     assert_is_file(final_path / 'manage.py')
     verbose_check_call(
-        command=f'{sys.executable} manage.py {args}',
+        sys.executable,
+        'manage.py',
+        *args,
         extra_env=extra_env,
         cwd=final_path,
     )
@@ -64,9 +50,18 @@ def copy_patch(src_file, replaces, final_path):
         f.write(content)
 
 
+@dataclasses.dataclass
+class CreateResults:
+    final_path: Path
+    django_settings_name: str
+
+
 def create_local_test(
-    django_settings_path, destination, runserver=False, extra_replacements: dict = None
-):
+    django_settings_path: Path,
+    destination: Path,
+    runserver: bool = False,
+    extra_replacements: Optional[dict] = None,
+) -> CreateResults:
     django_settings_path = django_settings_path.resolve()
     assert_is_file(django_settings_path)
 
@@ -153,12 +148,10 @@ def create_local_test(
     local_settings += local_settings_source.read_text()
     local_settings_path.write_text(local_settings)
 
-    # call "local_test/manage.py" via subprocess:
-    call_manage_py(final_path, 'check --deploy')
     if runserver:
-        call_manage_py(final_path, 'migrate --no-input')
-        call_manage_py(final_path, 'collectstatic --no-input')
-        call_manage_py(final_path, 'create_superuser --username="test"')
+        call_manage_py(final_path, 'migrate', '--no-input')
+        call_manage_py(final_path, 'collectstatic', '--no-input')
+        call_manage_py(final_path, 'create_superuser', '--username="test"')
 
         os.environ['DJANGO_SETTINGS_MODULE'] = django_settings_name
 
@@ -179,40 +172,10 @@ def create_local_test(
             )
         except KeyboardInterrupt:
             print('\nBye ;)')
+    else:
+        print('\n')
 
-    return final_path
-
-
-def cli():
-    parser = argparse.ArgumentParser(description='Generate a YunoHost package local test')
-
-    parser.add_argument(
-        '--django_settings_path',
-        action='store',
-        metavar='path',
-        help='Path to YunoHost package settings.py file (in "conf" directory)',
+    return CreateResults(
+        final_path=final_path,
+        django_settings_name=django_settings_name,
     )
-    parser.add_argument(
-        '--destination',
-        action='store',
-        metavar='path',
-        help='Destination directory for the local test files',
-    )
-    parser.add_argument(
-        '--runserver',
-        action='store',
-        type=bool,
-        default=False,
-        help='Start Django "runserver" after local test file creation?',
-    )
-    args = parser.parse_args()
-
-    create_local_test(
-        django_settings_path=Path(args.django_settings_path),
-        destination=Path(args.destination),
-        runserver=args.runserver,
-    )
-
-
-if __name__ == '__main__':
-    cli()

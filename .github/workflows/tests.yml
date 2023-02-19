@@ -1,6 +1,6 @@
-# https://github.com/actions/setup-python
 
-name: Test
+
+name: tests
 
 on:
   push:
@@ -12,15 +12,12 @@ on:
 
 jobs:
   test:
-    name: 'Python ${{ matrix.python-version }} Django ${{ matrix.django }}'
     runs-on: ubuntu-latest
-    env:
-      PYTHONUNBUFFERED: 1
     strategy:
+      max-parallel: 2
       fail-fast: false
       matrix:
         python-version: ["3.11", "3.10", "3.9"]
-        django: ["4.1", "4.0"]
     steps:
     - name: Checkout
       run: |
@@ -35,19 +32,29 @@ jobs:
       with:
         python-version: '${{ matrix.python-version }}'
         cache: 'pip' # caching pip dependencies
-        cache-dependency-path: '**/poetry.lock'
+        cache-dependency-path: '**/requirements.dev.txt'
 
     - name: 'Bootstrap'
+      # The first CLI call will create the .venv
       run: |
-        python3 devshell.py quit
+        ./cli.py version
 
-    - name: 'List installed packages'
+    - name: 'CLI help'
       run: |
-        python3 devshell.py list_venv_packages
+        ./cli.py --help
 
-    - name: 'Run tests with Python ${{ matrix.python-version }} Django ${{ matrix.django }}'
-      run: python3 devshell.py tox -e python-django${{ matrix.django }}
-
-    - name: 'Run safety check with Python v${{ matrix.python-version }}'
+    - name: 'Safety'
       run: |
-        python3 devshell.py safety
+        ./cli.py safety
+
+    - name: 'Run tests with Python v${{ matrix.python-version }}'
+      run: |
+        ./cli.py coverage
+
+    - name: 'Upload coverage report'
+      uses: codecov/codecov-action@v3
+      # https://github.com/marketplace/actions/codecov
+      with:
+        fail_ci_if_error: false
+        verbose: true
+
