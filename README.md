@@ -184,8 +184,11 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.1...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...main)
   * tbc
+* [v0.5.2 - 19.02.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.1...v0.5.2)
+  * Update the projec setup a little bit via manageprojects
+  * Support Django 4.0 and 4.1 (backport `RedirectURLMixin` for 4.0 from 4.1)
 * [v0.5.1 - 21.12.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.0...v0.5.1)
   * Skip versions check in Github actions to avoid the rate limit in pipelines ;)
 * [v0.5.0 - 21.12.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...v0.5.0)

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'django_yunohost_integration'
-version = "0.5.1"
+version = "0.5.2"
 description = 'Glue code to package django projects as yunohost apps.'
 homepage = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 authors = [

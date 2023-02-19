@@ -5,10 +5,16 @@ from urllib.parse import ParseResult, urlparse
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.views import RedirectURLMixin
 from django.http import HttpResponseRedirect
 from django.http.request import HttpRequest, host_validation_re
 from django.views import View
+
+
+try:
+    from django.contrib.auth.views import RedirectURLMixin  # New in Django 4.1
+except ImportError:
+    # Django 4.0 fallback:
+    from django_yunohost_integration.compat import RedirectURLMixin
 
 
 logger = logging.getLogger(__name__)
