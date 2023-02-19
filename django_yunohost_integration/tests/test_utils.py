@@ -3,11 +3,7 @@ from bx_py_utils.environ import OverrideEnviron
 from django.test import SimpleTestCase
 from packaging.version import Version
 
-from django_yunohost_integration.test_utils import (
-    assert_project_version,
-    generate_basic_auth,
-    get_github_version_tag,
-)
+from django_yunohost_integration.test_utils import assert_project_version, generate_basic_auth, get_github_version_tag
 
 
 class TestUtilsTestCase(SimpleTestCase):
@@ -22,17 +18,13 @@ class TestUtilsTestCase(SimpleTestCase):
                     json=[{'name': 'v1.2.3'}],
                 )
                 ver_obj = get_github_version_tag(
-                    github_project_url=(
-                        'https://github.com/YunoHost-Apps/django_yunohost_integration'
-                    )
+                    github_project_url=('https://github.com/YunoHost-Apps/django_yunohost_integration')
                 )
             assert ver_obj == Version('1.2.3')
 
             ###########################################################################
 
-            with self.assertRaisesMessage(
-                AssertionError, "No Github Project url: 'http/foo.tld/bar'"
-            ):
+            with self.assertRaisesMessage(AssertionError, "No Github Project url: 'http/foo.tld/bar'"):
                 get_github_version_tag(github_project_url='http/foo.tld/bar')
 
             ###########################################################################
@@ -51,9 +43,7 @@ class TestUtilsTestCase(SimpleTestCase):
                 )
 
                 get_github_version_tag(
-                    github_project_url=(
-                        'https://github.com/YunoHost-Apps/django_yunohost_integration'
-                    )
+                    github_project_url=('https://github.com/YunoHost-Apps/django_yunohost_integration')
                 )
 
     def test_assert_project_version(self):
@@ -65,9 +55,7 @@ class TestUtilsTestCase(SimpleTestCase):
                 )
                 assert_project_version(
                     current_version='v1.2.3',
-                    github_project_url=(
-                        'https://github.com/YunoHost-Apps/django_yunohost_integration'
-                    ),
+                    github_project_url=('https://github.com/YunoHost-Apps/django_yunohost_integration'),
                 )
 
             ###########################################################################
@@ -87,7 +75,5 @@ class TestUtilsTestCase(SimpleTestCase):
 
                 assert_project_version(
                     current_version='v1.0.0',
-                    github_project_url=(
-                        'https://github.com/YunoHost-Apps/django_yunohost_integration'
-                    ),
+                    github_project_url=('https://github.com/YunoHost-Apps/django_yunohost_integration'),
                 )

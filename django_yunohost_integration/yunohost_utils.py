@@ -28,6 +28,9 @@ class YnhCurrentHostError(Exception):
 
 def get_ssowat_domain() -> str:
     path = Path(YNH_CURRENT_HOST)
+    if not path.is_file():
+        raise YnhCurrentHostError(f'No such file: {YNH_CURRENT_HOST!r}')
+
     try:
         current_host = path.read_text()
     except Exception as err:

@@ -1,8 +1,7 @@
 import tempfile
 from unittest.mock import patch
 
-from django.conf import settings
-from django.core.checks import Error, Warning
+from django.core.checks import Warning
 from django.core.checks.registry import CheckRegistry, registry
 from django.test.testcases import SimpleTestCase
 
@@ -26,7 +25,6 @@ class SystemChecksTestCase(SimpleTestCase):
         self.assertEqual(errors, expected_errors)
 
     def test_validate_emails(self):
-
         self._validate_emails(expected_errors=[])
 
         with self.settings(FOO_BAR_EMAIL='invalid email!'):
@@ -115,26 +113,14 @@ class SystemChecksTestCase(SimpleTestCase):
                     ],
                 )
 
-        with patch.object(
-            yunohost_utils, 'YNH_CURRENT_HOST', '/file/path/not/exists'
-        ), self.assertLogs('django_yunohost_integration') as logs:
+        with patch.object(yunohost_utils, 'YNH_CURRENT_HOST', '/file/path/not/exists'):
             errors = check_ynh_current_host(app_configs=None)
             self.assertEqual(
                 errors,
                 [
                     Warning(
-                        msg=(
-                            "Cannot read '/file/path/not/exists':"
-                            " [Errno 2] No such file or directory: '/file/path/not/exists'"
-                        ),
+                        msg=("No such file: '/file/path/not/exists'"),
                         id='django_yunohost_integration.W003',
                     )
                 ],
             )
-        self.assertEqual(len(logs.output), 1)
-        self.assertTrue(
-            logs.output[0].startswith(
-                'ERROR:django_yunohost_integration.yunohost_utils:'
-                'Cannot read \'/file/path/not/exists\': [Errno 2] No such file or directory'
-            )
-        )

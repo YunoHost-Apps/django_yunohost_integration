@@ -27,22 +27,20 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         assert str(settings.FINALPATH).endswith('/local_test/opt_yunohost')
         assert str(settings.PUBLIC_PATH).endswith('/local_test/var_www')
-        assert str(settings.LOG_FILE).endswith(
-            '/local_test/var_log_django_yunohost_integration.log'
-        )
+        assert str(settings.LOG_FILE).endswith('/local_test/var_log_django_yunohost_integration.log')
         assert settings.PATH_URL == 'app_path'
         assert settings.MEDIA_URL == '/app_path/media/'
         assert settings.STATIC_URL == '/app_path/static/'
 
         # config_panel.toml settings:
 
-        assert settings.DEBUG_ENABLED == '1'
+        self.assertEqual(settings.DEBUG_ENABLED, '0')
         assert settings.LOG_LEVEL == 'DEBUG'
         assert settings.ADMIN_EMAIL == 'admin-email@test.intranet'
         assert settings.DEFAULT_FROM_EMAIL == 'default-from-email@test.intranet'
 
         # Normal settings:
-        assert settings.DEBUG is True
+        self.assertIs(settings.DEBUG, False)
         assert settings.ROOT_URLCONF == 'urls'
         assert settings.ADMINS == (('The Admin Username', 'admin-email@test.intranet'),)
         assert settings.MANAGERS == (('The Admin Username', 'admin-email@test.intranet'),)
@@ -80,7 +78,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
             response,
             status_code=301,  # permanent redirect
             expected_url='https://testserver/app_path/',
-            fetch_redirect_response=False
+            fetch_redirect_response=False,
         )
 
         with self.assertLogs('django_example') as logs:
@@ -95,9 +93,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
                     '<tr><td>META:</td><td></td></tr>',
                 ),
             )
-        self.assertEqual(
-            logs.output, ['INFO:django_example.views:DebugView request from user: AnonymousUser']
-        )
+        self.assertEqual(logs.output, ['INFO:django_example.views:DebugView request from user: AnonymousUser'])
 
     @override_settings(SECURE_SSL_REDIRECT=False)
     def test_create_unknown_user(self):
@@ -129,9 +125,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
                 f'<tr><td>Process ID:</td><td>{os.getpid()}</td></tr>',
             ),
         )
-        self.assertEqual(
-            logs.output, ['INFO:django_example.views:DebugView request from user: test']
-        )
+        self.assertEqual(logs.output, ['INFO:django_example.views:DebugView request from user: test'])
 
     @override_settings(SECURE_SSL_REDIRECT=False)
     def test_wrong_auth_user(self):
@@ -194,9 +188,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
             path='/app_path/',
             HTTP_REMOTE_USER='test',
             HTTP_AUTH_USER='test',
-            HTTP_AUTHORIZATION=generate_basic_auth(
-                username='foobar', password='test123'  # <<< wrong user name
-            ),
+            HTTP_AUTHORIZATION=generate_basic_auth(username='foobar', password='test123'),  # <<< wrong user name
         )
 
         assert User.objects.count() == 1
