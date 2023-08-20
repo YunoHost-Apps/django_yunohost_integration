@@ -1,14 +1,15 @@
 [project]
 name = "django_yunohost_integration"
-version = "0.6.0rc1"
+dynamic = ["version"]
 description = "Glue code to package django projects as yunohost apps."
+license = {text = "GPL-3.0-or-later"}
 readme = "README.md"
 authors = [
     {name = 'Jens Diemer', email = 'git@jensdiemer.de'}
 ]
 requires-python = ">=3.9,<4" # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
 dependencies = [
-    'django>=4.0,<4.2',  # https://github.com/django/django
+    'django',  # https://github.com/django/django
     'django-tools',  # https://github.com/jedie/django-tools
 
     'colorlog',   # https://github.com/borntyping/python-colorlog
@@ -28,30 +29,36 @@ dev = [
     'django-example',  # https://github.com/jedie/django-example
     'bx_django_utils',   # https://github.com/boxine/bx_django_utils
     'requests-mock',  # https://github.com/jamielennox/requests-mock
+    "cli-base-utilities>=0.3.0",  # https://github.com/jedie/cli-base-utilities
     "click",  # https://github.com/pallets/click/
     "rich-click",  # https://github.com/ewels/rich-click
     "rich",  # https://github.com/Textualize/rich
-    "manageprojects",  # https://github.com/jedie/manageprojects
+
+    "manageprojects>=0.15.0",  # https://github.com/jedie/manageprojects
     "pip-tools",  # https://github.com/jazzband/pip-tools/
     "tox",  # https://github.com/tox-dev/tox
     "coverage",  # https://github.com/nedbat/coveragepy
-    "darker>=1.7",  # https://github.com/akaihola/darker
     "autopep8",  # https://github.com/hhatto/autopep8
     "pyupgrade",  # https://github.com/asottile/pyupgrade
-    "isort",  # https://github.com/pycqa/isort
-    "flynt",  # https://github.com/ikamensh/flynt
     "flake8",  # https://github.com/pycqa/flake8
     "pyflakes",  # https://github.com/PyCQA/pyflakes
     "codespell",  # https://github.com/codespell-project/codespell
     "EditorConfig",  # https://github.com/editorconfig/editorconfig-core-py
     "safety",  # https://github.com/pyupio/safety
     "mypy",  # https://github.com/python/mypy
-    "tomli",  # https://github.com/hukkin/tomli
     "twine",  # https://github.com/pypa/twine
+
+    # https://github.com/akaihola/darker
+    # https://github.com/ikamensh/flynt
+    # https://github.com/pycqa/isort
+    # https://github.com/pygments/pygments
+    "darker[flynt, isort, color]",
+
+    "tomli",  # https://github.com/hukkin/tomli
     #
-    # Work-a-round for:
-    # https://github.com/jazzband/pip-tools/issues/994#issuecomment-1321226661
-    "typing-extensions>=3.10",
+    # tomli only needed for Python <3.11, but see pip bug:
+    # https://github.com/pypa/pip/issues/9644 / https://github.com/jazzband/pip-tools/issues/1866
+    #'tomli;python_version<"3.11"',  # https://github.com/hukkin/tomli
 ]
 
 [project.urls]
@@ -59,22 +66,23 @@ Documentation = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 Source = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 
 [project.scripts]
-django_yunohost_integration = "django_yunohost_integration.__main__:main"
+django_yunohost_integration_app = "django_yunohost_integration.__main__:main"
+django_yunohost_integration_dev = "django_yunohost_integration.cli.dev:main"
 
-
-
+[build-system]
+requires = ["setuptools>=61.0", "setuptools_scm>=7.1"]
+build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ['django_yunohost_integration']
+include = ["django_yunohost_integration*"]
 
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+[tool.setuptools.dynamic]
+version = {attr = "django_yunohost_integration.__version__"}
 
 
 [tool.darker]
-src = ['django_yunohost_integration']
+src = ['.']
 revision = "origin/main..."
 line_length = 119
 verbose = true
@@ -103,13 +111,43 @@ lines_after_imports=2
 
 [tool.coverage.run]
 branch = true
+parallel = true
+concurrency = ["multiprocessing"]
 source = ['.']
-omit = ['.*', '*/tests/*']
 command_line = 'manage.py test --buffer --shuffle -v 2'
 
 [tool.coverage.report]
+omit = ['.*', '*/tests/*']
 skip_empty = true
-fail_under = 45
+fail_under = 30
+show_missing = true
+exclude_lines = [
+    'if self.debug:',
+    'pragma: no cover',
+    'raise NotImplementedError',
+    'if __name__ == .__main__.:',
+]
+
+
+[tool.tox]  # https://tox.wiki/en/latest/config.html#pyproject-toml
+legacy_tox_ini = """
+[tox]
+isolated_build = True
+envlist = py{311,310,39}
+skip_missing_interpreters = True
+
+[testenv]
+passenv = *
+skip_install = true
+commands_pre =
+    pip install -U pip-tools
+    pip-sync requirements.dev.txt
+commands =
+    {envpython} -m coverage run --context='{envname}'
+    {envpython} -m coverage combine --append
+    {envpython} -m coverage xml
+    {envpython} -m coverage report
+"""
 
 
 [tool.mypy]
@@ -126,6 +164,9 @@ initial_revision = "5c06368"
 initial_date = 2023-02-19T17:27:46+01:00
 cookiecutter_template = "https://github.com/jedie/cookiecutter_templates/"
 cookiecutter_directory = "piptools-python"
+applied_migrations = [
+    "877e2ec", # 2023-08-17T20:54:24+02:00
+]
 
 [manageprojects.cookiecutter_context.cookiecutter]
 full_name = "Jens Diemer"

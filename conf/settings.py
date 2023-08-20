@@ -2,7 +2,7 @@
 ################################################################################
 
 # Please do not modify this file, it will be reset at the next update.
-# You can edit the file __FINALPATH__/local_settings.py and add/modify the settings you need.
+# You can edit the file __DATA_DIR__/local_settings.py and add/modify the settings you need.
 # The parameters you add in local_settings.py will overwrite these,
 # but you can use the options and documentation in this file to find out what can be done.
 
@@ -22,11 +22,11 @@ from django_example.settings.prod import *  # noqa:F401,F403 isort:skip
 from django_yunohost_integration.base_settings import LOGGING  # noqa:F401 isort:skip
 
 
-FINALPATH = __Path('__FINALPATH__')  # /opt/yunohost/$app
-assert FINALPATH.is_dir(), f'Directory not exists: {FINALPATH}'
+DATA_DIR_PATH = __Path('__DATA_DIR__')  # /home/yunohost.app/$app
+assert DATA_DIR_PATH.is_dir(), f'Directory not exists: {DATA_DIR_PATH}'
 
-PUBLIC_PATH = __Path('__PUBLIC_PATH__')  # /var/www/$app
-assert PUBLIC_PATH.is_dir(), f'Directory not exists: {PUBLIC_PATH}'
+INSTALL_DIR_PATH = __Path('__INSTALL_DIR__')  # /var/www/$app
+assert INSTALL_DIR_PATH.is_dir(), f'Directory not exists: {INSTALL_DIR_PATH}'
 
 LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/$app.log
 assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
@@ -38,7 +38,7 @@ PATH_URL = PATH_URL.strip('/')
 # config_panel.toml settings:
 
 DEBUG_ENABLED = '__DEBUG_ENABLED__'
-DEBUG = bool(int(DEBUG_ENABLED))
+DEBUG = DEBUG_ENABLED == 'YES'
 
 LOG_LEVEL = '__LOG_LEVEL__'
 ADMIN_EMAIL = '__ADMIN_EMAIL__'
@@ -46,10 +46,6 @@ ADMIN_EMAIL = '__ADMIN_EMAIL__'
 # Default email address to use for various automated correspondence from
 # the site managers. Used for registration emails.
 DEFAULT_FROM_EMAIL = '__DEFAULT_FROM_EMAIL__'
-
-# -----------------------------------------------------------------------------
-
-DEBUG = bool(int(DEBUG_ENABLED))
 
 # -----------------------------------------------------------------------------
 
@@ -61,7 +57,7 @@ EXTRA_REPLACEMENT = '__EXTRA_REPLACEMENT__'
 # Function that will be called to finalize a user profile:
 YNH_SETUP_USER = 'setup_user.setup_project_user'
 
-SECRET_KEY = __get_or_create_secret(FINALPATH / 'secret.txt')  # /opt/yunohost/$app/secret.txt
+SECRET_KEY = __get_or_create_secret(DATA_DIR_PATH / 'secret.txt')  # /home/yunohost.app/$app/secret.txt
 
 INSTALLED_APPS += [
     'axes',  # https://github.com/jazzband/django-axes
@@ -159,8 +155,8 @@ else:
     STATIC_URL = '/static/'
     MEDIA_URL = '/media/'
 
-STATIC_ROOT = str(PUBLIC_PATH / 'static')
-MEDIA_ROOT = str(PUBLIC_PATH / 'media')
+STATIC_ROOT = str(INSTALL_DIR_PATH / 'static')
+MEDIA_ROOT = str(INSTALL_DIR_PATH / 'media')
 
 
 # -----------------------------------------------------------------------------

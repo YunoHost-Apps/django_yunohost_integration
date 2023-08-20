@@ -8,7 +8,9 @@ coverage.*
 !.editorconfig
 !.flake8
 !.gitignore
+!.gitkeep
 
 secret.txt
 /local_test/
 *.log
+*.sqlite
