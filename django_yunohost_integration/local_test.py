@@ -120,7 +120,7 @@ def create_local_test(
         "'syslog'": "'console'",  # Log to console for local test
         #
         # config_panel.toml settings:
-        '__DEBUG_ENABLED__': '1',
+        '__DEBUG_ENABLED__': 'YES',
         '__LOG_LEVEL__': 'DEBUG',
         '__ADMIN__': 'The Admin Username',
         '__DEFAULT_FROM_EMAIL__': 'default-from-email@test.intranet',

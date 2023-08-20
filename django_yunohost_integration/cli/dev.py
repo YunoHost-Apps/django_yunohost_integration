@@ -314,7 +314,7 @@ def local_test(*, setting: Path, destination: Path, runserver: bool):
         django_settings_path=setting,
         destination=destination,
         runserver=runserver,
-        extra_replacements={'__DEBUG_ENABLED__': '1'},
+        extra_replacements={'__DEBUG_ENABLED__': 'YES'},
     )
 
 
