@@ -34,7 +34,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         # config_panel.toml settings:
 
-        self.assertEqual(settings.DEBUG_ENABLED, '0')
+        self.assertEqual(settings.DEBUG_ENABLED, 'NO')
         assert settings.LOG_LEVEL == 'DEBUG'
         assert settings.ADMIN_EMAIL == 'admin-email@test.intranet'
         assert settings.DEFAULT_FROM_EMAIL == 'default-from-email@test.intranet'
