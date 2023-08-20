@@ -31,7 +31,7 @@ assert INSTALL_DIR_PATH.is_dir(), f'Directory not exists: {INSTALL_DIR_PATH}'
 LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/$app.log
 assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
 
-PATH_URL = '__PATH_URL__'  # $YNH_APP_ARG_PATH
+PATH_URL = '__PATH__'
 PATH_URL = PATH_URL.strip('/')
 
 # -----------------------------------------------------------------------------
