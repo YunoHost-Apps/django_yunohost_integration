@@ -18,7 +18,7 @@ def run_local_test_manage(extra_env=None, argv=None):
         destination=PACKAGE_ROOT / 'local_test',
         runserver=False,
         extra_replacements={
-            '__DEBUG_ENABLED__': '0',
+            '__DEBUG_ENABLED__': 'NO',
             '__EXTRA_REPLACEMENT__': 'Just for the unittests ;)',
         },
     )
