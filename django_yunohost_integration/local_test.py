@@ -110,7 +110,7 @@ def create_local_test(
     REPLACES = {
         '__LOG_FILE__': str(log_file),
         '__APP__': 'app_name',
-        '__PATH_URL__': 'app_path',
+        '__PATH__': 'app_path',
         '__DOMAIN__': '127.0.0.1',
         'django.db.backends.postgresql': 'django.db.backends.sqlite3',
         '__DB_NAME__': str(destination / 'test_db.sqlite'),
