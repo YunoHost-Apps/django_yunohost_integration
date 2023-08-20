@@ -25,8 +25,8 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         # default YunoHost app replacements:
 
-        assert str(settings.FINALPATH).endswith('/local_test/opt_yunohost')
-        assert str(settings.PUBLIC_PATH).endswith('/local_test/var_www')
+        assert str(settings.DATA_DIR_PATH).endswith('/local_test/opt_yunohost')
+        assert str(settings.INSTALL_DIR_PATH).endswith('/local_test/var_www')
         assert str(settings.LOG_FILE).endswith('/local_test/var_log_django_yunohost_integration.log')
         assert settings.PATH_URL == 'app_path'
         assert settings.MEDIA_URL == '/app_path/media/'

@@ -9,7 +9,7 @@ import django_yunohost_integration
 from django_yunohost_integration.local_test import CreateResults, create_local_test
 
 
-def run_local_test_manage():
+def run_local_test_manage(extra_env=None, argv=None):
     PACKAGE_ROOT = Path(django_yunohost_integration.__file__).parent.parent
     assert_is_file(PACKAGE_ROOT / 'pyproject.toml')
 
@@ -23,10 +23,17 @@ def run_local_test_manage():
         },
     )
     os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+    os.environ['PYTHONUNBUFFERED'] = '1'
+    os.environ['PYTHONWARNINGS'] = 'always'
+    if extra_env:
+        os.environ.update(extra_env)
 
     # Add ".../local_test/opt_yunohost/" to sys.path, so that "settings" is importable:
-    final_home_str = str(result.final_path)
+    final_home_str = str(result.data_dir_path)
     if final_home_str not in sys.path:
         sys.path.insert(0, final_home_str)
 
-    execute_from_command_line(sys.argv)
+    if argv is None:
+        argv = sys.argv
+
+    execute_from_command_line(argv)

@@ -63,11 +63,11 @@ DEBUG = bool(int('__DEBUG_ENABLED__'))  # Set via config_panel.toml
 
 # -----------------------------------------------------------------------------
 
-FINALPATH = __Path('__FINALPATH__')  # /opt/yunohost/$app
-assert FINALPATH.is_dir(), f'Directory not exists: {FINALPATH}'
+DATA_DIR_PATH = __Path('__DATA_DIR__')  # /home/yunohost.app/$app
+assert DATA_DIR_PATH.is_dir(), f'Directory not exists: {DATA_DIR_PATH}'
 
-PUBLIC_PATH = __Path('__PUBLIC_PATH__')  # /var/www/$app
-assert PUBLIC_PATH.is_dir(), f'Directory not exists: {PUBLIC_PATH}'
+INSTALL_DIR_PATH = __Path('__INSTALL_DIR__')  # /var/www/$app
+assert INSTALL_DIR_PATH.is_dir(), f'Directory not exists: {INSTALL_DIR_PATH}'
 
 LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/$app.log
 assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
@@ -80,7 +80,7 @@ PATH_URL = PATH_URL.strip('/')
 # Function that will be called to finalize a user profile:
 YNH_SETUP_USER = 'setup_user.setup_project_user'
 
-SECRET_KEY = __get_or_create_secret(FINALPATH / 'secret.txt')  # /opt/yunohost/$app/secret.txt
+SECRET_KEY = __get_or_create_secret(DATA_DIR_PATH / 'secret.txt')  # /home/yunohost.app/$app/secret.txt
 
 # INSTALLED_APPS.append('<insert-your-app-here>')
 
@@ -184,8 +184,14 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0rc2...main)
   * tbc
+* [v0.5.2 - 19.02.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0rc2)
+  * Migrate to "YunoHost Manifest v2":
+    * OLD: `FINALPATH`/`__FINALPATH__` -> NEW: `DATA_DIR_PATH`/`__DATA_DIR__`
+    * OLD: `PUBLIC_PATH`/`__PUBLIC_PATH__` -> NEW: `INSTALL_DIR_PATH`/`__INSTALL_DIR__`
+  * local tests tries to read `manifest.toml` instead of old `manifest.json`
+  * Rename `cli.py` to `dev-cli.py`
 * [v0.5.2 - 19.02.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.1...v0.5.2)
   * Update the projec setup a little bit via manageprojects
   * Support Django 4.0 and 4.1 (backport `RedirectURLMixin` for 4.0 from 4.1)

@@ -56,11 +56,11 @@ DEP_HASH_PATH = VENV_PATH / '.dep_hash'
 
 # script file defined in pyproject.toml as [console_scripts]
 # (Under Windows: ".exe" not added!)
-PROJECT_SHELL_SCRIPT = BIN_PATH / 'django_yunohost_integration'
+PROJECT_SHELL_SCRIPT = BIN_PATH / 'django_yunohost_integration_dev'
 
 
 def get_dep_hash():
-    """Get SHA512 hash from poetry.lock content."""
+    """Get SHA512 hash from lock file content."""
     return hashlib.sha512(DEP_LOCK_PATH.read_bytes()).hexdigest()
 
 
@@ -101,12 +101,12 @@ def main(argv):
         verbose_check_call(PIP_SYNC_PATH, str(DEP_LOCK_PATH))
 
         # install project
-        verbose_check_call(PIP_PATH, 'install', '-e', '.')
+        verbose_check_call(PIP_PATH, 'install', '--no-deps', '-e', '.')
         store_dep_hash()
 
     # Call our entry point CLI:
     try:
-        verbose_check_call(PROJECT_SHELL_SCRIPT, *sys.argv[1:])
+        verbose_check_call(PROJECT_SHELL_SCRIPT, *argv[1:])
     except subprocess.CalledProcessError as err:
         sys.exit(err.returncode)
 
