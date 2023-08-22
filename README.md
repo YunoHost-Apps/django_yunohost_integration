@@ -138,33 +138,7 @@ e.g.:
 ```bash
 ~$ git clone https://github.com/YunoHost-Apps/django_yunohost_integration.git
 ~$ cd django_yunohost_integration/
-~/django_yunohost_integration$ ./devshell.py
-
-+ .venv/bin/python .venv/bin/devshell
-
-
-
-Developer shell - django_yunohost_integration - v0.2.0
-
-
-Documented commands (use 'help -v' for verbose/'help <topic>' for details):
-
-dev-shell commands
-==================
-fix_code_style  linting  list_venv_packages  publish  pytest  update
-
-
-Django-YunoHost-Integration commands
-====================================
-local_test
-
-Uncategorized
-=============
-alias  help     macro  run_pyscript  set    shortcuts
-edit   history  quit   run_script    shell
-
-
-(django_yunohost_integration)
+~/django_yunohost_integration$ ./dev-cli.py
 ```
 
 For quicker developing of django_yunohost_integration in the context of YunoHost app,
@@ -173,8 +147,7 @@ and urls made for YunoHost installation.
 
 e.g.:
 ```bash
-~/django_yunohost_integration$ ./devshell.py
-(django_yunohost_integration) local_test
+~/django_yunohost_integration$ ./dev-cli.py local-test
 ```
 
 * SQlite database will be used
@@ -184,9 +157,12 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0rc2...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...main)
   * tbc
-* [v0.5.2 - 19.02.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0rc2)
+* [v0.6.0 - 22.08.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
+  * Update to YunoHost "Manifest v2"
+  * Replace devshell with a click CLI & replace pytest with normal unittests
+* [v0.5.2 - 19.02.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
   * Migrate to "YunoHost Manifest v2":
     * OLD: `FINALPATH`/`__FINALPATH__` -> NEW: `DATA_DIR_PATH`/`__DATA_DIR__`
     * OLD: `PUBLIC_PATH`/`__PUBLIC_PATH__` -> NEW: `INSTALL_DIR_PATH`/`__INSTALL_DIR__`
