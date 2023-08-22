@@ -30,8 +30,9 @@ django-tools==0.54.0 \
     --hash=sha256:5040a91282be9d1c9d379b0c65da50bcb3691bff03cee54fd4123ace238c3a43 \
     --hash=sha256:a7b7bfa5b9c5a81966454d17dffb2403cee25a806c858ee0486a08798227598f
     # via django-yunohost-integration (pyproject.toml)
-icdiff==2.0.6 \
-    --hash=sha256:a2673b335d671e64fc73c44e1eaa0aa01fd0e68354e58ee17e863ab29912a79a
+icdiff==2.0.7 \
+    --hash=sha256:f05d1b3623223dd1c70f7848da7d699de3d9a2550b902a8234d9026292fb5762 \
+    --hash=sha256:f79a318891adbf59a45e3a7694f5e1f18c5407065264637072ac8363b759866f
     # via django-tools
 packaging==23.1 \
     --hash=sha256:994793af429502c4ea2ebf6bf664629d07c1a9fe974af92966e4b8d2df7edc61 \
