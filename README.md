@@ -157,8 +157,12 @@ e.g.:
 
 ## history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...main)
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.0...main)
   * tbc
+* [v0.7.0 - 22.12.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...v0.7.0)
+  * Fix: `TypeError: SSOwatUserBackend.configure_user() got an unexpected keyword argument 'created'`
+  * Update project setup
+  * Remove Python v3.9 support!
 * [v0.6.0 - 22.08.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
   * Update to YunoHost "Manifest v2"
   * Replace devshell with a click CLI & replace pytest with normal unittests
