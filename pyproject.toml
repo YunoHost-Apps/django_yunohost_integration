@@ -114,12 +114,12 @@ branch = true
 parallel = true
 concurrency = ["multiprocessing"]
 source = ['.']
-command_line = 'manage.py test --buffer --shuffle -v 2'
+command_line = '-m django_yunohost_integration test'
 
 [tool.coverage.report]
 omit = ['.*', '*/tests/*']
 skip_empty = true
-fail_under = 30
+fail_under = 60
 show_missing = true
 exclude_lines = [
     'if self.debug:',
@@ -166,6 +166,7 @@ cookiecutter_template = "https://github.com/jedie/cookiecutter_templates/"
 cookiecutter_directory = "piptools-python"
 applied_migrations = [
     "877e2ec", # 2023-08-17T20:54:24+02:00
+    "56c0eb7", # 2023-12-22T08:36:44+01:00
 ]
 
 [manageprojects.cookiecutter_context.cookiecutter]

@@ -34,24 +34,21 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         # config_panel.toml settings:
 
-        self.assertEqual(settings.DEBUG_ENABLED, 'NO')
+        self.assertEqual(settings.DEBUG_ENABLED, '0')
         assert settings.LOG_LEVEL == 'DEBUG'
-        assert settings.ADMIN_EMAIL == 'admin-email@test.intranet'
-        assert settings.DEFAULT_FROM_EMAIL == 'default-from-email@test.intranet'
+        assert settings.ADMIN_EMAIL == 'admin-email@test.tld'
+        assert settings.DEFAULT_FROM_EMAIL == 'default-from-email@test.tld'
 
         # Normal settings:
         self.assertIs(settings.DEBUG, False)
         assert settings.ROOT_URLCONF == 'urls'
-        assert settings.ADMINS == (('The Admin Username', 'admin-email@test.intranet'),)
-        assert settings.MANAGERS == (('The Admin Username', 'admin-email@test.intranet'),)
-        assert settings.SERVER_EMAIL == 'admin-email@test.intranet'
-        assert settings.ALLOWED_HOSTS == [
-            '127.0.0.1',  # The real entry
-            'testserver',  # Added by Django's setup_test_environment()
-        ]
-
-        # Set in tests.conftest.pytest_configure via create_local_test():
-        assert settings.EXTRA_REPLACEMENT == 'Just for the unittests ;)'
+        assert settings.ADMINS == (('The Admin Username', 'admin-email@test.tld'),)
+        assert settings.MANAGERS == (('The Admin Username', 'admin-email@test.tld'),)
+        assert settings.SERVER_EMAIL == 'admin-email@test.tld'
+        self.assertEqual(
+            settings.ALLOWED_HOSTS,
+            ['testserver'],  # Added by Django's setup_test_environment()
+        )
 
         # Logging example correct?
         log_filename = settings.LOGGING['handlers']['log_file']['filename']

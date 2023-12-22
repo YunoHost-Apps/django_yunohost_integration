@@ -5,8 +5,16 @@
 import dataclasses
 import os
 import sys
+from functools import cache
 from pathlib import Path
 from typing import Optional
+
+import django
+from bx_py_utils.pyproject_toml import get_pyproject_config
+from rich import print
+
+from django_yunohost_integration.path_utils import get_project_root
+
 
 try:
     import tomllib  # New in Python 3.11
@@ -16,11 +24,15 @@ except ImportError:
 from cli_base.cli_tools.subprocess_utils import verbose_check_call
 from django_tools.unittest_utils.assertments import assert_is_dir, assert_is_file
 
-import django_yunohost_integration
 from django_yunohost_integration.test_utils import generate_basic_auth
 
 
-BASE_PATH = Path(django_yunohost_integration.__file__).parent
+DEFAULT_REPLACEMENTS = {
+    '__DEBUG_ENABLED__': '0',  # "1" or "0" string
+    '__LOG_LEVEL__': 'DEBUG',
+    '__ADMIN_EMAIL__': 'admin-email@test.tld',
+    '__DEFAULT_FROM_EMAIL__': 'default-from-email@test.tld',
+}
 
 
 def call_manage_py(data_dir_path, *args, extra_env=None):
@@ -150,7 +162,16 @@ def create_local_test(
         copy_patch(src_file=src_file, replaces=REPLACES, data_dir_path=data_dir_path)
 
     local_settings_path = data_dir_path / 'local_settings.py'
-    local_settings_source = Path(BASE_PATH / 'local_settings_source.py')
+
+    local_settings_source = get_pyproject_config(section=('ynh-integration', 'local_settings_source'))
+    if not local_settings_source:
+        print(r'[bold red]WARNING: No \[ynh-integration.local_settings_source\] in your pyproject.toml!')
+        local_settings_source = get_project_root() / 'django_yunohost_integration' / 'local_settings_source.py'
+        print(f'\tFallback to: {local_settings_source}')
+    else:
+        print(f'Use: {local_settings_source}')
+
+    assert_is_file(local_settings_source)
     local_settings = f'# source file: {local_settings_source}\n'
     local_settings += local_settings_source.read_text()
     local_settings_path.write_text(local_settings)
@@ -184,3 +205,39 @@ def create_local_test(
         data_dir_path=data_dir_path,
         django_settings_name=django_settings_name,
     )
+
+
+@cache  # Run only one time per session
+def setup_local_yunohost_test(
+    *,
+    extra_env: dict | None = None,
+    extra_replacements: dict | None = None,
+) -> None:
+    package_root = get_project_root()
+    print(f'Setup local YunoHost package from: {package_root}')
+
+    replacements = DEFAULT_REPLACEMENTS.copy()
+    if extra_replacements:
+        replacements.update(extra_replacements)
+
+    result: CreateResults = create_local_test(
+        django_settings_path=package_root / 'conf' / 'settings.py',
+        destination=package_root / 'local_test',
+        runserver=False,
+        extra_replacements=replacements,
+    )
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+    os.environ['ENV_TYPE'] = 'test'
+
+    os.environ['PYTHONUNBUFFERED'] = '1'
+    os.environ['PYTHONWARNINGS'] = 'always'
+
+    if extra_env:
+        os.environ.update(extra_env)
+
+    # Add ".../local_test/opt_yunohost/" to sys.path, so that "settings" is importable:
+    final_home_str = str(result.data_dir_path)
+    if final_home_str not in sys.path:
+        sys.path.insert(0, final_home_str)
+
+    django.setup()

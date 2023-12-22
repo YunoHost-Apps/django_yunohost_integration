@@ -44,7 +44,7 @@ class SSOwatUserBackend(RemoteUserBackend):
         logger.info('Remote user authenticate: %r', remote_user)
         return super().authenticate(request, remote_user)
 
-    def configure_user(self, request, user):
+    def configure_user(self, request, user, created=True):
         """
         Configure a new user after creation and return the updated user.
         """
