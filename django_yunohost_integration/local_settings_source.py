@@ -13,7 +13,7 @@ if ENV_TYPE == 'local':
     SECURE_SSL_REDIRECT = False  # Don't redirect http to https
     SERVE_FILES = True  # May used in urls.py
     AUTH_PASSWORD_VALIDATORS = []  # accept all passwords
-    ALLOWED_HOSTS = ["*"]  # Allow access from "everywhere"
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']  # For local dev. server
     CACHES = {  # Setup a working cache, without Redis ;)
         'default': {
             'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -22,3 +22,4 @@ if ENV_TYPE == 'local':
     }
 elif ENV_TYPE == 'test':
     SILENCED_SYSTEM_CHECKS = ['security.W018']  # tests runs with DEBUG=True
+    ALLOWED_HOSTS = []  # For unittests (Django's setup_test_environment() will add 'testserver')
