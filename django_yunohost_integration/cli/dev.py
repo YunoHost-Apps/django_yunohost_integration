@@ -187,7 +187,8 @@ def publish():
     """
     Build and upload this project to PyPi
     """
-    _run_django_test_cli(argv=['manage.py', 'test'])  # Don't publish a broken state
+    # Don't publish a broken state:
+    _run_django_test_cli(argv=['manage.py', 'test'], exit_after_run=False)
 
     publish_package(
         module=django_yunohost_integration,
