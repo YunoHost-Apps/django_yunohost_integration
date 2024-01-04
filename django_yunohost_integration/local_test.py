@@ -165,11 +165,12 @@ def create_local_test(
 
     local_settings_source = get_pyproject_config(section=('ynh-integration', 'local_settings_source'))
     if not local_settings_source:
-        print(r'[bold red]WARNING: No \[ynh-integration.local_settings_source\] in your pyproject.toml!')
+        print(r'[bold red]WARNING: No "\[ynh-integration.local_settings_source]" in your pyproject.toml!')
         local_settings_source = get_project_root() / 'django_yunohost_integration' / 'local_settings_source.py'
         print(f'\tFallback to: {local_settings_source}')
     else:
         print(f'Use: {local_settings_source}')
+        local_settings_source = Path(local_settings_source)
 
     assert_is_file(local_settings_source)
     local_settings = f'# source file: {local_settings_source}\n'
