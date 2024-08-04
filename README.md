@@ -160,6 +160,7 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [v0.8.0rc0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0rc0)
+  * 2024-08-04 - Update requirements
   * 2024-08-04 - Set Python 3.11 as minimum
   * 2024-08-04 - Add pre-commit scripts
   * 2024-08-04 - safety -> pip-audit

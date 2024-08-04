@@ -15,7 +15,6 @@ dependencies = [
     'colorlog',   # https://github.com/borntyping/python-colorlog
     'packaging',   # https://github.com/pypa/packaging
     'pyyaml',   # https://github.com/yaml/pyyaml
-
 ]
 [project.optional-dependencies]
 ynh = [  # install "django_yunohost_integration" as YunoHost app:
@@ -84,6 +83,12 @@ version = {attr = "django_yunohost_integration.__version__"}
 
 [tool.cli_base]
 version_module_name = "django_yunohost_integration" # Used in cli_base.cli_tools.git_history.update_readme_history()
+
+[tool.cli_base.pip_audit]
+requirements=["requirements.dev.txt"]
+strict=true
+require_hashes=true
+ignore-vuln=[]
 
 
 [tool.darker]
