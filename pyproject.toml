@@ -90,6 +90,8 @@ strict=true
 require_hashes=true
 ignore-vuln=[]
 
+[ynh-integration]
+local_settings_source= "django_yunohost_integration/local_settings_source.py"
 
 [tool.darker]
 src = ['.']
