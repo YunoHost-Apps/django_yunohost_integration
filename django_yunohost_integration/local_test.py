@@ -7,7 +7,6 @@ import os
 import sys
 from functools import cache
 from pathlib import Path
-from typing import Optional
 
 import django
 from bx_py_utils.pyproject_toml import get_pyproject_config
@@ -76,7 +75,7 @@ def create_local_test(
     django_settings_path: Path,
     destination: Path,
     runserver: bool = False,
-    extra_replacements: Optional[dict] = None,
+    extra_replacements: dict | None = None,
 ) -> CreateResults:
     django_settings_path = django_settings_path.resolve()
     assert_is_file(django_settings_path)
@@ -213,7 +212,7 @@ def setup_local_yunohost_test(
     *,
     extra_env: dict | None = None,
     extra_replacements: dict | None = None,
-) -> None:
+) -> CreateResults:
     package_root = get_project_root()
     print(f'Setup local YunoHost package from: {package_root}')
 
@@ -242,3 +241,20 @@ def setup_local_yunohost_test(
         sys.path.insert(0, final_home_str)
 
     django.setup()
+
+    return result
+
+
+def run_local_test_manage(*, argv: list | None = None, extra_env: dict | None = None, exit_after_run: bool = True):
+    """
+    Call the origin Django test manage command CLI and pass all args to it.
+    """
+    if argv is None:
+        argv = sys.argv
+
+    result: CreateResults = setup_local_yunohost_test()
+
+    call_manage_py(result.data_dir_path, *argv[1:], extra_env=extra_env)
+
+    if exit_after_run:
+        sys.exit(0)

@@ -87,23 +87,27 @@ def main(argv):
 
     # Create virtual env in ".venv/":
     if not PYTHON_PATH.is_file():
-        print('Create virtual env here:', VENV_PATH.absolute())
+        print(f'Create virtual env here: {VENV_PATH.absolute()}')
         builder = venv.EnvBuilder(symlinks=True, upgrade=True, with_pip=True)
         builder.create(env_dir=VENV_PATH)
+
+    if not PROJECT_SHELL_SCRIPT.is_file() or not venv_up2date():
         # Update pip
         verbose_check_call(PYTHON_PATH, '-m', 'pip', 'install', '-U', 'pip')
 
-    if not PIP_SYNC_PATH.is_file():
         # Install pip-tools
         verbose_check_call(PYTHON_PATH, '-m', 'pip', 'install', '-U', 'pip-tools')
 
-    if not PROJECT_SHELL_SCRIPT.is_file() or not venv_up2date():
         # install requirements via "pip-sync"
         verbose_check_call(PIP_SYNC_PATH, str(DEP_LOCK_PATH))
 
         # install project
         verbose_check_call(PIP_PATH, 'install', '--no-deps', '-e', '.')
         store_dep_hash()
+
+        # Activate git pre-commit hooks:
+        verbose_check_call(PYTHON_PATH, '-m', 'pre_commit', 'install')
+        verbose_check_call(PYTHON_PATH, '-m', 'pre_commit', 'autoupdate')
 
     # Call our entry point CLI:
     try:

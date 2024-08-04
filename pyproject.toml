@@ -7,7 +7,7 @@ readme = "README.md"
 authors = [
     {name = 'Jens Diemer', email = 'git@jensdiemer.de'}
 ]
-requires-python = ">=3.9,<4" # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
+requires-python = ">=3.11"
 dependencies = [
     'django',  # https://github.com/django/django
     'django-tools',  # https://github.com/jedie/django-tools
@@ -15,12 +15,11 @@ dependencies = [
     'colorlog',   # https://github.com/borntyping/python-colorlog
     'packaging',   # https://github.com/pypa/packaging
     'pyyaml',   # https://github.com/yaml/pyyaml
-
 ]
 [project.optional-dependencies]
 ynh = [  # install "django_yunohost_integration" as YunoHost app:
     'gunicorn',
-    'psycopg2', # Don't use "psycopg2-binary": It's not available on ARM boards see: https://github.com/jedie/PyInventory/issues/56
+    'psycopg[binary]', # https://github.com/psycopg/psycopg
     'django-redis',
     'django-axes', # https://github.com/jazzband/django-axes
 ]
@@ -29,12 +28,12 @@ dev = [
     'django-example',  # https://github.com/jedie/django-example
     'bx_django_utils',   # https://github.com/boxine/bx_django_utils
     'requests-mock',  # https://github.com/jamielennox/requests-mock
-    "cli-base-utilities>=0.3.0",  # https://github.com/jedie/cli-base-utilities
+    "cli-base-utilities",  # https://github.com/jedie/cli-base-utilities
     "click",  # https://github.com/pallets/click/
     "rich-click",  # https://github.com/ewels/rich-click
     "rich",  # https://github.com/Textualize/rich
 
-    "manageprojects>=0.15.0",  # https://github.com/jedie/manageprojects
+    "manageprojects",  # https://github.com/jedie/manageprojects
     "pip-tools",  # https://github.com/jazzband/pip-tools/
     "tox",  # https://github.com/tox-dev/tox
     "coverage",  # https://github.com/nedbat/coveragepy
@@ -44,9 +43,10 @@ dev = [
     "pyflakes",  # https://github.com/PyCQA/pyflakes
     "codespell",  # https://github.com/codespell-project/codespell
     "EditorConfig",  # https://github.com/editorconfig/editorconfig-core-py
-    "safety",  # https://github.com/pyupio/safety
+    "pip-audit",  # https://github.com/pypa/pip-audit
     "mypy",  # https://github.com/python/mypy
     "twine",  # https://github.com/pypa/twine
+    "pre-commit",  # https://github.com/pre-commit/pre-commit
 
     # https://github.com/akaihola/darker
     # https://github.com/ikamensh/flynt
@@ -81,18 +81,28 @@ include = ["django_yunohost_integration*"]
 version = {attr = "django_yunohost_integration.__version__"}
 
 
+[tool.cli_base]
+version_module_name = "django_yunohost_integration" # Used in cli_base.cli_tools.git_history.update_readme_history()
+
+[tool.cli_base.pip_audit]
+requirements=["requirements.dev.txt"]
+strict=true
+require_hashes=true
+ignore-vuln=[]
+
+[ynh-integration]
+local_settings_source= "django_yunohost_integration/local_settings_source.py"
+
 [tool.darker]
 src = ['.']
 revision = "origin/main..."
 line_length = 119
-verbose = true
 color = true
 skip_string_normalization = true
 diff = false
 check = false
 stdout = false
 isort = true
-flynt = true
 lint = [
     "flake8",
 ]
@@ -133,7 +143,7 @@ exclude_lines = [
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-envlist = py{311,310,39}
+envlist = py{312,311}
 skip_missing_interpreters = True
 
 [testenv]
@@ -167,6 +177,7 @@ cookiecutter_directory = "piptools-python"
 applied_migrations = [
     "877e2ec", # 2023-08-17T20:54:24+02:00
     "56c0eb7", # 2023-12-22T08:36:44+01:00
+    "52669d0", # 2024-08-02T15:47:04+02:00
 ]
 
 [manageprojects.cookiecutter_context.cookiecutter]

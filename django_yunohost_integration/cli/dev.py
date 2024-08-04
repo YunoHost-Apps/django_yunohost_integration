@@ -12,9 +12,10 @@ from cli_base.cli_tools.subprocess_utils import verbose_check_call
 from cli_base.cli_tools.test_utils.snapshot import UpdateTestSnapshotFiles
 from cli_base.cli_tools.verbosity import OPTION_KWARGS_VERBOSE
 from cli_base.cli_tools.version_info import print_version
+from cli_base.run_pip_audit import run_pip_audit
 from django.core.management.commands.test import Command as DjangoTestCommand
 from manageprojects.utilities.publish import publish_package
-from rich import print  # noqa; noqa
+from rich import print  # noqa
 from rich.console import Console
 from rich.traceback import install as rich_traceback_install
 from rich_click import RichGroup
@@ -84,15 +85,13 @@ def install():
 cli.add_command(install)
 
 
-@click.command()
-def safety():
+@cli.command()
+@click.option('-v', '--verbosity', **OPTION_KWARGS_VERBOSE)
+def pip_audit(verbosity: int):
     """
-    Run safety check against current requirements files
+    Run pip-audit check against current requirements files
     """
-    verbose_check_call('safety', 'check', '-r', 'requirements.dev.txt')
-
-
-cli.add_command(safety)
+    run_pip_audit(base_path=get_project_root(), verbosity=verbosity)
 
 
 @click.command()
@@ -147,7 +146,7 @@ def update():
         extra_env=extra_env,
     )
 
-    verbose_check_call(bin_path / 'safety', 'check', '-r', 'requirements.ynh.txt', '-r', 'requirements.dev.txt')
+    run_pip_audit(base_path=get_project_root())
 
     # Install new dependencies in current .venv:
     verbose_check_call(bin_path / 'pip-sync', 'requirements.dev.txt')
