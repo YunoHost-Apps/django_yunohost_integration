@@ -7,7 +7,7 @@ readme = "README.md"
 authors = [
     {name = 'Jens Diemer', email = 'git@jensdiemer.de'}
 ]
-requires-python = ">=3.9,<4" # Stay with 3.9 until YunoHost used >=Debian 11 (Bullseye)
+requires-python = ">=3.11"
 dependencies = [
     'django',  # https://github.com/django/django
     'django-tools',  # https://github.com/jedie/django-tools
@@ -29,12 +29,12 @@ dev = [
     'django-example',  # https://github.com/jedie/django-example
     'bx_django_utils',   # https://github.com/boxine/bx_django_utils
     'requests-mock',  # https://github.com/jamielennox/requests-mock
-    "cli-base-utilities>=0.3.0",  # https://github.com/jedie/cli-base-utilities
+    "cli-base-utilities",  # https://github.com/jedie/cli-base-utilities
     "click",  # https://github.com/pallets/click/
     "rich-click",  # https://github.com/ewels/rich-click
     "rich",  # https://github.com/Textualize/rich
 
-    "manageprojects>=0.15.0",  # https://github.com/jedie/manageprojects
+    "manageprojects",  # https://github.com/jedie/manageprojects
     "pip-tools",  # https://github.com/jazzband/pip-tools/
     "tox",  # https://github.com/tox-dev/tox
     "coverage",  # https://github.com/nedbat/coveragepy
@@ -90,14 +90,12 @@ version_module_name = "django_yunohost_integration" # Used in cli_base.cli_tools
 src = ['.']
 revision = "origin/main..."
 line_length = 119
-verbose = true
 color = true
 skip_string_normalization = true
 diff = false
 check = false
 stdout = false
 isort = true
-flynt = true
 lint = [
     "flake8",
 ]
@@ -138,7 +136,7 @@ exclude_lines = [
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-envlist = py{311,310,39}
+envlist = py{312,311}
 skip_missing_interpreters = True
 
 [testenv]
