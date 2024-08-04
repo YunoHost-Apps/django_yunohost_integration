@@ -160,6 +160,7 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [v0.8.0rc0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0rc0)
+  * 2024-08-04 - safety -> pip-audit
   * 2024-08-04 - 'psycopg2' -> 'psycopg[binary]'
   * 2024-08-04 - Use pre-commit to update history in README
   * 2024-08-04 - Apply manageprojects updates
