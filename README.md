@@ -155,82 +155,156 @@ e.g.:
 * The page is available under `http://127.0.0.1:8000/app_path/`
 
 
-## history
+# history
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.0...main)
-  * tbc
-* [v0.7.0 - 22.12.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...v0.7.0)
-  * Fix: `TypeError: SSOwatUserBackend.configure_user() got an unexpected keyword argument 'created'`
-  * Update project setup
-  * Remove Python v3.9 support!
-* [v0.6.0 - 22.08.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
-  * Update to YunoHost "Manifest v2"
-  * Replace devshell with a click CLI & replace pytest with normal unittests
-* [v0.5.2 - 19.02.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
-  * Migrate to "YunoHost Manifest v2":
-    * OLD: `FINALPATH`/`__FINALPATH__` -> NEW: `DATA_DIR_PATH`/`__DATA_DIR__`
-    * OLD: `PUBLIC_PATH`/`__PUBLIC_PATH__` -> NEW: `INSTALL_DIR_PATH`/`__INSTALL_DIR__`
-  * local tests tries to read `manifest.toml` instead of old `manifest.json`
-  * Rename `cli.py` to `dev-cli.py`
-* [v0.5.2 - 19.02.2023](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.1...v0.5.2)
-  * Update the projec setup a little bit via manageprojects
-  * Support Django 4.0 and 4.1 (backport `RedirectURLMixin` for 4.0 from 4.1)
-* [v0.5.1 - 21.12.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.0...v0.5.1)
-  * Skip versions check in Github actions to avoid the rate limit in pipelines ;)
-* [v0.5.0 - 21.12.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...v0.5.0)
-  * Add `SSOwatLoginRedirectView`
-  * Set min. Python version from 3.7 to 3.9 (Needs YunoHost 11!)
-  * Display logs in local tests and use `colorlog.StreamHandler`
-  * Bugfix example url pattern
-  * Code cleanup: Remove `request_media_debug_view`
-* [v0.4.1 - 04.10.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0...v0.4.1)
-  * Add `assert_project_version` and `get_github_version_tag` in `test_utils`
-* [v0.4.0 - 15.09.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...v0.4.0)
-  * Add `SyslogHandler` to logging settings and enhance logging example settings.
-  * rename replacements (but still support the old ones):
-    * `__FINAL_HOME_PATH__` -> `__FINALPATH__`
-    * `__FINAL_WWW_PATH__` -> `__PUBLIC_PATH__`
-  * Add system checks to verify all "EMAIL" in `settings` and `settings.LOG_LEVEL`
-  * Bugfix dev shell and exit if it's called as CLI
-  * Run "saftey" check in CI
-* [v0.3.0 - 14.08.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.5...v0.3.0)
-  * Add `extra_replacements:dict` argument to `create_local_test()` to pass own `__YNH_VARIABLE__` replacements
-  * Remove `pytest_helper.run_pytest()` because every project should used a own [conftest.py](https://github.com/YunoHost-Apps/django_yunohost_integration/blob/main/tests/conftest.py) with `create_local_test()` usage.
-* [v0.2.5 - 12.08.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.4...v0.2.5)
-  * Support new variable names, for `ynh_add_config` usage in local test helper.
-  * Run tests with Python v3.10, too.
-  * Update project setup.
-* [v0.2.4 - 30.01.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.3...v0.2.4)
-  * Rename git "master" branch to "main"
-  * Use darker and pytest-darker as code formatter + update requirements
-* [v0.2.3 - 07.01.2022](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.2...v0.2.3)
-  * Bugfix Fix local test by set `"SECURE_SSL_REDIRECT = False"`
-* [v0.2.2 - 10.10.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.1...v0.2.2)
-  * Read YunoHost App Id from "manifest.json" and check root directory name
-* [v0.2.1 - 16.09.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.0...v0.2.1)
-  * Bugfix endless redirect loop, by adding `SECURE_PROXY_SSL_HEADER` to settings
-* [v0.2.0 - 15.09.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.5...v0.2.0)
-  * rename/split `django_ynh` into:
-    * [django_yunohost_integration](https://github.com/YunoHost-Apps/django_yunohost_integration) - Python package with the glue code to integrate a Django project with YunoHost
-    * [django_example_ynh](https://github.com/YunoHost-Apps/django_example_ynh) - Demo YunoHost App to demonstrate the integration of a Django project under YunoHost
-  * Replace `psycopg2-binary` with `psycopg2` (needs some prerequisites packages, see above)
-* [v0.1.5 - 19.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.4...v0.1.5)
-  * Make some deps `gunicorn`, `psycopg2-binary`, `django-redis`, `django-axes` optional
-* [v0.1.4 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.3...v0.1.4)
-  * Bugfix: CSRF verification failed on POST requests
-* [v0.1.3 - 08.01.2021](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.2...v0.1.3)
-  * set "DEBUG = True" in local_test (so static files are served and auth works)
-  * Bugfixes and cleanups
-* [v0.1.2 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.1...v0.1.2)
-  * Bugfixes
-* [v0.1.1 - 29.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.0...v0.1.1)
-  * Refactor "create_superuser" to a manage command, useable via "django_yunohost_integration" in `INSTALLED_APPS`
-  * Generate "conf/requirements.txt" and use this file for install
-  * rename own settings and urls (in `/conf/`)
-* [v0.1.0 - 28.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/f578f14...v0.1.0)
-  * first working state
-* [23.12.2020](https://github.com/YunoHost-Apps/django_yunohost_integration/commit/f578f144a3a6d11d7044597c37d550d29c247773)
-  * init the project
+[comment]: <> (✂✂✂ auto generated history start ✂✂✂)
+
+* [v0.8.0rc0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0rc0)
+  * 2024-08-04 - Use pre-commit to update history in README
+  * 2024-08-04 - Apply manageprojects updates
+* [v0.7.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.0...v0.7.1)
+  * 2024-01-04 - Bugfix create_local_test()
+* [v0.7.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...v0.7.0)
+  * 2023-12-22 - Fix publish
+  * 2023-12-22 - Update project setup
+  * 2023-12-22 - Bugfix: unexpected keyword argument 'created'
+  * 2023-08-22 - Update README.md
+* [v0.6.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
+  * 2023-08-22 - Update requeirements, README and bump version to v0.6.0
+  * 2023-08-20 - __PATH_URL__ -> __PATH__
+  * 2023-08-20 - update test
+  * 2023-08-20 - Replace __DEBUG_ENABLED__ with "YES" in local tests
+  * 2023-08-20 - Update to YunoHost "Manifest v2"
+  * 2023-02-19 - Replace devshell with a click CLI & replace pytest with normal unittests
+
+<details><summary>Expand older history entries ...</summary>
+
+* [v0.5.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.1...v0.5.2)
+  * 2023-02-19 - Support Django 4.0: Add RedirectURLMixin from 4.1 as fallback
+  * 2023-02-18 - Update via manageprojects
+* [v0.5.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.0...v0.5.1)
+  * 2022-12-21 - Disable assert_project_version in GitHub actions
+* [v0.5.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.1...v0.5.0)
+  * 2022-12-21 - include SSOwatLoginRedirectView
+  * 2022-10-19 - Project upgrades
+  * 2022-10-07 - "-pytest-darker" -> just call darker via test
+  * 2022-10-05 - updates
+* [v0.4.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.4.0...v0.4.1)
+  * 2022-10-04 - v0.4.1 Add `assert_project_version` and `get_github_version_tag`
+  * 2022-09-19 - Update requirements
+  * 2022-09-19 - README
+* [v0.4.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.3.0...v0.4.0)
+  * 2022-09-15 - update django-tools to v0.54.0
+  * 2022-09-15 - Run "saftey" check in CI
+  * 2022-09-15 - update project setup tests
+  * 2022-09-15 - Update requirements and release as v0.4.0rc6
+  * 2022-09-15 - Silent "DEBUG=True" warning in tests
+  * 2022-09-15 - Remove own assert_is_file() and assert_is_dir() implementation
+  * 2022-09-15 - Update devshell.py via tests
+  * 2022-08-25 - v0.4.0rc5 - better logging example settings
+  * 2022-08-25 - v0.4.0rc4 - Add `SyslogHandler` to logging settings
+  * 2022-08-25 - Lower systems checks "Error" to "Warning"
+  * 2022-08-24 - remove unused "check_process"
+  * 2022-08-24 - Update dev shell: Run a cmd2 App as CLI or shell
+  * 2022-08-24 - Add system check to validate settings.LOG_LEVEL
+  * 2022-08-24 - cleanup test settingsd
+  * 2022-08-24 - Add systemcheck to validate all email addresses in settings
+  * 2022-08-24 - __FINAL_HOME_PATH__ -> __FINALPATH__ and __FINAL_WWW_PATH__ -> __PUBLIC_PATH__
+* [v0.3.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.5...v0.3.0)
+  * 2022-08-14 - Update README
+  * 2022-08-14 - update requirements
+  * 2022-08-14 - code cleanup
+  * 2022-08-14 - Add `extra_replacements:dict` to `create_local_test()`
+  * 2022-08-14 - rename `setup_demo_user()` -> `setup_project_user()`
+  * 2022-08-14 - Remove `pytest_helper.run_pytest()`
+  * 2022-08-12 - Update README.md
+* [v0.2.5](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.4...v0.2.5)
+  * 2022-08-12 - bump version to v0.2.5
+  * 2022-08-12 - Update README.md
+  * 2022-08-12 - New variable names, for "ynh_add_config" usage
+  * 2022-08-12 - update test setup
+  * 2022-08-12 - fix line_length
+  * 2022-08-12 - uses: codecov/codecov-action@v2
+  * 2022-08-12 - fix editorconfig
+  * 2022-07-11 - Expand local settings for local test.
+* [v0.2.4](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.3...v0.2.4)
+  * 2022-01-30 - Update README.md
+  * 2022-01-30 - Use darker and pytest-darker as code formatter + update requirements
+  * 2022-01-30 - Add/update some meta information
+* [v0.2.3](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.2...v0.2.3)
+  * 2022-01-07 - Bugfix tests
+  * 2022-01-07 - update requirements
+  * 2022-01-07 - Fix local test by set "SECURE_SSL_REDIRECT = False"
+  * 2021-10-10 - Update README.md
+* [v0.2.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.1...v0.2.2)
+  * 2021-10-10 - Read YunoHost App name from project manifest.json file
+* [v0.2.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.2.0...v0.2.1)
+  * 2021-09-16 - Bugfix endless redirect loop, by adding `SECURE_PROXY_SSL_HEADER` to settings
+  * 2021-09-15 - Update README.md
+* [v0.2.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.5...v0.2.0)
+  * 2021-09-15 - Update deps
+  * 2021-08-17 - updtae README and add poetry.lock file
+  * 2021-08-16 - Bugfix publish command
+  * 2021-08-16 - fix "linting" and "fix_code_style" commands and remove obsolete Makefile
+  * 2021-08-16 - fix flake8
+  * 2021-08-16 - Set security settings
+  * 2021-08-16 - Update githib actions
+  * 2021-08-16 - Setup pytest against local test installation
+  * 2021-02-28 - Rename/split from django_ynh
+* [v0.1.5](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.4...v0.1.5)
+  * 2021-01-19 - release v0.1.5
+  * 2021-01-17 - Make some dependencies optional
+* [v0.1.4](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.3...v0.1.4)
+  * 2021-01-08 - prepare v0.1.4 release
+  * 2021-01-08 - Bugfix #7 CSRF verification failed on POST requests
+* [v0.1.3](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.2...v0.1.3)
+  * 2021-01-08 - update README
+  * 2021-01-08 - bump v0.1.3
+  * 2021-01-08 - rename log file name in local test
+  * 2021-01-08 - add homepage in pyproject.toml
+  * 2020-12-29 - Update README.md
+  * 2020-12-29 - update docs
+  * 2020-12-29 - -volumes
+  * 2020-12-29 - -pytest-randomly
+  * 2020-12-29 - set "DEBUG = True" in local_test (so static files are served)
+* [v0.1.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.1...v0.1.2)
+  * 2020-12-29 - Bugfix nginx config
+  * 2020-12-29 - copy conf/setup_user.py, too
+  * 2020-12-29 - fix serve static files
+  * 2020-12-29 - fix superuser setup
+  * 2020-12-29 - Make "--email" optional in "create_superuser" manage command
+* [v0.1.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.1.0...v0.1.1)
+  * 2020-12-29 - pass existing pytest arguments
+  * 2020-12-29 - fix code style
+  * 2020-12-29 - update tests
+  * 2020-12-29 - test version in scripts/_common.sh
+  * 2020-12-29 - install the app via pip
+  * 2020-12-29 - rename settings and urls
+  * 2020-12-29 - Fix nginx.conf
+  * 2020-12-29 - code cleanup
+  * 2020-12-29 - Add more info about this project into README
+  * 2020-12-29 - Generate "conf/requirements.txt" and use this file for install
+  * 2020-12-29 - Add "django_ynh" to INSTALLED_APPS and migrate "create_superuser" to a manage command
+* [v0.1.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/f578f14...v0.1.0)
+  * 2020-12-28 - fix "make publish"
+  * 2020-12-28 - fix linting
+  * 2020-12-28 - fix version test
+  * 2020-12-28 - bump version
+  * 2020-12-28 - bugfix "make publish"
+  * 2020-12-28 - remove test file
+  * 2020-12-28 - +DocString
+  * 2020-12-28 - code style
+  * 2020-12-28 - call "make lint" as unittest
+  * 2020-12-28 - +test_project_setup.py
+  * 2020-12-28 - get pytest running with local test copy
+  * 2020-12-28 - WIP: setup the project
+  * 2020-12-23 - init
+
+</details>
+
+
+[comment]: <> (✂✂✂ auto generated history end ✂✂✂)
+
 
 
 ## Links
