@@ -20,7 +20,7 @@ dependencies = [
 [project.optional-dependencies]
 ynh = [  # install "django_yunohost_integration" as YunoHost app:
     'gunicorn',
-    'psycopg2', # Don't use "psycopg2-binary": It's not available on ARM boards see: https://github.com/jedie/PyInventory/issues/56
+    'psycopg[binary]', # https://github.com/psycopg/psycopg
     'django-redis',
     'django-axes', # https://github.com/jazzband/django-axes
 ]
