@@ -159,6 +159,7 @@ e.g.:
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...main)
 * [v0.8.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0)
   * 2024-08-04 - work-a-round for: https://github.com/jazzband/pip-tools/issues/1866
   * 2024-08-04 - Bugfix local "manage.py" helper
@@ -176,6 +177,9 @@ e.g.:
   * 2023-12-22 - Update project setup
   * 2023-12-22 - Bugfix: unexpected keyword argument 'created'
   * 2023-08-22 - Update README.md
+
+<details><summary>Expand older history entries ...</summary>
+
 * [v0.6.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
   * 2023-08-22 - Update requeirements, README and bump version to v0.6.0
   * 2023-08-20 - __PATH_URL__ -> __PATH__
@@ -183,9 +187,6 @@ e.g.:
   * 2023-08-20 - Replace __DEBUG_ENABLED__ with "YES" in local tests
   * 2023-08-20 - Update to YunoHost "Manifest v2"
   * 2023-02-19 - Replace devshell with a click CLI & replace pytest with normal unittests
-
-<details><summary>Expand older history entries ...</summary>
-
 * [v0.5.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.1...v0.5.2)
   * 2023-02-19 - Support Django 4.0: Add RedirectURLMixin from 4.1 as fallback
   * 2023-02-18 - Update via manageprojects

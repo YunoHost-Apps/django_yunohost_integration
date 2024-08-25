@@ -26,12 +26,21 @@ jobs:
         git checkout $GITHUB_SHA || (git fetch && git checkout $GITHUB_SHA)
 
     - name: 'Set up Python ${{ matrix.python-version }}'
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       # https://github.com/marketplace/actions/setup-python
       with:
         python-version: '${{ matrix.python-version }}'
         cache: 'pip' # caching pip dependencies
         cache-dependency-path: '**/requirements.*.txt'
+
+    - name: 'Bootstrap app venv'
+      # The first CLI call will create the .venv
+      run: |
+        ./cli.py version
+
+    - name: 'app CLI help'
+      run: |
+        ./cli.py --help
 
     - name: 'Bootstrap dev venv'
       # The first CLI call will create the .venv
@@ -54,7 +63,7 @@ jobs:
         ./dev-cli.py coverage
 
     - name: 'Upload coverage report'
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       # https://github.com/marketplace/actions/codecov
       with:
         fail_ci_if_error: false
