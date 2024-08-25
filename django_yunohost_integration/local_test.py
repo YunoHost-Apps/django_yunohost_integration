@@ -9,6 +9,7 @@ from functools import cache
 from pathlib import Path
 
 import django
+from bx_py_utils.path import assert_is_dir, assert_is_file
 from bx_py_utils.pyproject_toml import get_pyproject_config
 from rich import print
 
@@ -21,7 +22,6 @@ except ImportError:
     import tomli as tomllib
 
 from cli_base.cli_tools.subprocess_utils import verbose_check_call
-from django_tools.unittest_utils.assertments import assert_is_dir, assert_is_file
 
 from django_yunohost_integration.test_utils import generate_basic_auth
 
