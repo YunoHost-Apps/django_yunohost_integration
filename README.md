@@ -1,7 +1,7 @@
 # django_yunohost_integration
 
 [![tests](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/YunoHost-Apps/django_yunohost_integration/actions/workflows/tests.yml)
-[![codecov](https://codecov.io/github/jedie/django_yunohost_integration/branch/main/graph/badge.svg)](https://app.codecov.io/github/jedie/django_yunohost_integration)
+[![codecov](https://codecov.io/github/YunoHost-Apps/django_yunohost_integration/branch/main/graph/badge.svg)](https://app.codecov.io/github/YunoHost-Apps/django_yunohost_integration)
 [![django_yunohost_integration @ PyPi](https://img.shields.io/pypi/v/django_yunohost_integration?label=django_yunohost_integration%20%40%20PyPi)](https://pypi.org/project/django_yunohost_integration/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/django_yunohost_integration)](https://github.com/YunoHost-Apps/django_yunohost_integration/blob/main/pyproject.toml)
 [![License GPL-3.0-or-later](https://img.shields.io/pypi/l/django_yunohost_integration)](https://github.com/YunoHost-Apps/django_yunohost_integration/blob/main/LICENSE)
@@ -160,6 +160,7 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...main)
+  * 2024-08-25 - Bugfix codecov.io badge in README
   * 2024-08-25 - Fix CI
   * 2024-08-25 - Update requirements
   * 2024-08-25 - Apply manageprojects updates
