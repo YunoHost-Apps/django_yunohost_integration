@@ -160,6 +160,7 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...main)
+  * 2024-08-25 - Fix CI
   * 2024-08-25 - Update requirements
   * 2024-08-25 - Apply manageprojects updates
 * [v0.8.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0)

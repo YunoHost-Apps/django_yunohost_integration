@@ -33,15 +33,6 @@ jobs:
         cache: 'pip' # caching pip dependencies
         cache-dependency-path: '**/requirements.*.txt'
 
-    - name: 'Bootstrap app venv'
-      # The first CLI call will create the .venv
-      run: |
-        ./cli.py version
-
-    - name: 'app CLI help'
-      run: |
-        ./cli.py --help
-
     - name: 'Bootstrap dev venv'
       # The first CLI call will create the .venv
       run: |
