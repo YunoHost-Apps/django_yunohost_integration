@@ -46,6 +46,7 @@ dev = [
     "pip-audit",  # https://github.com/pypa/pip-audit
     "mypy",  # https://github.com/python/mypy
     "twine",  # https://github.com/pypa/twine
+    "typeguard",  # https://github.com/agronholm/typeguard/
     "pre-commit",  # https://github.com/pre-commit/pre-commit
 
     # https://github.com/akaihola/darker
@@ -53,7 +54,7 @@ dev = [
     # https://github.com/pycqa/isort
     # https://github.com/pygments/pygments
     "darker[flynt, isort, color]",
-    
+
     # Indirect requirement work-a-round for: https://github.com/jazzband/pip-tools/issues/1866
     'backports.tarfile',
 ]

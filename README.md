@@ -160,6 +160,8 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...main)
+  * 2024-08-25 - Update requirements
+  * 2024-08-25 - Apply manageprojects updates
 * [v0.8.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0)
   * 2024-08-04 - work-a-round for: https://github.com/jazzband/pip-tools/issues/1866
   * 2024-08-04 - Bugfix local "manage.py" helper
