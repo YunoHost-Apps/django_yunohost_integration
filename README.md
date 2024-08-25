@@ -159,7 +159,8 @@ e.g.:
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...main)
+* [v0.8.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...v0.8.1)
+  * 2024-08-25 - update assert_is_dir, assert_is_file imports
   * 2024-08-25 - Bugfix codecov.io badge in README
   * 2024-08-25 - Fix CI
   * 2024-08-25 - Update requirements
