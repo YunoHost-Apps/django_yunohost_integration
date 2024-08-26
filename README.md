@@ -159,6 +159,8 @@ e.g.:
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...main)
+  * 2024-08-26 - Add install_python.py
 * [v0.8.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...v0.8.1)
   * 2024-08-25 - update assert_is_dir, assert_is_file imports
   * 2024-08-25 - Bugfix codecov.io badge in README
@@ -177,14 +179,14 @@ e.g.:
   * 2024-08-04 - Apply manageprojects updates
 * [v0.7.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.0...v0.7.1)
   * 2024-01-04 - Bugfix create_local_test()
+
+<details><summary>Expand older history entries ...</summary>
+
 * [v0.7.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...v0.7.0)
   * 2023-12-22 - Fix publish
   * 2023-12-22 - Update project setup
   * 2023-12-22 - Bugfix: unexpected keyword argument 'created'
   * 2023-08-22 - Update README.md
-
-<details><summary>Expand older history entries ...</summary>
-
 * [v0.6.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.5.2...v0.6.0)
   * 2023-08-22 - Update requeirements, README and bump version to v0.6.0
   * 2023-08-20 - __PATH_URL__ -> __PATH__
