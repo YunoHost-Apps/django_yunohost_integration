@@ -160,6 +160,7 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...main)
+  * 2024-08-27 - Change `--py-version` to optional, positional argument
   * 2024-08-26 - Add install_python.py
 * [v0.8.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...v0.8.1)
   * 2024-08-25 - update assert_is_dir, assert_is_file imports

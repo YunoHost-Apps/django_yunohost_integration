@@ -251,7 +251,8 @@ def main() -> Path:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        '--py-version',
+        'major_version',
+        nargs=argparse.OPTIONAL,
         default=DEFAULT_MAJOR_VERSION,
         choices=sorted(GPG_KEY_IDS.keys()),
         help='Specify the Python version',
@@ -280,8 +281,9 @@ def main() -> Path:
         format='%(levelname)9s %(message)s',
         stream=sys.stderr,
     )
+    logger.debug(f'Arguments: {args}')
     return install_python(
-        args.py_version,
+        major_version=args.major_version,
         write_check=not args.skip_write_check,
         delete_temp=not args.skip_temp_deletion,
     )
