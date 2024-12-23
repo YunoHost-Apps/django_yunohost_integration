@@ -178,6 +178,7 @@ proxy_set_header Ynh-User $http_ynh_user;
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [v0.9.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...v0.9.0)
+  * 2024-12-23 - fix Python 3.11 install
   * 2024-12-23 - YunoHost >= v12: Use JWT token as validation, too.
   * 2024-12-21 - Project updates
   * 2024-08-29 - Revert "Add install_python.py"
