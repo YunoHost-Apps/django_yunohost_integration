@@ -28,7 +28,7 @@ These projects used `django_yunohost_integration`:
 * SSOwat integration (see below)
 * Helper to create first super user for `scripts/install`
 * Run Django development server with a local generated YunoHost package installation (called `local_test`)
-* Helper to run `pytest` against `local_test` "installation"
+* Helper to run `test` against `local_test` "installation"
 
 
 ### SSO authentication
@@ -159,7 +159,8 @@ e.g.:
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...main)
+* [v0.9.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...v0.9.0)
+  * 2024-12-21 - Project updates
   * 2024-08-29 - Revert "Add install_python.py"
   * 2024-08-27 - Change `--py-version` to optional, positional argument
   * 2024-08-26 - Add install_python.py
