@@ -156,6 +156,11 @@ psycopg-binary==3.2.3 \
     --hash=sha256:fd65774ed7d65101b314808b6893e1a75b7664f680c3ef18d2e5c84d570fa393 \
     --hash=sha256:fda0162b0dbfa5eaed6cdc708179fa27e148cb8490c7d62e5cf30713909658ea
     # via psycopg
+pyjwt==2.10.1 \
+    --hash=sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953 \
+    --hash=sha256:8cdde531a09ef4716089c072e3d32a97f080e2010df723c90b41ca421b4a8220 \
+    --hash=sha256:dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb
+    # via django_yunohost_integration (pyproject.toml)
 python-stdnum==1.20 \
     --hash=sha256:111008e10391d54fb2afad2a10df70d5cb0c6c0a7ec82fec6f022cb8712961d3 \
     --hash=sha256:3673ab615f5cb9066ff3ee034e9074f7f377ff0ca29b7572c2b0557dfa9a86c8 \

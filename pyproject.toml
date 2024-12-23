@@ -12,6 +12,8 @@ dependencies = [
     'django',  # https://github.com/django/django
     'django-tools',  # https://github.com/jedie/django-tools
 
+    'PyJWT',  # https://github.com/jpadilla/pyjwt
+
     'colorlog',   # https://github.com/borntyping/python-colorlog
     'packaging',   # https://github.com/pypa/packaging
     'pyyaml',   # https://github.com/yaml/pyyaml

@@ -947,6 +947,11 @@ pygments==2.18.0 \
     #   darker
     #   readme-renderer
     #   rich
+pyjwt==2.10.1 \
+    --hash=sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953 \
+    --hash=sha256:8cdde531a09ef4716089c072e3d32a97f080e2010df723c90b41ca421b4a8220 \
+    --hash=sha256:dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb
+    # via django_yunohost_integration (pyproject.toml)
 pyparsing==3.2.0 \
     --hash=sha256:93d9577b88da0bbea8cc8334ee8b918ed014968fd2ec383e868fb8afb1ccef84 \
     --hash=sha256:cbf74e27246d595d9a74b186b810f6fbb86726dbf3b9532efb343f6d7294fe9c \
@@ -1181,10 +1186,10 @@ tyro==0.9.4 \
     --hash=sha256:00546f1863f842b2b400b3fa3ca4606dc4de53f989ed570357da393580b0a6c5 \
     --hash=sha256:1f6c8fe19040e2f8bde32013c5255693a2f311d3599bb051474bc92561de25e2
     # via cli-base-utilities
-urllib3==2.2.3 \
-    --hash=sha256:53042b594bc77c4b5d43f598b9eca1333bf4f884c300473192f4d4f47bab1d2d \
-    --hash=sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac \
-    --hash=sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9
+urllib3==2.3.0 \
+    --hash=sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df \
+    --hash=sha256:c99ebc29115eed3d260db0c65d90d145979cc864b9a454856be6027debde76f5 \
+    --hash=sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d
     # via
     #   django_yunohost_integration (pyproject.toml)
     #   requests
