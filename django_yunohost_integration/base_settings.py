@@ -82,6 +82,13 @@ LOGOUT_REDIRECT_URL = '/yunohost/sso/'
 
 # _____________________________________________________________________________
 
+YNH_USER_NAME_HEADER_KEY = 'HTTP_YNH_USER'
+YNH_JWT_COOKIE_NAME = 'yunohost.portal'
+YNH_BASIC_AUTH_HEADER_KEY = 'HTTP_AUTHORIZATION'
+
+
+# _____________________________________________________________________________
+
 # Mark CSRF cookie as "secure" -> browsers sent cookie only with an HTTPS connection:
 CSRF_COOKIE_SECURE = True
 

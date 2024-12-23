@@ -568,6 +568,11 @@ idna==3.10 \
     --hash=sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9 \
     --hash=sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3
     # via requests
+importlib-metadata==8.5.0 \
+    --hash=sha256:25fdeef51551b4bf26b88884dea00a484828b76d3bf033b01fd7db602b15c78b \
+    --hash=sha256:45e54197d28b7a7f1559e60b95e7c567032b602131fbd588f1497f47880aa68b \
+    --hash=sha256:71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7
+    # via django_yunohost_integration (pyproject.toml)
 isort==5.13.2 \
     --hash=sha256:34a146c22c83acbd192a848e12a9b5e6bc14ef3d17f38fd5ad22a0b0488b87ba \
     --hash=sha256:48fdfcb9face5d58a4f6dde2e72a1fb8dcaf8ab26f95ab49fab84c2ddefb0109 \
@@ -947,6 +952,11 @@ pygments==2.18.0 \
     #   darker
     #   readme-renderer
     #   rich
+pyjwt==2.10.1 \
+    --hash=sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953 \
+    --hash=sha256:8cdde531a09ef4716089c072e3d32a97f080e2010df723c90b41ca421b4a8220 \
+    --hash=sha256:dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb
+    # via django_yunohost_integration (pyproject.toml)
 pyparsing==3.2.0 \
     --hash=sha256:93d9577b88da0bbea8cc8334ee8b918ed014968fd2ec383e868fb8afb1ccef84 \
     --hash=sha256:cbf74e27246d595d9a74b186b810f6fbb86726dbf3b9532efb343f6d7294fe9c \
@@ -1181,10 +1191,10 @@ tyro==0.9.4 \
     --hash=sha256:00546f1863f842b2b400b3fa3ca4606dc4de53f989ed570357da393580b0a6c5 \
     --hash=sha256:1f6c8fe19040e2f8bde32013c5255693a2f311d3599bb051474bc92561de25e2
     # via cli-base-utilities
-urllib3==2.2.3 \
-    --hash=sha256:53042b594bc77c4b5d43f598b9eca1333bf4f884c300473192f4d4f47bab1d2d \
-    --hash=sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac \
-    --hash=sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9
+urllib3==2.3.0 \
+    --hash=sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df \
+    --hash=sha256:c99ebc29115eed3d260db0c65d90d145979cc864b9a454856be6027debde76f5 \
+    --hash=sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d
     # via
     #   django_yunohost_integration (pyproject.toml)
     #   requests
@@ -1205,6 +1215,11 @@ wheel==0.45.1 \
     --hash=sha256:661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729 \
     --hash=sha256:708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248
     # via pip-tools
+zipp==3.21.0 \
+    --hash=sha256:2c9958f6430a2040341a52eb608ed6dd93ef4392e02ffe219417c1b28b5dd1f4 \
+    --hash=sha256:682307d2a4f021c535b12b68ecc6f046334a1098105542f1361fb6659496150c \
+    --hash=sha256:ac1bbe05fd2991f160ebce24ffbac5f6d11d83dc90891255885223d42b3cd931
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 pip==24.3.1 \

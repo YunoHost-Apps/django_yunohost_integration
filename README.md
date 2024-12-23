@@ -155,11 +155,31 @@ e.g.:
 * The page is available under `http://127.0.0.1:8000/app_path/`
 
 
+# Backwards-incompatible changes
+
+## v0.9
+
+Starting with v0.9 we only support YunoHost >= v12.
+
+For this the `auth_middleware` was changed:
+
+* `HTTP_REMOTE_USER` changed `HTTP_YNH_USER`
+* `HTTP_AUTH_USER` was removed
+* `SSOwAuthUser` changed to JWT token `yunohost.portal`
+
+The YunoHost package nginx config should be set:
+```
+proxy_set_header Ynh-User $http_ynh_user;
+```
+
+
 # history
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [v0.9.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...v0.9.0)
+  * 2024-12-23 - fix Python 3.11 install
+  * 2024-12-23 - YunoHost >= v12: Use JWT token as validation, too.
   * 2024-12-21 - Project updates
   * 2024-08-29 - Revert "Add install_python.py"
   * 2024-08-27 - Change `--py-version` to optional, positional argument

@@ -12,6 +12,8 @@ dependencies = [
     'django',  # https://github.com/django/django
     'django-tools',  # https://github.com/jedie/django-tools
 
+    'PyJWT',  # https://github.com/jpadilla/pyjwt
+
     'colorlog',   # https://github.com/borntyping/python-colorlog
     'packaging',   # https://github.com/pypa/packaging
     'pyyaml',   # https://github.com/yaml/pyyaml
@@ -61,6 +63,7 @@ dev = [
     # see also: https://github.com/jazzband/pip-tools/issues/994#issuecomment-1321226661
     # backports.tarfile is needed for python <3.12
     'backports.tarfile', # via jaraco-context -> keyring -> twine
+    'importlib-metadata', # for Python 3.11
 ]
 
 [tool.pip-tools.compile]
