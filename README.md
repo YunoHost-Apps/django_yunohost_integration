@@ -214,7 +214,7 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
-* [v0.10.0rc1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0rc1)
+* [v0.10.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0)
   * 2025-01-31 - Bugfix publish dev. command
   * 2025-01-31 - pip-tools -> uv + refactor cli
 * [v0.9.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...v0.9.0)
