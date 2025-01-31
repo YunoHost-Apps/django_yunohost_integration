@@ -1,5 +1,4 @@
 
-
 name: tests
 
 on:
@@ -42,10 +41,9 @@ jobs:
       run: |
         ./dev-cli.py --help
 
-# TODO: Activate after switch to uv:
-#    - name: 'Run pip-audit'
-#      run: |
-#        ./dev-cli.py pip-audit
+    - name: 'Run pip-audit'
+      run: |
+        ./dev-cli.py pip-audit
 
     - name: 'Run tests with Python v${{ matrix.python-version }}'
       env:

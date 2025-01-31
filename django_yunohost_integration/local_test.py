@@ -11,6 +11,7 @@ from pathlib import Path
 import django
 from bx_py_utils.path import assert_is_dir, assert_is_file
 from bx_py_utils.pyproject_toml import get_pyproject_config
+from django.core.management.commands.test import Command as DjangoTestCommand
 from rich import print
 
 from django_yunohost_integration.path_utils import get_project_root
@@ -256,5 +257,20 @@ def run_local_test_manage(*, argv: list | None = None, extra_env: dict | None = 
 
     call_manage_py(result.data_dir_path, *argv[1:], extra_env=extra_env)
 
+    if exit_after_run:
+        sys.exit(0)
+
+
+def run_django_test_cli(*, argv: list | None = None, exit_after_run: bool = True):
+    """
+    Call the origin Django test manage command CLI and pass all args to it.
+    """
+    if argv is None:
+        argv = sys.argv
+
+    setup_local_yunohost_test()
+
+    test_command = DjangoTestCommand()
+    test_command.run_from_argv(argv)
     if exit_after_run:
         sys.exit(0)

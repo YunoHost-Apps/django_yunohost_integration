@@ -155,6 +155,43 @@ e.g.:
 * The page is available under `http://127.0.0.1:8000/app_path/`
 
 
+## dev-cli.py usage
+
+[comment]: <> (✂✂✂ auto generated dev help start ✂✂✂)
+```
+usage: ./dev-cli.py [-h]
+                    {check-code-style,coverage,fix-code-style,install,local-test,mypy,pip-audit,publish,test,tox,updat
+e,update-test-snapshot-files,version}
+
+
+
+╭─ options ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ -h, --help        show this help message and exit                                                                  │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ subcommands ──────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ {check-code-style,coverage,fix-code-style,install,local-test,mypy,pip-audit,publish,test,tox,update,update-test-s… │
+│     check-code-style                                                                                               │
+│                   Check code style by calling darker + flake8                                                      │
+│     coverage      Run tests and show coverage report.                                                              │
+│     fix-code-style                                                                                                 │
+│                   Fix code style of all django_yunohost_integration source code files via darker                   │
+│     install       Install requirements and 'django_yunohost_integration' via pip as editable.                      │
+│     local-test    Build a "local_test" YunoHost installation and start the Django dev. server against it.          │
+│     mypy          Run Mypy (configured in pyproject.toml)                                                          │
+│     pip-audit     Run pip-audit check against current requirements files                                           │
+│     publish       Build and upload this project to PyPi                                                            │
+│     test          Run unittests                                                                                    │
+│     tox           Run tox                                                                                          │
+│     update        Update "requirements*.txt" dependencies files                                                    │
+│     update-test-snapshot-files                                                                                     │
+│                   Update all test snapshot files (by remove and recreate all snapshot files)                       │
+│     version       Print version and exit                                                                           │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```
+[comment]: <> (✂✂✂ auto generated dev help end ✂✂✂)
+
+
+
 # Backwards-incompatible changes
 
 ## v0.9
@@ -177,6 +214,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [v0.10.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0)
+  * 2025-01-31 - pip-tools -> uv + refactor cli
 * [v0.9.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...v0.9.0)
   * 2024-12-23 - fix Python 3.11 install
   * 2024-12-23 - YunoHost >= v12: Use JWT token as validation, too.
@@ -200,11 +239,11 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2024-08-04 - 'psycopg2' -> 'psycopg[binary]'
   * 2024-08-04 - Use pre-commit to update history in README
   * 2024-08-04 - Apply manageprojects updates
-* [v0.7.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.0...v0.7.1)
-  * 2024-01-04 - Bugfix create_local_test()
 
 <details><summary>Expand older history entries ...</summary>
 
+* [v0.7.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.0...v0.7.1)
+  * 2024-01-04 - Bugfix create_local_test()
 * [v0.7.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...v0.7.0)
   * 2023-12-22 - Fix publish
   * 2023-12-22 - Update project setup
