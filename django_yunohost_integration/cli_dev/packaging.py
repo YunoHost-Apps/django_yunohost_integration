@@ -1,6 +1,5 @@
 import logging
 
-from cli_base.cli_tools.dev_tools import run_unittest_cli
 from cli_base.cli_tools.subprocess_utils import ToolsExecutor
 from cli_base.cli_tools.verbosity import setup_logging
 from cli_base.run_pip_audit import run_pip_audit
@@ -9,6 +8,7 @@ from manageprojects.utilities.publish import publish_package
 
 import django_yunohost_integration
 from django_yunohost_integration.cli_dev import PACKAGE_ROOT, app
+from django_yunohost_integration.local_test import run_django_test_cli
 
 
 logger = logging.getLogger(__name__)
@@ -60,6 +60,6 @@ def publish():
     """
     Build and upload this project to PyPi
     """
-    run_unittest_cli(verbose=False, exit_after_run=False)  # Don't publish a broken state
+    run_django_test_cli(exit_after_run=False)  # Don't publish a broken state
 
     publish_package(module=django_yunohost_integration, package_path=PACKAGE_ROOT)
