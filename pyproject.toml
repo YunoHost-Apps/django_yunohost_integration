@@ -37,6 +37,7 @@ dev = [
     "rich",  # https://github.com/Textualize/rich
 
     "manageprojects",  # https://github.com/jedie/manageprojects
+    "setuptools",  # https://github.com/pypa/setuptools
     "urllib3", # for bx_py_utils.test_utils.deny_requests.deny_any_real_request() in tests
     "uv",  # https://github.com/astral-sh/uv
     "tox",  # https://github.com/tox-dev/tox
