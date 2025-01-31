@@ -18,7 +18,8 @@ dependencies = [
     'packaging',   # https://github.com/pypa/packaging
     'pyyaml',   # https://github.com/yaml/pyyaml
 ]
-[project.optional-dependencies]
+
+[dependency-groups]
 ynh = [  # install "django_yunohost_integration" as YunoHost app:
     'gunicorn',
     'psycopg[binary]', # https://github.com/psycopg/psycopg
@@ -37,8 +38,9 @@ dev = [
 
     "manageprojects",  # https://github.com/jedie/manageprojects
     "urllib3", # for bx_py_utils.test_utils.deny_requests.deny_any_real_request() in tests
-    "pip-tools",  # https://github.com/jazzband/pip-tools/
+    "uv",  # https://github.com/astral-sh/uv
     "tox",  # https://github.com/tox-dev/tox
+    "tox-uv",  # https://github.com/tox-dev/tox-uv
     "coverage",  # https://github.com/nedbat/coveragepy
     "autopep8",  # https://github.com/hhatto/autopep8
     "pyupgrade",  # https://github.com/asottile/pyupgrade
@@ -63,17 +65,7 @@ dev = [
     # see also: https://github.com/jazzband/pip-tools/issues/994#issuecomment-1321226661
     # backports.tarfile is needed for python <3.12
     'backports.tarfile', # via jaraco-context -> keyring -> twine
-    'importlib-metadata', # for Python 3.11
 ]
-
-[tool.pip-tools.compile]
-index-url="https://pypi.org/simple"
-extra-index-url=["https://www.piwheels.org/simple"] # Add hashes of piwheels packages, too!
-generate-hashes = true
-# https://pip-tools.readthedocs.io/en/stable/#deprecations
-allow-unsafe = true
-resolver="backtracking"
-strip-extras = true
 
 [project.urls]
 Documentation = "https://github.com/YunoHost-Apps/django_yunohost_integration"
@@ -81,7 +73,7 @@ Source = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 
 [project.scripts]
 django_yunohost_integration_app = "django_yunohost_integration.__main__:main"
-django_yunohost_integration_dev = "django_yunohost_integration.cli.dev:main"
+django_yunohost_integration_dev = "django_yunohost_integration.cli_dev:main"
 
 [build-system]
 requires = ["setuptools>=61.0", "setuptools_scm>=7.1"]
@@ -117,9 +109,6 @@ diff = false
 check = false
 stdout = false
 isort = true
-lint = [
-    "flake8",
-]
 log_level = "INFO"
 
 
@@ -154,24 +143,16 @@ exclude_lines = [
 
 
 [tool.tox]  # https://tox.wiki/en/latest/config.html#pyproject-toml
-legacy_tox_ini = """
-[tox]
-isolated_build = True
-envlist = py{313,312,311}
-skip_missing_interpreters = True
+isolated_build = true
+env_list = ["3.13", "3.12", "3.11"]
+skip_missing_interpreters = true
 
-[testenv]
-passenv = *
-skip_install = true
-commands_pre =
-    pip install -U pip-tools
-    pip-sync requirements.dev.txt
-commands =
-    {envpython} -m coverage run --context='{envname}'
-    {envpython} -m coverage combine --append
-    {envpython} -m coverage xml
-    {envpython} -m coverage report
-"""
+[tool.tox.env_run_base]
+runner = "uv-venv-lock-runner"
+with_dev = true
+commands = [
+    ["python3", "-m", "coverage", "run", "--context", "'{envname}'"]
+]
 
 
 [tool.mypy]
@@ -187,13 +168,14 @@ exclude = ['.venv', 'tests']
 initial_revision = "5c06368"
 initial_date = 2023-02-19T17:27:46+01:00
 cookiecutter_template = "https://github.com/jedie/cookiecutter_templates/"
-cookiecutter_directory = "piptools-python"
+cookiecutter_directory = "uv-python"
 applied_migrations = [
     "877e2ec", # 2023-08-17T20:54:24+02:00
     "56c0eb7", # 2023-12-22T08:36:44+01:00
     "52669d0", # 2024-08-02T15:47:04+02:00
     "3dac094", # 2024-08-25T15:13:50+02:00
     "7b8d152", # 2024-12-03T21:16:56+01:00
+    "d1df540", # 2025-01-11T08:58:27+01:00
 ]
 
 [manageprojects.cookiecutter_context.cookiecutter]

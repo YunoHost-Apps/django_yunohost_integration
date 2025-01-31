@@ -3,11 +3,7 @@
     through `python -m django_yunohost_integration`.
 """
 
-from django_yunohost_integration.cli.dev import cli
-
-
-def main():
-    cli()
+from django_yunohost_integration.cli_dev import main
 
 
 if __name__ == '__main__':
