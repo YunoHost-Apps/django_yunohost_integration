@@ -1,4 +1,4 @@
-from cli_base.cli_tools.dev_tools import run_coverage, run_tox, run_unittest_cli
+from cli_base.cli_tools.dev_tools import run_coverage, run_nox, run_unittest_cli
 from cli_base.cli_tools.subprocess_utils import verbose_check_call
 from cli_base.cli_tools.test_utils.snapshot import UpdateTestSnapshotFiles
 from cli_base.tyro_commands import TyroVerbosityArgType
@@ -45,9 +45,9 @@ def coverage():
     run_coverage()
 
 
-@app.command  # Dummy "tox" command
-def tox():
+@app.command  # Dummy "nox" command
+def nox():
     """
-    Run tox
+    Run nox
     """
-    run_tox()
+    run_nox()

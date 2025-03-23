@@ -22,23 +22,25 @@ from django_example.settings.prod import *  # noqa:F401,F403 isort:skip
 from django_yunohost_integration.base_settings import LOGGING  # noqa:F401 isort:skip
 
 
-DATA_DIR_PATH = __Path('__DATA_DIR__')  # /home/yunohost.app/$app
+DATA_DIR_PATH = __Path('__DATA_DIR__')  # /home/yunohost.app/$app/
 assert DATA_DIR_PATH.is_dir(), f'Directory not exists: {DATA_DIR_PATH}'
 
-INSTALL_DIR_PATH = __Path('__INSTALL_DIR__')  # /var/www/$app
+INSTALL_DIR_PATH = __Path('__INSTALL_DIR__')  # /var/www/$app/
 assert INSTALL_DIR_PATH.is_dir(), f'Directory not exists: {INSTALL_DIR_PATH}'
 
-LOG_FILE = __Path('__LOG_FILE__')  # /var/log/$app/$app.log
-assert LOG_FILE.is_file(), f'File not exists: {LOG_FILE}'
+LOG_FILE_PATH = __Path('__LOG_FILE__')  # /var/log/$app/$app.log
+assert LOG_FILE_PATH.is_file(), f'File not exists: {LOG_FILE_PATH}'
 
 PATH_URL = '__PATH__'
 PATH_URL = PATH_URL.strip('/')
+
+YNH_CURRENT_HOST = '__YNH_CURRENT_HOST__'  # YunoHost main domain from: /etc/yunohost/current_host
 
 # -----------------------------------------------------------------------------
 # config_panel.toml settings:
 
 DEBUG_ENABLED = '__DEBUG_ENABLED__'
-DEBUG = DEBUG_ENABLED == 'YES'
+DEBUG = DEBUG_ENABLED == '1'
 
 LOG_LEVEL = '__LOG_LEVEL__'
 ADMIN_EMAIL = '__ADMIN_EMAIL__'
@@ -57,20 +59,25 @@ EXTRA_REPLACEMENT = '__EXTRA_REPLACEMENT__'
 # Function that will be called to finalize a user profile:
 YNH_SETUP_USER = 'setup_user.setup_project_user'
 
+
+if 'axes' not in INSTALLED_APPS:
+    INSTALLED_APPS.append('axes')  # https://github.com/jazzband/django-axes
+
+INSTALLED_APPS.append('django_yunohost_integration.apps.YunohostIntegrationConfig')
+
+
 SECRET_KEY = __get_or_create_secret(DATA_DIR_PATH / 'secret.txt')  # /home/yunohost.app/$app/secret.txt
 
-INSTALLED_APPS += [
-    'axes',  # https://github.com/jazzband/django-axes
-    'django_yunohost_integration.apps.YunohostIntegrationConfig',
-]
 
 MIDDLEWARE.insert(
     MIDDLEWARE.index('django.contrib.auth.middleware.AuthenticationMiddleware') + 1,
     # login a user via HTTP_REMOTE_USER header from SSOwat:
     'django_yunohost_integration.sso_auth.auth_middleware.SSOwatRemoteUserMiddleware',
 )
-# AxesMiddleware should be the last middleware:
-MIDDLEWARE.append('axes.middleware.AxesMiddleware')
+if 'axes.middleware.AxesMiddleware' not in MIDDLEWARE:
+    # AxesMiddleware should be the last middleware:
+    MIDDLEWARE.append('axes.middleware.AxesMiddleware')
+
 
 # Keep ModelBackend around for per-user permissions and superuser
 AUTHENTICATION_BACKENDS = (
@@ -161,19 +168,40 @@ MEDIA_ROOT = str(INSTALL_DIR_PATH / 'media')
 
 # -----------------------------------------------------------------------------
 
-# Set log file to e.g.: /var/log/$app/$app.log
-LOGGING['handlers']['log_file']['filename'] = str(LOG_FILE)
-
-# Example how to add logging to own app:
-LOGGING['loggers']['django_yunohost_integration'] = {
-    'handlers': ['syslog', 'log_file', 'mail_admins'],
-    'level': 'INFO',
-    'propagate': False,
-}
-LOGGING['loggers']['django_example'] = {
-    'handlers': ['syslog', 'log_file', 'mail_admins'],
-    'level': 'INFO',
-    'propagate': False,
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} {levelname} {name} {module}.{funcName} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'log_file': {
+            'level': LOG_LEVEL,
+            'class': 'logging.handlers.WatchedFileHandler',
+            'formatter': 'verbose',
+            'filename': str(LOG_FILE_PATH),
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'formatter': 'verbose',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+    },
+    'loggers': {
+        '': {'handlers': ['log_file', 'mail_admins'], 'level': LOG_LEVEL, 'propagate': False},
+        'django': {'handlers': ['log_file', 'mail_admins'], 'level': LOG_LEVEL, 'propagate': False},
+        'axes': {'handlers': ['log_file', 'mail_admins'], 'level': LOG_LEVEL, 'propagate': False},
+        'django_yunohost_integration': {
+            'handlers': ['log_file', 'mail_admins'],
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        'django_example': {'handlers': ['log_file', 'mail_admins'], 'level': LOG_LEVEL, 'propagate': False},
+    },
 }
 
 # -----------------------------------------------------------------------------

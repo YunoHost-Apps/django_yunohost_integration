@@ -37,8 +37,8 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
             msg=f'{settings.INSTALL_DIR_PATH=}',
         )
         self.assertTrue(
-            str(settings.LOG_FILE).endswith('/local_test/var_log_django_yunohost_integration.log'),
-            msg=f'{settings.LOG_FILE=}',
+            str(settings.LOG_FILE_PATH).endswith('/local_test/var_log_django_yunohost_integration.log'),
+            msg=f'{settings.LOG_FILE_PATH=}',
         )
         self.assertEqual(settings.PATH_URL, 'app_path')
         self.assertEqual(settings.MEDIA_URL, '/app_path/media/')
@@ -68,8 +68,8 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         self.assertEqual(
             settings.LOGGING['loggers']['django_yunohost_integration'],
             {
-                'handlers': ['console', 'log_file', 'mail_admins'],
-                'level': 'INFO',
+                'handlers': ['log_file', 'mail_admins'],
+                'level': 'DEBUG',
                 'propagate': False,
             },
         )

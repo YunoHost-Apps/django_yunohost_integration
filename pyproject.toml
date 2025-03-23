@@ -17,6 +17,8 @@ dependencies = [
     'colorlog',   # https://github.com/borntyping/python-colorlog
     'packaging',   # https://github.com/pypa/packaging
     'pyyaml',   # https://github.com/yaml/pyyaml
+    "cli-base-utilities>=0.17.0",  # https://github.com/jedie/cli-base-utilities
+    "tyro",  # https://github.com/brentyi/tyro
 ]
 
 [dependency-groups]
@@ -37,11 +39,10 @@ dev = [
     "rich",  # https://github.com/Textualize/rich
 
     "manageprojects",  # https://github.com/jedie/manageprojects
-    "setuptools",  # https://github.com/pypa/setuptools
     "urllib3", # for bx_py_utils.test_utils.deny_requests.deny_any_real_request() in tests
     "uv",  # https://github.com/astral-sh/uv
-    "tox",  # https://github.com/tox-dev/tox
-    "tox-uv",  # https://github.com/tox-dev/tox-uv
+    "setuptools",  # https://github.com/pypa/setuptools
+    "nox",  # https://github.com/wntrblm/nox
     "coverage",  # https://github.com/nedbat/coveragepy
     "autopep8",  # https://github.com/hhatto/autopep8
     "pyupgrade",  # https://github.com/asottile/pyupgrade
@@ -61,11 +62,6 @@ dev = [
     # https://github.com/pycqa/isort
     # https://github.com/pygments/pygments
     "darker[flynt, isort, color]",
-
-    # Work-a-round for: https://github.com/jazzband/pip-tools/issues/1866
-    # see also: https://github.com/jazzband/pip-tools/issues/994#issuecomment-1321226661
-    # backports.tarfile is needed for python <3.12
-    'backports.tarfile', # via jaraco-context -> keyring -> twine
 ]
 
 [project.urls]
@@ -143,19 +139,6 @@ exclude_lines = [
 ]
 
 
-[tool.tox]  # https://tox.wiki/en/latest/config.html#pyproject-toml
-isolated_build = true
-env_list = ["3.13", "3.12", "3.11"]
-skip_missing_interpreters = true
-
-[tool.tox.env_run_base]
-runner = "uv-venv-lock-runner"
-with_dev = true
-commands = [
-    ["python3", "-m", "coverage", "run", "--context", "'{envname}'"]
-]
-
-
 [tool.mypy]
 warn_unused_configs = true
 ignore_missing_imports = true
@@ -177,6 +160,7 @@ applied_migrations = [
     "3dac094", # 2024-08-25T15:13:50+02:00
     "7b8d152", # 2024-12-03T21:16:56+01:00
     "d1df540", # 2025-01-11T08:58:27+01:00
+    "a36dd75", # 2025-03-23T11:39:23+01:00
 ]
 
 [manageprojects.cookiecutter_context.cookiecutter]
@@ -184,7 +168,7 @@ full_name = "Jens Diemer"
 github_username = "jedie"
 author_email = "git@jensdiemer.de"
 package_name = "django_yunohost_integration"
-package_version = "0.5.1"
+package_version = "0.10.1"
 package_description = "Glue code to package django projects as yunohost apps."
 package_url = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 issues_url = "https://github.com/YunoHost-Apps/django_yunohost_integration/issues"
