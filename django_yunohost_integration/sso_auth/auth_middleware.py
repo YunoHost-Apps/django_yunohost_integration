@@ -41,6 +41,11 @@ class SSOwatRemoteUserMiddleware(RemoteUserMiddleware):
     force_logout_if_no_header = True
 
     def process_request(self, request):
+        if self.header not in request.META:
+            logger.warning('Missing %r header', self.header)
+        else:
+            logger.debug('%r header value: %r', self.header, request.META[self.header])
+
         # Keep the information if the user is already logged in
         was_authenticated = request.user.is_authenticated
 
