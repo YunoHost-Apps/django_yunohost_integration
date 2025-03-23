@@ -8,8 +8,7 @@ import sys
 
 from bx_py_utils.path import assert_is_file
 from cli_base.autodiscover import import_all_files
-from cli_base.cli_tools.dev_tools import run_coverage, run_tox
-from cli_base.cli_tools.rich_utils import rich_traceback_install
+from cli_base.cli_tools.dev_tools import run_coverage, run_nox
 from cli_base.cli_tools.version_info import print_version
 from typeguard import install_import_hook
 from tyro.extras import SubcommandApp
@@ -50,14 +49,13 @@ def version():
 
 def main():
     print_version(django_yunohost_integration)
-    rich_traceback_install()
 
     if len(sys.argv) >= 2:
         # Check if we can just pass a command call to origin CLI:
         command = sys.argv[1]
         command_map = {
             'test': run_django_test_cli,
-            'tox': run_tox,
+            'nox': run_nox,
             'coverage': run_coverage,
         }
         if real_func := command_map.get(command):

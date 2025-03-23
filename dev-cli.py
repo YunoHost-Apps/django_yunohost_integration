@@ -107,7 +107,6 @@ def main(argv):
 
         # Activate git pre-commit hooks:
         verbose_check_call(PYTHON_PATH, '-m', 'pre_commit', 'install')
-        verbose_check_call(PYTHON_PATH, '-m', 'pre_commit', 'autoupdate')
 
     # Call our entry point CLI:
     try:

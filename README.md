@@ -160,7 +160,7 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated dev help start ✂✂✂)
 ```
 usage: ./dev-cli.py [-h]
-                    {check-code-style,coverage,fix-code-style,install,local-test,mypy,pip-audit,publish,test,tox,updat
+                    {check-code-style,coverage,fix-code-style,install,local-test,mypy,nox,pip-audit,publish,test,updat
 e,update-test-snapshot-files,version}
 
 
@@ -169,7 +169,8 @@ e,update-test-snapshot-files,version}
 │ -h, --help        show this help message and exit                                                                  │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ subcommands ──────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ {check-code-style,coverage,fix-code-style,install,local-test,mypy,pip-audit,publish,test,tox,update,update-test-s… │
+│ {check-code-style,coverage,fix-code-style,install,local-test,mypy,nox,pip-audit,publish,test,update,update-test-sn │
+│ apshot-files,version}                                                                                              │
 │     check-code-style                                                                                               │
 │                   Check code style by calling darker + flake8                                                      │
 │     coverage      Run tests and show coverage report.                                                              │
@@ -178,10 +179,10 @@ e,update-test-snapshot-files,version}
 │     install       Install requirements and 'django_yunohost_integration' via pip as editable.                      │
 │     local-test    Build a "local_test" YunoHost installation and start the Django dev. server against it.          │
 │     mypy          Run Mypy (configured in pyproject.toml)                                                          │
+│     nox           Run nox                                                                                          │
 │     pip-audit     Run pip-audit check against current requirements files                                           │
 │     publish       Build and upload this project to PyPi                                                            │
 │     test          Run unittests                                                                                    │
-│     tox           Run tox                                                                                          │
 │     update        Update "requirements*.txt" dependencies files                                                    │
 │     update-test-snapshot-files                                                                                     │
 │                   Update all test snapshot files (by remove and recreate all snapshot files)                       │
@@ -214,6 +215,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [v0.11.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.0...v0.11.0)
+  * 2025-03-23 - Apply manageproject updates + update requirements
 * [v0.10.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0)
   * 2025-01-31 - Bugfix publish dev. command
   * 2025-01-31 - pip-tools -> uv + refactor cli
@@ -230,6 +233,9 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2024-08-25 - Fix CI
   * 2024-08-25 - Update requirements
   * 2024-08-25 - Apply manageprojects updates
+
+<details><summary>Expand older history entries ...</summary>
+
 * [v0.8.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0)
   * 2024-08-04 - work-a-round for: https://github.com/jazzband/pip-tools/issues/1866
   * 2024-08-04 - Bugfix local "manage.py" helper
@@ -240,9 +246,6 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2024-08-04 - 'psycopg2' -> 'psycopg[binary]'
   * 2024-08-04 - Use pre-commit to update history in README
   * 2024-08-04 - Apply manageprojects updates
-
-<details><summary>Expand older history entries ...</summary>
-
 * [v0.7.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.0...v0.7.1)
   * 2024-01-04 - Bugfix create_local_test()
 * [v0.7.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.6.0...v0.7.0)
