@@ -215,6 +215,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [v0.10.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.1...v0.10.2)
+  * 2025-03-23 - Expand logging about HTTP_YNH_USER header
 * [v0.10.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.0...v0.10.1)
   * 2025-03-23 - Update example settings
   * 2025-03-23 - Apply manageproject updates + update requirements
@@ -228,15 +230,15 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2024-08-29 - Revert "Add install_python.py"
   * 2024-08-27 - Change `--py-version` to optional, positional argument
   * 2024-08-26 - Add install_python.py
+
+<details><summary>Expand older history entries ...</summary>
+
 * [v0.8.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...v0.8.1)
   * 2024-08-25 - update assert_is_dir, assert_is_file imports
   * 2024-08-25 - Bugfix codecov.io badge in README
   * 2024-08-25 - Fix CI
   * 2024-08-25 - Update requirements
   * 2024-08-25 - Apply manageprojects updates
-
-<details><summary>Expand older history entries ...</summary>
-
 * [v0.8.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.7.1...v0.8.0)
   * 2024-08-04 - work-a-round for: https://github.com/jazzband/pip-tools/issues/1866
   * 2024-08-04 - Bugfix local "manage.py" helper
