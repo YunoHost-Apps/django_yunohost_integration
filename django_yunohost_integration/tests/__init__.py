@@ -26,10 +26,6 @@ def pre_configure_tests() -> None:
     # Display DEBUG logs in tests:
     setup_logging(verbosity=MAX_LOG_LEVEL)
 
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-    DJANGO_SETTINGS_MODULE = os.environ['DJANGO_SETTINGS_MODULE']
-    print(f'\n[yellow]{DJANGO_SETTINGS_MODULE=}\n')
-
 
 def load_tests(loader, tests, pattern):
     """
