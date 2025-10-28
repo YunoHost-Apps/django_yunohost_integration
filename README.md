@@ -218,6 +218,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [v0.10.4](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.3...v0.10.4)
+  * 2025-10-28 - Replace @cache because dict arguments
 * [v0.10.3](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.2...v0.10.3)
   * 2025-10-28 - Add PyCharm config files
   * 2025-10-28 - Add optional argument "extra_replacements" to run_local_test_manage()
@@ -227,12 +229,12 @@ proxy_set_header Ynh-User $http_ynh_user;
 * [v0.10.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.0...v0.10.1)
   * 2025-03-23 - Update example settings
   * 2025-03-23 - Apply manageproject updates + update requirements
-* [v0.10.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0)
-  * 2025-01-31 - Bugfix publish dev. command
-  * 2025-01-31 - pip-tools -> uv + refactor cli
 
 <details><summary>Expand older history entries ...</summary>
 
+* [v0.10.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0)
+  * 2025-01-31 - Bugfix publish dev. command
+  * 2025-01-31 - pip-tools -> uv + refactor cli
 * [v0.9.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...v0.9.0)
   * 2024-12-23 - fix Python 3.11 install
   * 2024-12-23 - YunoHost >= v12: Use JWT token as validation, too.
