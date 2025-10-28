@@ -1,3 +1,4 @@
+# ruff: noqa: F405
 ################################################################################
 ################################################################################
 
@@ -17,9 +18,6 @@ from django_yunohost_integration.secret_key import get_or_create_secret as __get
 
 # https://github.com/jedie/django-example/
 from django_example.settings.prod import *  # noqa:F401,F403 isort:skip
-
-
-from django_yunohost_integration.base_settings import LOGGING  # noqa:F401 isort:skip
 
 
 DATA_DIR_PATH = __Path('__DATA_DIR__')  # /home/yunohost.app/$app/
