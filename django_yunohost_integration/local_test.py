@@ -246,14 +246,23 @@ def setup_local_yunohost_test(
     return result
 
 
-def run_local_test_manage(*, argv: list | None = None, extra_env: dict | None = None, exit_after_run: bool = True):
+def run_local_test_manage(
+    *,
+    argv: list | None = None,
+    extra_env: dict | None = None,
+    extra_replacements: dict | None = None,
+    exit_after_run: bool = True,
+):
     """
     Call the origin Django test manage command CLI and pass all args to it.
     """
     if argv is None:
         argv = sys.argv
 
-    result: CreateResults = setup_local_yunohost_test()
+    result: CreateResults = setup_local_yunohost_test(
+        extra_env=extra_env,
+        extra_replacements=extra_replacements,
+    )
 
     call_manage_py(result.data_dir_path, *argv[1:], extra_env=extra_env)
 
