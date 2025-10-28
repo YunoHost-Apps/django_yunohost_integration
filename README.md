@@ -219,6 +219,7 @@ proxy_set_header Ynh-User $http_ynh_user;
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [v0.10.3](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.2...v0.10.3)
+  * 2025-10-28 - Add PyCharm config files
   * 2025-10-28 - Add optional argument "extra_replacements" to run_local_test_manage()
   * 2025-10-28 - Apply manageprojects updates and apply fixes
 * [v0.10.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.1...v0.10.2)
