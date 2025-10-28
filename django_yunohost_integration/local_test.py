@@ -3,29 +3,24 @@
 """
 
 import dataclasses
+import logging
 import os
 import sys
-from functools import cache
+import tomllib
 from pathlib import Path
 
 import django
 from bx_py_utils.path import assert_is_dir, assert_is_file
 from bx_py_utils.pyproject_toml import get_pyproject_config
+from cli_base.cli_tools.subprocess_utils import verbose_check_call
 from django.core.management.commands.test import Command as DjangoTestCommand
 from rich import print
 
 from django_yunohost_integration.path_utils import get_project_root
-
-
-try:
-    import tomllib  # New in Python 3.11
-except ImportError:
-    import tomli as tomllib
-
-from cli_base.cli_tools.subprocess_utils import verbose_check_call
-
 from django_yunohost_integration.test_utils import generate_basic_auth
 
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_REPLACEMENTS = {
     '__DEBUG_ENABLED__': '0',  # "1" or "0" string
@@ -208,42 +203,55 @@ def create_local_test(
     )
 
 
-@cache  # Run only one time per session
-def setup_local_yunohost_test(
-    *,
-    extra_env: dict | None = None,
-    extra_replacements: dict | None = None,
-) -> CreateResults:
-    package_root = get_project_root()
-    print(f'Setup local YunoHost package from: {package_root}')
+class SetupLocalYunohostTest:
+    last_result: CreateResults | None = None
 
-    replacements = DEFAULT_REPLACEMENTS.copy()
-    if extra_replacements:
-        replacements.update(extra_replacements)
+    def __call__(
+        self,
+        *,
+        extra_env: dict | None = None,
+        extra_replacements: dict | None = None,
+    ) -> CreateResults:
+        if self.last_result:
+            # Run only one time per session
+            logger.info('Local YunoHost test environment already setup, re-use it.')
+            return self.last_result
 
-    result: CreateResults = create_local_test(
-        django_settings_path=package_root / 'conf' / 'settings.py',
-        destination=package_root / 'local_test',
-        runserver=False,
-        extra_replacements=replacements,
-    )
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-    os.environ['ENV_TYPE'] = 'test'
+        logger.info('Setup local YunoHost test environment')
 
-    os.environ['PYTHONUNBUFFERED'] = '1'
-    os.environ['PYTHONWARNINGS'] = 'always'
+        package_root = get_project_root()
+        print(f'Setup local YunoHost package from: {package_root}')
 
-    if extra_env:
-        os.environ.update(extra_env)
+        replacements = DEFAULT_REPLACEMENTS.copy()
+        if extra_replacements:
+            replacements.update(extra_replacements)
 
-    # Add ".../local_test/opt_yunohost/" to sys.path, so that "settings" is importable:
-    final_home_str = str(result.data_dir_path)
-    if final_home_str not in sys.path:
-        sys.path.insert(0, final_home_str)
+        self.last_result: CreateResults = create_local_test(
+            django_settings_path=package_root / 'conf' / 'settings.py',
+            destination=package_root / 'local_test',
+            runserver=False,
+            extra_replacements=replacements,
+        )
+        os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+        os.environ['ENV_TYPE'] = 'test'
 
-    django.setup()
+        os.environ['PYTHONUNBUFFERED'] = '1'
+        os.environ['PYTHONWARNINGS'] = 'always'
 
-    return result
+        if extra_env:
+            os.environ.update(extra_env)
+
+        # Add ".../local_test/opt_yunohost/" to sys.path, so that "settings" is importable:
+        final_home_str = str(self.last_result.data_dir_path)
+        if final_home_str not in sys.path:
+            sys.path.insert(0, final_home_str)
+
+        django.setup()
+
+        return self.last_result
+
+
+setup_local_yunohost_test = SetupLocalYunohostTest()
 
 
 def run_local_test_manage(
