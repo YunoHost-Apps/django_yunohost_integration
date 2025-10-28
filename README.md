@@ -160,30 +160,33 @@ e.g.:
 [comment]: <> (✂✂✂ auto generated dev help start ✂✂✂)
 ```
 usage: ./dev-cli.py [-h]
-                    {check-code-style,coverage,fix-code-style,install,local-test,mypy,nox,pip-audit,publish,test,updat
-e,update-test-snapshot-files,version}
+                    {coverage,install,lint,local-test,mypy,nox,pip-audit,publish,test,update,update-readme-history,upd
+ate-test-snapshot-files,version}
 
-
+Project Homepage: https://github.com/YunoHost-Apps/django_yunohost_integration
 
 ╭─ options ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ -h, --help        show this help message and exit                                                                  │
 ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ subcommands ──────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ {check-code-style,coverage,fix-code-style,install,local-test,mypy,nox,pip-audit,publish,test,update,update-test-sn │
-│ apshot-files,version}                                                                                              │
-│     check-code-style                                                                                               │
-│                   Check code style by calling darker + flake8                                                      │
+│ {coverage,install,lint,local-test,mypy,nox,pip-audit,publish,test,update,update-readme-history,update-test-snapsho │
+│ t-files,version}                                                                                                   │
 │     coverage      Run tests and show coverage report.                                                              │
-│     fix-code-style                                                                                                 │
-│                   Fix code style of all django_yunohost_integration source code files via darker                   │
 │     install       Install requirements and 'django_yunohost_integration' via pip as editable.                      │
+│     lint          Check/fix code style by run: "ruff check --fix"                                                  │
 │     local-test    Build a "local_test" YunoHost installation and start the Django dev. server against it.          │
 │     mypy          Run Mypy (configured in pyproject.toml)                                                          │
 │     nox           Run nox                                                                                          │
 │     pip-audit     Run pip-audit check against current requirements files                                           │
 │     publish       Build and upload this project to PyPi                                                            │
 │     test          Run unittests                                                                                    │
-│     update        Update "requirements*.txt" dependencies files                                                    │
+│     update        Update dependencies (uv.lock) and git pre-commit hooks                                           │
+│     update-readme-history                                                                                          │
+│                   Update project history base on git commits/tags in README.md Will be exited with 1 if the        │
+│                   README.md was updated otherwise with 0.                                                          │
+│                                                                                                                    │
+│                   Also, callable via e.g.:                                                                         │
+│                       python -m cli_base update-readme-history -v                                                  │
 │     update-test-snapshot-files                                                                                     │
 │                   Update all test snapshot files (by remove and recreate all snapshot files)                       │
 │     version       Print version and exit                                                                           │
@@ -215,6 +218,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.2...main)
+  * 2025-10-28 - Apply manageprojects updates and apply fixes
 * [v0.10.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.1...v0.10.2)
   * 2025-03-23 - Expand logging about HTTP_YNH_USER header
 * [v0.10.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.0...v0.10.1)
@@ -223,6 +228,9 @@ proxy_set_header Ynh-User $http_ynh_user;
 * [v0.10.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0)
   * 2025-01-31 - Bugfix publish dev. command
   * 2025-01-31 - pip-tools -> uv + refactor cli
+
+<details><summary>Expand older history entries ...</summary>
+
 * [v0.9.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.1...v0.9.0)
   * 2024-12-23 - fix Python 3.11 install
   * 2024-12-23 - YunoHost >= v12: Use JWT token as validation, too.
@@ -230,9 +238,6 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2024-08-29 - Revert "Add install_python.py"
   * 2024-08-27 - Change `--py-version` to optional, positional argument
   * 2024-08-26 - Add install_python.py
-
-<details><summary>Expand older history entries ...</summary>
-
 * [v0.8.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.8.0...v0.8.1)
   * 2024-08-25 - update assert_is_dir, assert_is_file imports
   * 2024-08-25 - Bugfix codecov.io badge in README

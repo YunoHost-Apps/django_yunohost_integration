@@ -34,21 +34,15 @@ dev = [
     'bx_django_utils',   # https://github.com/boxine/bx_django_utils
     'requests-mock',  # https://github.com/jamielennox/requests-mock
     "cli-base-utilities",  # https://github.com/jedie/cli-base-utilities
-    "click",  # https://github.com/pallets/click/
-    "rich-click",  # https://github.com/ewels/rich-click
     "rich",  # https://github.com/Textualize/rich
 
     "manageprojects",  # https://github.com/jedie/manageprojects
     "urllib3", # for bx_py_utils.test_utils.deny_requests.deny_any_real_request() in tests
     "uv",  # https://github.com/astral-sh/uv
-    "setuptools",  # https://github.com/pypa/setuptools
+    "hatchling",  # https://github.com/pypa/hatch/tree/master/backend
     "nox",  # https://github.com/wntrblm/nox
     "coverage",  # https://github.com/nedbat/coveragepy
-    "autopep8",  # https://github.com/hhatto/autopep8
-    "pyupgrade",  # https://github.com/asottile/pyupgrade
-    "flake8",  # https://github.com/pycqa/flake8
-    "flake8-bugbear",  # https://github.com/PyCQA/flake8-bugbear
-    "pyflakes",  # https://github.com/PyCQA/pyflakes
+    "ruff", # https://github.com/astral-sh/ruff
     "codespell",  # https://github.com/codespell-project/codespell
     "EditorConfig",  # https://github.com/editorconfig/editorconfig-core-py
     "pip-audit",  # https://github.com/pypa/pip-audit
@@ -56,12 +50,6 @@ dev = [
     "twine",  # https://github.com/pypa/twine
     "pre-commit",  # https://github.com/pre-commit/pre-commit
     "typeguard",  # https://github.com/agronholm/typeguard/
-
-    # https://github.com/akaihola/darker
-    # https://github.com/ikamensh/flynt
-    # https://github.com/pycqa/isort
-    # https://github.com/pygments/pygments
-    "darker[flynt, isort, color]",
 ]
 
 [project.urls]
@@ -72,23 +60,22 @@ Source = "https://github.com/YunoHost-Apps/django_yunohost_integration"
 django_yunohost_integration_app = "django_yunohost_integration.__main__:main"
 django_yunohost_integration_dev = "django_yunohost_integration.cli_dev:main"
 
+
 [build-system]
-requires = ["setuptools>=61.0", "setuptools_scm>=7.1"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["django_yunohost_integration*"]
+[tool.hatch.build.targets.wheel]
+packages = ["django_yunohost_integration"]
 
-[tool.setuptools.dynamic]
-version = {attr = "django_yunohost_integration.__version__"}
+[tool.hatch.version]
+path = "django_yunohost_integration/__init__.py"
 
 
 [tool.cli_base]
 version_module_name = "django_yunohost_integration" # Used in cli_base.cli_tools.git_history.update_readme_history()
 
 [tool.cli_base.pip_audit]
-requirements=["requirements.dev.txt"]
 strict=true
 require_hashes=true
 ignore-vuln=[]
@@ -96,27 +83,31 @@ ignore-vuln=[]
 [ynh-integration]
 local_settings_source= "django_yunohost_integration/local_settings_source.py"
 
-[tool.darker]
-src = ['.']
-revision = "origin/main..."
-line_length = 119
-color = true
-skip_string_normalization = true
-diff = false
-check = false
-stdout = false
-isort = true
-log_level = "INFO"
 
+[tool.ruff]
+# https://docs.astral.sh/ruff/configuration/
+line-length = 120
+exclude = [
+  ".*/",
+]
 
-[tool.isort]
-# https://pycqa.github.io/isort/docs/configuration/config_files/#pyprojecttoml-preferred-format
-atomic=true
-profile='black'
-skip_glob=['.*', '*/htmlcov/*']
-known_first_party=['django_yunohost_integration']
-line_length=119
-lines_after_imports=2
+[tool.ruff.lint]
+preview = true  # Needed for some of the rules
+extend-select = [
+    "E", # pycodestyle: https://docs.astral.sh/ruff/rules/#error-e
+    "I", # isort: https://docs.astral.sh/ruff/rules/#isort-i
+]
+ignore = [
+    "E402", # https://docs.astral.sh/ruff/rules/module-import-not-at-top-of-file/
+    "E731", # https://docs.astral.sh/ruff/rules/lambda-assignment/
+]
+
+[tool.ruff.lint.isort]
+# https://docs.astral.sh/ruff/settings/#lintisort
+lines-after-imports = 2
+
+[tool.ruff.format]
+quote-style = "single"
 
 
 [tool.coverage.run]
@@ -161,6 +152,7 @@ applied_migrations = [
     "7b8d152", # 2024-12-03T21:16:56+01:00
     "d1df540", # 2025-01-11T08:58:27+01:00
     "a36dd75", # 2025-03-23T11:39:23+01:00
+    "ac28103", # 2025-10-25T19:03:33+02:00
 ]
 
 [manageprojects.cookiecutter_context.cookiecutter]
