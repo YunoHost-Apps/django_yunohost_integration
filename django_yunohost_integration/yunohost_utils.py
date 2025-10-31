@@ -1,44 +1,16 @@
 import base64
 import logging
-from pathlib import Path
 from urllib.parse import ParseResult, unquote, urlparse
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import RedirectURLMixin
 from django.http import HttpResponseRedirect
-from django.http.request import HttpRequest, host_validation_re
+from django.http.request import HttpRequest
 from django.views import View
 
 
 logger = logging.getLogger(__name__)
-
-YNH_CURRENT_HOST = '/etc/yunohost/current_host'
-
-
-class YnhCurrentHostError(Exception):
-    pass
-
-
-def get_ssowat_domain() -> str:
-    path = Path(YNH_CURRENT_HOST)
-    if not path.is_file():
-        raise YnhCurrentHostError(f'No such file: {YNH_CURRENT_HOST!r}')
-
-    try:
-        current_host = path.read_text()
-    except Exception as err:
-        logger.exception(f'Cannot read {YNH_CURRENT_HOST!r}: %s', err)
-        raise YnhCurrentHostError(f'Cannot read {YNH_CURRENT_HOST!r}: {err}')
-
-    current_host = current_host.strip()
-    if not current_host:
-        raise YnhCurrentHostError(f'{YNH_CURRENT_HOST!r} is empty')
-
-    if not host_validation_re.match(current_host):
-        raise YnhCurrentHostError(f'{current_host!r} is invalid')
-
-    return current_host
 
 
 def encode_ssowat_uri(uri: str) -> str:
@@ -84,13 +56,7 @@ def build_ssowat_uri(request: HttpRequest, next_url: str) -> str:
     logger.debug('Built SSOWat next_uri=%r', next_uri)
     next_uri_base64 = encode_ssowat_uri(next_uri)
 
-    try:
-        ynh_sso_host = get_ssowat_domain()
-    except YnhCurrentHostError as err:
-        logger.exception(str(err))
-        ynh_sso_host = request.get_host()
-
-    ssowat_uri = f'{request.scheme}://{ynh_sso_host}/yunohost/sso/?r={next_uri_base64}'
+    ssowat_uri = f'/yunohost/sso/?r={next_uri_base64}'
     return ssowat_uri
 
 

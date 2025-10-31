@@ -1,8 +1,6 @@
 import base64
 import os
-from tempfile import NamedTemporaryFile
 from typing import Optional
-from unittest.mock import patch
 
 import requests
 from packaging.version import Version
@@ -52,20 +50,3 @@ def assert_project_version(current_version: str, github_project_url: str) -> Non
     )
 
 
-class MockYnhCurrentHost:
-    def __init__(self, ssowat_domain='ynh.test.tld'):
-        self.ssowat_domain = ssowat_domain
-        self.tmp = NamedTemporaryFile(prefix='current_host', delete=False)
-        self.patcher = patch('django_yunohost_integration.yunohost_utils.YNH_CURRENT_HOST', self.tmp.name)
-
-    def __enter__(self):
-        self.tmp.write(self.ssowat_domain.encode('utf-8'))
-        self.tmp.flush()
-        self.patcher.start()
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.patcher.stop()
-        self.tmp.close()
-        if exc_type:
-            return False

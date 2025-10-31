@@ -1,17 +1,12 @@
-import tempfile
-from unittest.mock import patch
 
 from django.core.checks import Warning
 from django.core.checks.registry import CheckRegistry, registry
 from django.test.testcases import SimpleTestCase
 
-from django_yunohost_integration import yunohost_utils
 from django_yunohost_integration.system_checks import (
-    check_ynh_current_host,
     validate_log_level,
     validate_settings_emails,
 )
-from django_yunohost_integration.yunohost_utils import get_ssowat_domain
 
 
 class SystemChecksTestCase(SimpleTestCase):
@@ -75,52 +70,4 @@ class SystemChecksTestCase(SimpleTestCase):
                         id='django_yunohost_integration.W002',
                     )
                 ]
-            )
-
-    def test_check_ynh_current_host_setting(self):
-        with tempfile.NamedTemporaryFile(prefix='current_host') as tmp:
-            with patch.object(yunohost_utils, 'YNH_CURRENT_HOST', tmp.name):
-                errors = check_ynh_current_host(app_configs=None)
-                self.assertEqual(
-                    errors,
-                    [
-                        Warning(
-                            msg=f"'{tmp.name}' is empty",
-                            id='django_yunohost_integration.W003',
-                        )
-                    ],
-                )
-
-                tmp.write(b'ynh.test.tld')
-                tmp.flush()
-                self.assertEqual(get_ssowat_domain(), 'ynh.test.tld')
-
-                errors = check_ynh_current_host(app_configs=None)
-                self.assertEqual(errors, [])
-
-                tmp.seek(0)
-                tmp.write(b'This is no domain!')
-                tmp.flush()
-
-                errors = check_ynh_current_host(app_configs=None)
-                self.assertEqual(
-                    errors,
-                    [
-                        Warning(
-                            msg="'This is no domain!' is invalid",
-                            id='django_yunohost_integration.W003',
-                        )
-                    ],
-                )
-
-        with patch.object(yunohost_utils, 'YNH_CURRENT_HOST', '/file/path/not/exists'):
-            errors = check_ynh_current_host(app_configs=None)
-            self.assertEqual(
-                errors,
-                [
-                    Warning(
-                        msg=("No such file: '/file/path/not/exists'"),
-                        id='django_yunohost_integration.W003',
-                    )
-                ],
             )
