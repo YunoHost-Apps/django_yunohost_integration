@@ -88,9 +88,11 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+# Login the user by using SSOwat login page:
 LOGIN_URL = '/yunohost/sso/'
-LOGIN_REDIRECT_URL = '/yunohost/sso/'
-LOGOUT_REDIRECT_URL = '/yunohost/sso/'
+
+# After login, redirect back to the YunoHost App:
+LOGIN_REDIRECT_URL = f'/{PATH_URL}/'
 
 ROOT_URLCONF = 'urls'  # .../conf/urls.py
 

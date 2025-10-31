@@ -1,20 +1,14 @@
 import base64
 import logging
 from pathlib import Path
-from urllib.parse import ParseResult, urlparse
+from urllib.parse import ParseResult, unquote, urlparse
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.views import RedirectURLMixin
 from django.http import HttpResponseRedirect
 from django.http.request import HttpRequest, host_validation_re
 from django.views import View
-
-
-try:
-    from django.contrib.auth.views import RedirectURLMixin  # New in Django 4.1
-except ImportError:
-    # Django 4.0 fallback:
-    from django_yunohost_integration.compat import RedirectURLMixin
 
 
 logger = logging.getLogger(__name__)
@@ -48,10 +42,32 @@ def get_ssowat_domain() -> str:
 
 
 def encode_ssowat_uri(uri: str) -> str:
+    """
+    Encode the given URI as urlsafe base64 string useable for SSOwat redirect URIs.
+    >>> encode_ssowat_uri('/foo/bar/')
+    'L2Zvby9iYXIv'
+    """
     uri_bytes = uri.encode(encoding='UTF8')
     uri_encoded_bytes: bytes = base64.urlsafe_b64encode(uri_bytes)
     uri_encoded = uri_encoded_bytes.decode(encoding='ASCII')
     return uri_encoded
+
+
+def decode_ssowat_uri(encoded_uri: str) -> str:
+    """
+    Decode a base64-encoded SSOwat URI.
+    >>> decode_ssowat_uri('L2Zvby9iYXIv')
+    '/foo/bar/'
+    """
+    # Decode URL-encoded string first
+    encoded_uri = unquote(encoded_uri)
+    # Add padding if necessary
+    missing_padding = len(encoded_uri) % 4
+    if missing_padding:
+        encoded_uri += '=' * (4 - missing_padding)
+    uri_bytes = base64.urlsafe_b64decode(encoded_uri.encode('ASCII'))
+    uri = uri_bytes.decode('UTF8')
+    return uri
 
 
 def build_ssowat_uri(request: HttpRequest, next_url: str) -> str:
@@ -64,7 +80,8 @@ def build_ssowat_uri(request: HttpRequest, next_url: str) -> str:
     if result.netloc:
         raise ValueError(f'{next_url=} should not contain {result.netloc=} part')
 
-    next_uri = f'{request.scheme}://{request.get_host()}{next_url.lstrip("/")}'
+    next_uri = f'{request.scheme}://{request.get_host()}/{next_url.strip("/")}/'
+    logger.debug('Built SSOWat next_uri=%r', next_uri)
     next_uri_base64 = encode_ssowat_uri(next_uri)
 
     try:
@@ -88,7 +105,7 @@ class SSOwatLoginRedirectView(RedirectURLMixin, View):
             path('admin/', admin.site.urls),
         ]
         settings.LOGIN_URL='/yunohost/sso/'
-        settings.LOGIN_REDIRECT_URL='/yunohost/sso/'
+        settings.LOGIN_REDIRECT_URL='/app_path/'
     """
 
     next_page = settings.LOGIN_REDIRECT_URL

@@ -218,6 +218,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [v0.10.6](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.5...v0.10.6)
+  * 2025-10-31 - Try to fix everything around SSO login and redirection
 * [v0.10.5](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.4...v0.10.5)
   * 2025-10-31 - Fix README
   * 2025-10-31 - Dev
@@ -228,11 +230,11 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2025-10-28 - Add PyCharm config files
   * 2025-10-28 - Add optional argument "extra_replacements" to run_local_test_manage()
   * 2025-10-28 - Apply manageprojects updates and apply fixes
-* [v0.10.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.1...v0.10.2)
-  * 2025-03-23 - Expand logging about HTTP_YNH_USER header
 
 <details><summary>Expand older history entries ...</summary>
 
+* [v0.10.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.1...v0.10.2)
+  * 2025-03-23 - Expand logging about HTTP_YNH_USER header
 * [v0.10.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.0...v0.10.1)
   * 2025-03-23 - Update example settings
   * 2025-03-23 - Apply manageproject updates + update requirements
