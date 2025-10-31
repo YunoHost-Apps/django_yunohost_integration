@@ -10,6 +10,8 @@ from django_yunohost_integration.local_test import run_local_test_manage
 
 if __name__ == '__main__':
     run_local_test_manage(
-        extra_env=None,
-        extra_replacements=None,
+        extra_env={'ENV_TYPE': 'local'},
+        extra_replacements={
+            '__PATH__': 'app_path',  # Simulate installation into "/app_path/" !
+        },
     )

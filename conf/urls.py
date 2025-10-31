@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib import admin
+from django.conf.urls import static
 from django.urls import include, path
 from django.views.generic import RedirectView
 
@@ -14,6 +14,16 @@ urlpatterns = [
     #
     # Cover over the default Django Admin Login with SSOWat login:
     path(f'{settings.PATH_URL}/login/', SSOwatLoginRedirectView.as_view(), name='ssowat-login'),
-    #
-    path(f'{settings.PATH_URL}/', admin.site.urls),
 ]
+
+
+if settings.SERVE_FILES:
+    urlpatterns += static.static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+if 'debug_toolbar' in settings.INSTALLED_APPS:
+    import debug_toolbar
+
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
