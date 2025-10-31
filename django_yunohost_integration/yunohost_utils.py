@@ -46,13 +46,16 @@ def build_ssowat_uri(request: HttpRequest, next_url: str) -> str:
     user = request.user
     assert not user.is_authenticated, 'User "{user}" already authenticated'
 
-    result: ParseResult = urlparse(next_url)
-    if result.scheme:
-        raise ValueError(f'{next_url=} should not contain {result.scheme=} part')
-    if result.netloc:
-        raise ValueError(f'{next_url=} should not contain {result.netloc=} part')
+    next_uri = f'{request.scheme}://{request.get_host()}/'
 
-    next_uri = f'{request.scheme}://{request.get_host()}/{next_url.strip("/")}/'
+    if next_url != '/':
+        result: ParseResult = urlparse(next_url)
+        if result.scheme:
+            raise ValueError(f'{next_url=} should not contain {result.scheme=} part')
+        if result.netloc:
+            raise ValueError(f'{next_url=} should not contain {result.netloc=} part')
+
+        next_uri = f'{next_uri}{next_url.strip("/")}/'
     logger.debug('Built SSOWat next_uri=%r', next_uri)
     next_uri_base64 = encode_ssowat_uri(next_uri)
 
