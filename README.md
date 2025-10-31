@@ -218,6 +218,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [v0.10.8](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.7...v0.10.8)
+  * 2025-10-31 - Bugfix redirect of Ynh app is installed on domain root `next=/`
 * [v0.10.7](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.6...v0.10.7)
   * 2025-10-31 - Bugfix SSO login redirection: Don't change the domain
 * [v0.10.6](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.5...v0.10.6)
@@ -226,11 +228,11 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2025-10-31 - Fix README
   * 2025-10-31 - Dev
   * 2025-10-31 - Update requirements
-* [v0.10.4](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.3...v0.10.4)
-  * 2025-10-28 - Replace @cache because dict arguments
 
 <details><summary>Expand older history entries ...</summary>
 
+* [v0.10.4](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.3...v0.10.4)
+  * 2025-10-28 - Replace @cache because dict arguments
 * [v0.10.3](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.2...v0.10.3)
   * 2025-10-28 - Add PyCharm config files
   * 2025-10-28 - Add optional argument "extra_replacements" to run_local_test_manage()
