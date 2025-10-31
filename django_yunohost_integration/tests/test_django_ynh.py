@@ -11,9 +11,9 @@ from django.urls.base import reverse
 from django.views.generic import RedirectView
 from django_example.views import LoginRequiredView
 
-from django_yunohost_integration.test_utils import generate_basic_auth
+from django_yunohost_integration.test_utils import MockYnhCurrentHost, generate_basic_auth
 from django_yunohost_integration.yunohost.tests.test_ynh_jwt import create_jwt
-from django_yunohost_integration.yunohost_utils import SSOwatLoginRedirectView
+from django_yunohost_integration.yunohost_utils import SSOwatLoginRedirectView, decode_ssowat_uri
 
 
 class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
@@ -81,19 +81,30 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         self.assertEqual(settings.PATH_URL, 'app_path')
         self.assertEqual(settings.ROOT_URLCONF, 'urls')
         self.assertEqual(settings.LOGIN_URL, '/yunohost/sso/')
-        self.assertEqual(settings.LOGIN_REDIRECT_URL, '/yunohost/sso/')
         self.assertEqual(reverse('admin:index'), '/app_path/admin/')
+
+        # After SSO login, user should be redirected to app root path:
+        self.assertEqual(settings.LOGIN_REDIRECT_URL, '/app_path/')
 
         response = self.client.get('/', secure=True)
         self.assertEqual(response.resolver_match.func.view_class, RedirectView)
         self.assertRedirects(response, expected_url='/app_path/', fetch_redirect_response=False)
 
-        response = self.client.get('/app_path/login/', secure=True)
+        with MockYnhCurrentHost(ssowat_domain='ynh.test.tld'):
+            response = self.client.get(
+                path='/app_path/login/',
+                headers={'Host': 'testserver'},
+                secure=True,
+            )
         self.assertEqual(response.resolver_match.func.view_class, SSOwatLoginRedirectView)
         self.assertRedirects(
             response,
-            expected_url='https://testserver/yunohost/sso/?r=aHR0cHM6Ly90ZXN0c2VydmVyeXVub2hvc3Qvc3NvLw==',
+            expected_url='https://ynh.test.tld/yunohost/sso/?r=aHR0cHM6Ly90ZXN0c2VydmVyL2FwcF9wYXRoLw%3D%3D',
             fetch_redirect_response=False,
+        )
+        self.assertEqual(  # check the encoded URL
+            decode_ssowat_uri('aHR0cHM6Ly90ZXN0c2VydmVyL2FwcF9wYXRoLw%3D%3D'),
+            'https://testserver/app_path/',
         )
 
         # Test view from django-example project:
