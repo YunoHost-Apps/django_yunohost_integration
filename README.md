@@ -218,6 +218,9 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.4...main)
+  * 2025-10-31 - Limit software version to match YunoHost v12
+  * 2025-10-31 - Update requirements
 * [v0.10.4](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.3...v0.10.4)
   * 2025-10-28 - Replace @cache because dict arguments
 * [v0.10.3](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.2...v0.10.3)
@@ -226,12 +229,12 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2025-10-28 - Apply manageprojects updates and apply fixes
 * [v0.10.2](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.1...v0.10.2)
   * 2025-03-23 - Expand logging about HTTP_YNH_USER header
-* [v0.10.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.0...v0.10.1)
-  * 2025-03-23 - Update example settings
-  * 2025-03-23 - Apply manageproject updates + update requirements
 
 <details><summary>Expand older history entries ...</summary>
 
+* [v0.10.1](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.0...v0.10.1)
+  * 2025-03-23 - Update example settings
+  * 2025-03-23 - Apply manageproject updates + update requirements
 * [v0.10.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.9.0...v0.10.0)
   * 2025-01-31 - Bugfix publish dev. command
   * 2025-01-31 - pip-tools -> uv + refactor cli

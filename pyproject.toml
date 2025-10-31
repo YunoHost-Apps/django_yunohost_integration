@@ -7,9 +7,13 @@ readme = "README.md"
 authors = [
     {name = 'Jens Diemer', email = 'git@jensdiemer.de'}
 ]
-requires-python = ">=3.11"
+# Until we can update to Django 5.2, we need to stay with Python <3.14
+requires-python = ">=3.11,<3.14"
 dependencies = [
-    'django',  # https://github.com/django/django
+    # Stay with Django <= 5.1, because >=5.2 requires postgresql >= 14
+    # See: https://docs.djangoproject.com/en/dev/ref/databases/#postgresql-notes
+    # But current YunoHost v12.x postgresql version is 13.x
+    "Django<5.2",
     'django-tools',  # https://github.com/jedie/django-tools
 
     'PyJWT',  # https://github.com/jpadilla/pyjwt
