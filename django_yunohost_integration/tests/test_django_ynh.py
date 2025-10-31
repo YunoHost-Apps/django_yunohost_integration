@@ -8,9 +8,12 @@ from django.contrib.auth.models import User
 from django.test import override_settings
 from django.test.testcases import TestCase
 from django.urls.base import reverse
+from django.views.generic import RedirectView
+from django_example.views import LoginRequiredView
 
 from django_yunohost_integration.test_utils import generate_basic_auth
 from django_yunohost_integration.yunohost.tests.test_ynh_jwt import create_jwt
+from django_yunohost_integration.yunohost_utils import SSOwatLoginRedirectView
 
 
 class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
@@ -77,10 +80,30 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
     def test_urls(self):
         self.assertEqual(settings.PATH_URL, 'app_path')
         self.assertEqual(settings.ROOT_URLCONF, 'urls')
+        self.assertEqual(settings.LOGIN_URL, '/yunohost/sso/')
+        self.assertEqual(settings.LOGIN_REDIRECT_URL, '/yunohost/sso/')
         self.assertEqual(reverse('admin:index'), '/app_path/admin/')
 
         response = self.client.get('/', secure=True)
+        self.assertEqual(response.resolver_match.func.view_class, RedirectView)
         self.assertRedirects(response, expected_url='/app_path/', fetch_redirect_response=False)
+
+        response = self.client.get('/app_path/login/', secure=True)
+        self.assertEqual(response.resolver_match.func.view_class, SSOwatLoginRedirectView)
+        self.assertRedirects(
+            response,
+            expected_url='https://testserver/yunohost/sso/?r=aHR0cHM6Ly90ZXN0c2VydmVyeXVub2hvc3Qvc3NvLw==',
+            fetch_redirect_response=False,
+        )
+
+        # Test view from django-example project:
+        response = self.client.get('/app_path/login-required/', secure=True)
+        self.assertEqual(response.resolver_match.func.view_class, LoginRequiredView)
+        self.assertRedirects(
+            response,
+            expected_url='/yunohost/sso/?next=/app_path/login-required/',
+            fetch_redirect_response=False,
+        )
 
     def test_auth(self):
         # SecurityMiddleware should redirects all non-HTTPS requests to HTTPS:

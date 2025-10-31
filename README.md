@@ -218,8 +218,9 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.4...main)
-  * 2025-10-31 - Limit software version to match YunoHost v12
+* [v0.10.5](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.4...v0.10.5)
+  * 2025-10-31 - Bugfix checks in build_ssowat_uri()
+  * 2025-10-31 - Update project setup
   * 2025-10-31 - Update requirements
 * [v0.10.4](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.3...v0.10.4)
   * 2025-10-28 - Replace @cache because dict arguments

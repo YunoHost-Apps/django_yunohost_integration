@@ -13,6 +13,7 @@ SECRET_KEY = None
 # -----------------------------------------------------------------------------
 
 ROOT_URLCONF = 'urls'  # .../conf/urls.py
+SERVE_FILES = False  # May used in urls.py
 
 INSTALLED_APPS = [
     'django.contrib.admin',
