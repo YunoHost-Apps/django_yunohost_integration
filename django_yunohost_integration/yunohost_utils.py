@@ -59,8 +59,10 @@ def build_ssowat_uri(request: HttpRequest, next_url: str) -> str:
     assert not user.is_authenticated, 'User "{user}" already authenticated'
 
     result: ParseResult = urlparse(next_url)
-    assert result.scheme is None, f'{next_url} contains URI scheme part'
-    assert result.netloc is None, f'{next_url} contains URI netloc part'
+    if result.scheme:
+        raise ValueError(f'{next_url=} should not contain {result.scheme=} part')
+    if result.netloc:
+        raise ValueError(f'{next_url=} should not contain {result.netloc=} part')
 
     next_uri = f'{request.scheme}://{request.get_host()}{next_url.lstrip("/")}'
     next_uri_base64 = encode_ssowat_uri(next_uri)
@@ -85,14 +87,15 @@ class SSOwatLoginRedirectView(RedirectURLMixin, View):
             path('admin/login/', SSOwatLoginRedirectView.as_view(), name='ssowat-login'),
             path('admin/', admin.site.urls),
         ]
-        settings.LOGIN_URL='ssowat-login'
+        settings.LOGIN_URL='/yunohost/sso/'
+        settings.LOGIN_REDIRECT_URL='/yunohost/sso/'
     """
 
     next_page = settings.LOGIN_REDIRECT_URL
     redirect_field_name = REDIRECT_FIELD_NAME
     success_url_allowed_hosts = set()
 
-    def get(self, request):
+    def get(self, request: HttpRequest):
         user = request.user
         next_url = self.get_success_url()
         if user.is_authenticated:

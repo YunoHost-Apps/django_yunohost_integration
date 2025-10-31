@@ -88,10 +88,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_REDIRECT_URL = None
 LOGIN_URL = '/yunohost/sso/'
+LOGIN_REDIRECT_URL = '/yunohost/sso/'
 LOGOUT_REDIRECT_URL = '/yunohost/sso/'
-# /yunohost/sso/?action=logout
 
 ROOT_URLCONF = 'urls'  # .../conf/urls.py
 
