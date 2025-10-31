@@ -3,8 +3,6 @@ from django.core.checks import Warning, register
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 
-from django_yunohost_integration.yunohost_utils import YnhCurrentHostError, get_ssowat_domain
-
 
 VALID_LOG_LEVEL_NAMES = (
     'DEBUG',
@@ -66,16 +64,4 @@ def validate_settings_emails(app_configs, **kwargs):
     return errors
 
 
-@register()
-def check_ynh_current_host(app_configs, **kwargs):
-    errors = []
-    try:
-        get_ssowat_domain()
-    except YnhCurrentHostError as err:
-        errors.append(
-            Warning(
-                msg=str(err),
-                id='django_yunohost_integration.W003',
-            )
-        )
-    return errors
+

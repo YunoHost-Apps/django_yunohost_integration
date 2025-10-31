@@ -11,7 +11,7 @@ from django.urls.base import reverse
 from django.views.generic import RedirectView
 from django_example.views import LoginRequiredView
 
-from django_yunohost_integration.test_utils import MockYnhCurrentHost, generate_basic_auth
+from django_yunohost_integration.test_utils import generate_basic_auth
 from django_yunohost_integration.yunohost.tests.test_ynh_jwt import create_jwt
 from django_yunohost_integration.yunohost_utils import SSOwatLoginRedirectView, decode_ssowat_uri
 
@@ -90,8 +90,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         self.assertEqual(response.resolver_match.func.view_class, RedirectView)
         self.assertRedirects(response, expected_url='/app_path/', fetch_redirect_response=False)
 
-        with MockYnhCurrentHost(ssowat_domain='ynh.test.tld'):
-            response = self.client.get(
+        response = self.client.get(
                 path='/app_path/login/',
                 headers={'Host': 'testserver'},
                 secure=True,
@@ -99,7 +98,7 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
         self.assertEqual(response.resolver_match.func.view_class, SSOwatLoginRedirectView)
         self.assertRedirects(
             response,
-            expected_url='https://ynh.test.tld/yunohost/sso/?r=aHR0cHM6Ly90ZXN0c2VydmVyL2FwcF9wYXRoLw%3D%3D',
+            expected_url='/yunohost/sso/?r=aHR0cHM6Ly90ZXN0c2VydmVyL2FwcF9wYXRoLw%3D%3D',
             fetch_redirect_response=False,
         )
         self.assertEqual(  # check the encoded URL
