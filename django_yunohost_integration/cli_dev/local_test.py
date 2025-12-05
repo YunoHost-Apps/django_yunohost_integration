@@ -27,5 +27,5 @@ def local_test(*, args: LocalTestArgs):
         django_settings_path=args.setting,
         destination=args.destination,
         runserver=args.runserver,
-        extra_replacements={'__DEBUG_ENABLED__': 'YES'},
+        extra_replacements={'__DEBUG_ENABLED__': '1'},
     )
