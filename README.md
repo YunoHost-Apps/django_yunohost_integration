@@ -218,7 +218,8 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.8...main)
+* [v0.10.9](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.8...v0.10.9)
+  * 2025-12-05 - Replace __DEBUG_ENABLED__ default "YES" to "1"
   * 2025-12-05 - Update requirements
 * [v0.10.8](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.7...v0.10.8)
   * 2025-10-31 - Bugfix redirect of Ynh app is installed on domain root `next=/`
