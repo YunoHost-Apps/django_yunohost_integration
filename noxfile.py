@@ -1,14 +1,20 @@
+#
+# https://github.com/wntrblm/nox/
+# Documentation: https://nox.thea.codes/
+#
 import nox
 from nox.sessions import Session
 
 
-PYTHON_VERSIONS = (
-    # TODO: '3.14' After YunoHost v13 release
-    '3.13', '3.12', '3.11'
+PYTHON_VERSIONS = ('3.14', '3.13', '3.12')
+
+
+@nox.session(
+    python=PYTHON_VERSIONS,
+    venv_backend='uv',
+    reuse_venv=True,
+    download_python='auto',
 )
-
-
-@nox.session(python=PYTHON_VERSIONS)
 def tests(session: Session):
     session.install('uv')
     session.run(
@@ -17,6 +23,12 @@ def tests(session: Session):
         '--all-extras',
         '--python',
         session.python,
+        env={'UV_PROJECT_ENVIRONMENT': session.virtualenv.location},
+    )
+    # uv audit it fast, so run it every time:
+    session.run(
+        'uv',
+        'audit',
         env={'UV_PROJECT_ENVIRONMENT': session.virtualenv.location},
     )
     session.run('python', '-m', 'coverage', 'run', '--context', f'py{session.python}')

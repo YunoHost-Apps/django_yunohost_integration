@@ -18,6 +18,12 @@ class ProjectSetupTestCase(TestCase):
         version = Version(__version__)  # Will raise InvalidVersion() if wrong formatted
         self.assertEqual(str(version), __version__)
 
+        cli_bin = PACKAGE_ROOT / 'cli.py'
+        assert_is_file(cli_bin)
+
+        output = subprocess.check_output([cli_bin, 'version'], text=True)
+        self.assertIn(f'django_yunohost_integration v{__version__}', output)
+
         dev_cli_bin = PACKAGE_ROOT / 'dev-cli.py'
         assert_is_file(dev_cli_bin)
 
