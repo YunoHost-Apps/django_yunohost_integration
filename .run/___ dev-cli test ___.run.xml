@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="dev-cli test" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="*** dev-cli test ***" type="PythonConfigurationType" factoryName="Python">
     <module name="django_yunohost_integration" />
     <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
@@ -12,7 +12,9 @@
     <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="false" />
     <option name="ADD_SOURCE_ROOTS" value="false" />
+    <option name="DEBUG_JUST_MY_CODE" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+    <option name="RUN_TOOL" value="" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dev-cli.py" />
     <option name="PARAMETERS" value="test" />
     <option name="SHOW_COMMAND_LINE" value="false" />

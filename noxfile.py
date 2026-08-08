@@ -7,15 +7,16 @@ from nox.sessions import Session
 
 
 PYTHON_VERSIONS = ('3.14', '3.13', '3.12')
+DJANGO_VERSIONS = ('6.1', '6.0', '5.2')
 
 
 @nox.session(
     python=PYTHON_VERSIONS,
     venv_backend='uv',
-    reuse_venv=True,
     download_python='auto',
 )
-def tests(session: Session):
+@nox.parametrize('django', DJANGO_VERSIONS)
+def tests(session: Session, django: str):
     session.install('uv')
     session.run(
         'uv',
@@ -25,10 +26,11 @@ def tests(session: Session):
         session.python,
         env={'UV_PROJECT_ENVIRONMENT': session.virtualenv.location},
     )
-    # uv audit it fast, so run it every time:
     session.run(
         'uv',
-        'audit',
+        'pip',
+        'install',
+        f'django>={django},<={django}.999',
         env={'UV_PROJECT_ENVIRONMENT': session.virtualenv.location},
     )
-    session.run('python', '-m', 'coverage', 'run', '--context', f'py{session.python}')
+    session.run('python', '-m', 'coverage', 'run', '--context', f'py{session.python}-django{django}')

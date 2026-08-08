@@ -1,4 +1,3 @@
-# ruff: noqa: F405
 ################################################################################
 ################################################################################
 
@@ -12,12 +11,11 @@
 
 from pathlib import Path as __Path
 
-from django_yunohost_integration.base_settings import *  # noqa:F401,F403
-from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
-
-
 # https://github.com/jedie/django-example/
-from django_example.settings.prod import *  # noqa:F401,F403 isort:skip
+from django_example.settings.prod import *
+
+from django_yunohost_integration.base_settings import *
+from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
 
 
 DATA_DIR_PATH = __Path('__DATA_DIR__')  # /home/yunohost.app/$app/
@@ -206,6 +204,6 @@ LOGGING = {
 # -----------------------------------------------------------------------------
 
 try:
-    from local_settings import *  # noqa:F401,F403
+    from local_settings import *
 except ImportError:
     pass

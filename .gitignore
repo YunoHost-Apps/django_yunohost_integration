@@ -15,5 +15,9 @@ __pycache__
 /coverage.*
 *.orig
 
-# If this is a library and not an application, add:
-#uv.lock
+# This is a library, not an application, so don't add the lock file into the repository:
+uv.lock
+
+# test project:
+/local_test/
+secret.txt
