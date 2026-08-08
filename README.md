@@ -221,7 +221,7 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
-* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.9...main)
+* [v0.11.0](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.9...v0.11.0)
   * 2026-08-08 - Add Cobertura XML coverage reporting and GitHub upload-code-coverage integration
   * 2026-08-08 - fix flaky test
   * 2026-08-08 - Expand github CI matrix
