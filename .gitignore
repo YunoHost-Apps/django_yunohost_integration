@@ -21,3 +21,6 @@ uv.lock
 # test project:
 /local_test/
 secret.txt
+
+# Coverage data:
+/.coverage_data/
