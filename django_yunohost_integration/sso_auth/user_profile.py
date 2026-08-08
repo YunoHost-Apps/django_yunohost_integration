@@ -1,5 +1,5 @@
 import logging
-from functools import lru_cache
+from functools import cache
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 UserModel = get_user_model()
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_setup_user_func():
     setup_user_func = import_string(settings.YNH_SETUP_USER)
     assert callable(setup_user_func)

@@ -4,6 +4,7 @@ from unittest import TestCase
 from bx_py_utils.path import assert_is_file
 from cli_base.cli_tools.code_style import assert_code_style
 from cli_base.cli_tools.subprocess_utils import ToolsExecutor
+from cli_base.cli_tools.test_utils.assertion import assert_in
 from manageprojects.test_utils.project_setup import check_editor_config, get_py_max_line_length
 from packaging.version import Version
 
@@ -22,7 +23,14 @@ class ProjectSetupTestCase(TestCase):
         assert_is_file(dev_cli_bin)
 
         output = subprocess.check_output([dev_cli_bin, 'version'], text=True)
-        self.assertIn(f'django_yunohost_integration v{__version__}', output)
+        assert_in(
+            content=output,
+            parts=(
+                '/django_yunohost_integration/',
+                'ENV_TYPE=test',
+                f'django-yunohost-integration v{__version__}',
+            ),
+        )
 
     def test_code_style(self):
         return_code = assert_code_style(package_root=PACKAGE_ROOT)

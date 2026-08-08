@@ -1,6 +1,5 @@
 import base64
 import os
-from typing import Optional
 
 import requests
 from packaging.version import Version
@@ -13,7 +12,7 @@ def generate_basic_auth(username, password):
     return f'basic {creds}'
 
 
-def get_github_version_tag(github_project_url: str) -> Optional[Version]:
+def get_github_version_tag(github_project_url: str) -> Version | None:
     """
     Returns the last non-prerelease Version objects from github tags.
     """

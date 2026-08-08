@@ -159,38 +159,41 @@ e.g.:
 
 [comment]: <> (✂✂✂ auto generated dev help start ✂✂✂)
 ```
-usage: ./dev-cli.py [-h]
-                    {coverage,install,lint,local-test,mypy,nox,pip-audit,publish,test,update,update-readme-history,upd
-ate-test-snapshot-files,version}
+usage: ./dev-cli.py [-h] {coverage,install,lint,local-test,mypy,nox,pip-audit,publish,test,update,update-readme-history,update-test-snapshot-files,version}
 
-Project Homepage: https://github.com/YunoHost-Apps/django_yunohost_integration
 
-╭─ options ──────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ -h, --help        show this help message and exit                                                                  │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ subcommands ──────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ {coverage,install,lint,local-test,mypy,nox,pip-audit,publish,test,update,update-readme-history,update-test-snapsho │
-│ t-files,version}                                                                                                   │
-│     coverage      Run tests and show coverage report.                                                              │
-│     install       Install requirements and 'django_yunohost_integration' via pip as editable.                      │
-│     lint          Check/fix code style by run: "ruff check --fix"                                                  │
-│     local-test    Build a "local_test" YunoHost installation and start the Django dev. server against it.          │
-│     mypy          Run Mypy (configured in pyproject.toml)                                                          │
-│     nox           Run nox                                                                                          │
-│     pip-audit     Run pip-audit check against current requirements files                                           │
-│     publish       Build and upload this project to PyPi                                                            │
-│     test          Run unittests                                                                                    │
-│     update        Update dependencies (uv.lock) and git pre-commit hooks                                           │
-│     update-readme-history                                                                                          │
-│                   Update project history base on git commits/tags in README.md Will be exited with 1 if the        │
-│                   README.md was updated otherwise with 0.                                                          │
-│                                                                                                                    │
-│                   Also, callable via e.g.:                                                                         │
-│                       python -m cli_base update-readme-history -v                                                  │
-│     update-test-snapshot-files                                                                                     │
-│                   Update all test snapshot files (by remove and recreate all snapshot files)                       │
-│     version       Print version and exit                                                                           │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+╭─ options ──────────────────────────────────────────────────────────────────────────────╮
+│ -h, --help    show this help message and exit                                          │
+╰────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ subcommands ──────────────────────────────────────────────────────────────────────────╮
+│ (required)                                                                             │
+│   • coverage  Run tests and show coverage report.                                      │
+│   • install   Install requirements and 'django_yunohost_integration' via pip as        │
+│               editable.                                                                │
+│   • lint      Check/fix code style by run: "ruff check --fix"                          │
+│   • local-test                                                                         │
+│               Build a "local_test" YunoHost installation and start the Django dev.     │
+│               server against it.                                                       │
+│   • mypy      Run Mypy (configured in pyproject.toml)                                  │
+│   • nox       Run nox                                                                  │
+│   • pip-audit                                                                          │
+│               Run pip-audit check against current requirements files                   │
+│   • publish   Build and upload this project to PyPi                                    │
+│   • test      Run unittests                                                            │
+│   • update    Update dependencies (uv.lock) and git pre-commit hooks                   │
+│   • update-readme-history                                                              │
+│               Update project history base on git commits/tags in README.md             │
+│                                                                                        │
+│               Will be exited with 1 if the README.md was updated otherwise with 0.     │
+│                                                                                        │
+│               Also, callable via e.g.:                                                 │
+│                   python -m cli_base update-readme-history -v                          │
+│   • update-test-snapshot-files                                                         │
+│               Update all test snapshot files (by remove and recreate all snapshot      │
+│               files)                                                                   │
+│   • version   Print version and exit                                                   │
+╰────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 [comment]: <> (✂✂✂ auto generated dev help end ✂✂✂)
 
@@ -218,6 +221,10 @@ proxy_set_header Ynh-User $http_ynh_user;
 
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
+* [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.9...main)
+  * 2026-08-08 - fix code style and tests
+  * 2026-08-08 - Modernize
+  * 2026-08-08 - Apply mamageprojects updates
 * [v0.10.9](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.8...v0.10.9)
   * 2025-12-05 - Replace __DEBUG_ENABLED__ default "YES" to "1"
   * 2025-12-05 - Update requirements
@@ -225,11 +232,11 @@ proxy_set_header Ynh-User $http_ynh_user;
   * 2025-10-31 - Bugfix redirect of Ynh app is installed on domain root `next=/`
 * [v0.10.7](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.6...v0.10.7)
   * 2025-10-31 - Bugfix SSO login redirection: Don't change the domain
-* [v0.10.6](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.5...v0.10.6)
-  * 2025-10-31 - Try to fix everything around SSO login and redirection
 
 <details><summary>Expand older history entries ...</summary>
 
+* [v0.10.6](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.5...v0.10.6)
+  * 2025-10-31 - Try to fix everything around SSO login and redirection
 * [v0.10.5](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.4...v0.10.5)
   * 2025-10-31 - Fix README
   * 2025-10-31 - Dev

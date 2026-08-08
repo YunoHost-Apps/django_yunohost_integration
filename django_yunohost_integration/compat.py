@@ -2,7 +2,7 @@
     borrowed from Django 4.1
     TODO: Remove this after Django 4.0 support dropped
 """
-
+from typing import ClassVar
 
 from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
 from django.core.exceptions import ImproperlyConfigured
@@ -16,7 +16,7 @@ UserModel = get_user_model()
 class RedirectURLMixin:
     next_page = None
     redirect_field_name = REDIRECT_FIELD_NAME
-    success_url_allowed_hosts = set()
+    success_url_allowed_hosts: ClassVar[set] = set()
 
     def get_success_url(self):
         return self.get_redirect_url() or self.get_default_redirect_url()

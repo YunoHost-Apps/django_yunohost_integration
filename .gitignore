@@ -1,10 +1,4 @@
 .*
-*.egg-info
-__pycache__
-/dist/
-/build/
-/coverage.*
-*.orig
 
 !.github
 !.run
@@ -14,7 +8,16 @@ __pycache__
 !.pre-commit-hooks.yaml
 !.gitkeep
 
-secret.txt
+*.egg-info
+__pycache__
+/dist/
+/build/
+/coverage.*
+*.orig
+
+# This is a library, not an application, so don't add the lock file into the repository:
+uv.lock
+
+# test project:
 /local_test/
-*.log
-*.sqlite
+secret.txt

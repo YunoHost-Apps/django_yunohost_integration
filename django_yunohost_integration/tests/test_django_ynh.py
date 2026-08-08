@@ -146,6 +146,12 @@ class DjangoYnhTestCase(HtmlAssertionMixin, TestCase):
 
         self.client.cookies['yunohost.portal'] = create_jwt(username='test')
 
+        # The https://github.com/jedie/django-example/ app is there:
+        self.assertIn('django_example.apps.DjangoExampleAppConfig', settings.INSTALLED_APPS)
+
+        self.assertIn('axes', settings.INSTALLED_APPS)
+        self.assertIn('django_yunohost_integration.apps.YunohostIntegrationConfig', settings.INSTALLED_APPS)
+
         with self.assertLogs('django_yunohost_integration') as logs, self.assertLogs('django_example') as app_logs:
             response = self.client.get(
                 path='/app_path/',

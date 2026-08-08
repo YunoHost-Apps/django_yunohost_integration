@@ -7,13 +7,9 @@ readme = "README.md"
 authors = [
     {name = 'Jens Diemer', email = 'git@jensdiemer.de'}
 ]
-# Until we can update to Django 5.2, we need to stay with Python <3.14
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.12"
 dependencies = [
-    # Stay with Django <= 5.1, because >=5.2 requires postgresql >= 14
-    # See: https://docs.djangoproject.com/en/dev/ref/databases/#postgresql-notes
-    # But current YunoHost v12.x postgresql version is 13.x
-    "Django<5.2",
+    "django",
     'django-tools',  # https://github.com/jedie/django-tools
 
     'PyJWT',  # https://github.com/jpadilla/pyjwt
@@ -65,6 +61,14 @@ django_yunohost_integration_app = "django_yunohost_integration.__main__:main"
 django_yunohost_integration_dev = "django_yunohost_integration.cli_dev:main"
 
 
+[tool.bx_py_utils.doc_write]
+docstring_prefix = 'DocWrite:'
+macro_prefix = 'DocWriteMacro:'
+output_base_path = './docs/'
+search_paths = ['./django_yunohost_integration/']
+delete_obsolete_files = true
+
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -113,16 +117,22 @@ lines-after-imports = 2
 [tool.ruff.format]
 quote-style = "single"
 
+[tool.ruff.lint.per-file-ignores]
+"conf/settings.py" = [
+    "I001", # "Wrong" import order is needed there!
+]
 
 [tool.coverage.run]
+# https://coverage.readthedocs.io/en/latest/config.html#run
 branch = true
 parallel = true
 concurrency = ["multiprocessing"]
 source = ['.']
 command_line = '-m django_yunohost_integration test'
+data_file = ".coverage_data/.coverage"
 
 [tool.coverage.report]
-omit = ['.*', '*/tests/*']
+omit = ['.*', '*/tests/*', 'noxfile.py']
 skip_empty = true
 fail_under = 60
 show_missing = true
@@ -157,6 +167,7 @@ applied_migrations = [
     "d1df540", # 2025-01-11T08:58:27+01:00
     "a36dd75", # 2025-03-23T11:39:23+01:00
     "ac28103", # 2025-10-25T19:03:33+02:00
+    "ee2e451", # 2026-08-08T13:51:46+02:00
 ]
 
 [manageprojects.cookiecutter_context.cookiecutter]

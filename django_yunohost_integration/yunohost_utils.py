@@ -1,5 +1,6 @@
 import base64
 import logging
+from typing import ClassVar
 from urllib.parse import ParseResult, unquote, urlparse
 
 from django.conf import settings
@@ -79,7 +80,7 @@ class SSOwatLoginRedirectView(RedirectURLMixin, View):
 
     next_page = settings.LOGIN_REDIRECT_URL
     redirect_field_name = REDIRECT_FIELD_NAME
-    success_url_allowed_hosts = set()
+    success_url_allowed_hosts: ClassVar[set] = set()
 
     def get(self, request: HttpRequest):
         user = request.user
