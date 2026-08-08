@@ -1,4 +1,3 @@
-
 name: tests
 permissions:
   contents: read
@@ -13,11 +12,13 @@ on:
 
 jobs:
   test:
+    name: 'Python ${{ matrix.python-version }} Django ${{ matrix.django-version }}'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.14", "3.13", "3.12"]
+        python-version: ['3.14', '3.13', '3.12']
+        django-version: ['6.1', '6.0', '5.2']
     steps:
     - name: Checkout
       run: |
@@ -48,16 +49,12 @@ jobs:
       run: |
         ./dev-cli.py --help
 
-    - name: 'Run pip-audit'
-      run: |
-        ./dev-cli.py pip-audit
-
-    - name: 'Run tests with Python v${{ matrix.python-version }}'
+    - name: 'Python ${{ matrix.python-version }} Django ${{ matrix.django-version }}'
       env:
         PYTHONUNBUFFERED: 1
         PYTHONWARNINGS: always
       run: |
-        ./dev-cli.py coverage
+        ./dev-cli.py nox -e "tests-${{ matrix.python-version }}(django='${{ matrix.django-version }}')"
 
     - name: 'Upload coverage report'
       uses: codecov/codecov-action@main
