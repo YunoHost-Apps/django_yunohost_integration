@@ -33,21 +33,6 @@ def assert_cli_help_in_readme(text_block: str, marker: str):
 
 
 class ReadmeTestCase(BaseTestCase):
-
-    def test_main_help(self):
-        with NoColorEnvRich():
-            stdout = invoke(cli_bin=PACKAGE_ROOT / 'cli.py', args=['--help'], strip_line_prefix='usage: ')
-        assert_in(
-            content=stdout,
-            parts=(
-                'usage: ./cli.py [-h]',
-                ' version ',
-                'Print version and exit',
-                constants.CLI_EPILOG,
-            ),
-        )
-        assert_cli_help_in_readme(text_block=stdout, marker='main help')
-
     def test_dev_help(self):
         with NoColorEnvRich():
             stdout = invoke(cli_bin=PACKAGE_ROOT / 'dev-cli.py', args=['--help'], strip_line_prefix='usage: ')

@@ -117,6 +117,10 @@ lines-after-imports = 2
 [tool.ruff.format]
 quote-style = "single"
 
+[tool.ruff.lint.per-file-ignores]
+"conf/settings.py" = [
+    "I001", # "Wrong" import order is needed there!
+]
 
 [tool.coverage.run]
 # https://coverage.readthedocs.io/en/latest/config.html#run

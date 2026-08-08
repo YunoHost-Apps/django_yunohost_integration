@@ -11,11 +11,10 @@
 
 from pathlib import Path as __Path
 
-# https://github.com/jedie/django-example/
-from django_example.settings.prod import *
-
 from django_yunohost_integration.base_settings import *
 from django_yunohost_integration.secret_key import get_or_create_secret as __get_or_create_secret
+
+from django_example.settings.prod import *  # https://github.com/jedie/django-example/
 
 
 DATA_DIR_PATH = __Path('__DATA_DIR__')  # /home/yunohost.app/$app/
@@ -59,7 +58,8 @@ YNH_SETUP_USER = 'setup_user.setup_project_user'
 if 'axes' not in INSTALLED_APPS:
     INSTALLED_APPS.append('axes')  # https://github.com/jazzband/django-axes
 
-INSTALLED_APPS.append('django_yunohost_integration.apps.YunohostIntegrationConfig')
+if 'django_yunohost_integration.apps.YunohostIntegrationConfig' not in INSTALLED_APPS:
+    INSTALLED_APPS.append('django_yunohost_integration.apps.YunohostIntegrationConfig')
 
 
 SECRET_KEY = __get_or_create_secret(DATA_DIR_PATH / 'secret.txt')  # /home/yunohost.app/$app/secret.txt

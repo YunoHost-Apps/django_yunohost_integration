@@ -38,7 +38,7 @@ class YunohostJwtTestCase(SimpleTestCase):
         self.assertEqual(
             cm.output,
             [
-                "ERROR:django_yunohost_integration.yunohost.ynh_jwt:"
-                "Mismatch: jwt_username='Bar' is not user.username='Foo'"
+                ("ERROR:django_yunohost_integration.yunohost.ynh_jwt:"
+                "Mismatch: jwt_username='Bar' is not user.username='Foo'")
             ],
         )
