@@ -65,3 +65,33 @@ jobs:
         fail_ci_if_error: false
         verbose: true
 
+
+    - name: Upload coverage artifact
+      if: >
+        matrix.python-version == '3.13' &&
+        (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+      uses: actions/upload-artifact@main
+      with:
+        name: coverage-report-python
+        path: coverage.xml
+
+  upload-coverage-python:
+    needs: test
+    if: >
+      !cancelled() &&
+      needs.test.result == 'success' &&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      code-quality: write
+    steps:
+      - name: Download coverage artifact
+        uses: actions/download-artifact@main
+        with:
+          name: coverage-report-python
+      - uses: actions/upload-code-coverage@main
+        with:
+          file: coverage.xml
+          language: Python
+          label: code-coverage-agent

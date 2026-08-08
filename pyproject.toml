@@ -122,6 +122,7 @@ quote-style = "single"
     "I001", # "Wrong" import order is needed there!
 ]
 
+
 [tool.coverage.run]
 # https://coverage.readthedocs.io/en/latest/config.html#run
 branch = true
@@ -142,6 +143,10 @@ exclude_lines = [
     'raise NotImplementedError',
     'if __name__ == .__main__.:',
 ]
+
+[tool.coverage.xml]
+# https://coverage.readthedocs.io/en/latest/config.html#xml
+output = "coverage.xml"
 
 
 [tool.mypy]
