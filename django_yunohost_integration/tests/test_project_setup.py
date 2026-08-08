@@ -26,9 +26,9 @@ class ProjectSetupTestCase(TestCase):
         assert_in(
             content=output,
             parts=(
-                '/django_yunohost_integration/',
                 'ENV_TYPE=test',
                 f'django-yunohost-integration v{__version__}',
+                '/django_yunohost_integration',
             ),
         )
 

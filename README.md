@@ -222,6 +222,7 @@ proxy_set_header Ynh-User $http_ynh_user;
 [comment]: <> (✂✂✂ auto generated history start ✂✂✂)
 
 * [**dev**](https://github.com/YunoHost-Apps/django_yunohost_integration/compare/v0.10.9...main)
+  * 2026-08-08 - fix flaky test
   * 2026-08-08 - Expand github CI matrix
   * 2026-08-08 - fix code style and tests
   * 2026-08-08 - Modernize
